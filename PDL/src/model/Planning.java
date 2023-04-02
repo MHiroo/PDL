@@ -1,6 +1,5 @@
 package model;
 import java.util.Date;
-import java.sql.Date;
 /**
  * Classe Planning
  * @author Hiroo
@@ -41,7 +40,7 @@ public class Planning {
 	 * @param nbreHeure du planning
 	 * @param typeRepartition du planning
 	 */
-	public Planning(int id, Enseignant enseignant,Cours cours, Date date, string typeRepartition) {
+	public Planning(int id, Enseignant enseignant,Cours cours, Date date, String typeRepartition) {
 		this.id=id;
 		this.enseignant=enseignant;
 		this.cours=cours;
@@ -88,7 +87,7 @@ public class Planning {
 	 * getter pour l'attribut date
 	 * @return valeur de la date
 	 */
-	public Cours getDate(Date date) {
+	public Date getDate(Date date) {
 		return date;
 	}
 	/**
@@ -102,7 +101,7 @@ public class Planning {
 	 * getter pour l'attribut typeRepartition
 	 * @return valeur de la typeRepartition
 	 */
-	public Cours getTypeRepartition(String typeRepartition) {
+	public String getTypeRepartition(String typeRepartition) {
 		return typeRepartition;
 	}
 	/**

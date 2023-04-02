@@ -61,14 +61,14 @@ public class Cours {
 	 * getter pour l'attribut nom
 	 * @return valeur du nom
 	 */
-	public string getNom() {
+	public String getNom() {
 		return nom;
 	}
 	/**
 	 * setter pour l'attribut nom
 	 * @param nom : nouvelle valeur du nom
 	 */
-	public void setNom(string nom) {
+	public void setNom(String nom) {
 		this.nom = nom;
 	}
 	/**
