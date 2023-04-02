@@ -9,14 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import dao.SupplierDAO;
-import model.Supplier;
+import dao.GestionnaireDAO;
+import model.Gestionnaire;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class SupplierGUI {
+public class GestionnaireGUI {
 
 	private JFrame modifierFrame;
 	private JFrame supprimerFrame;
@@ -24,10 +24,10 @@ public class SupplierGUI {
 	private JFrame fournisseurFrame;
 	private JFrame accueilFrame;
 	private JFrame mainFrame;
-	private JTextField supplierChoiceIpt;
-	private JLabel supplierNameLbl;
-	private JLabel supplierAddressLbl;
-	private JLabel supplierMailLbl;
+	private JTextField gestionnaireChoiceIpt;
+	private JLabel gestionnaireNameLbl;
+	private JLabel gestionnaireAddressLbl;
+	private JLabel gestionnaireMailLbl;
 
 	/**
 	 * Launch the application.
@@ -36,7 +36,7 @@ public class SupplierGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SupplierGUI window = new SupplierGUI();
+					GestionnaireGUI window = new GestionnaireGUI();
 					window.accueilFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,7 +48,7 @@ public class SupplierGUI {
 	/**
 	 * Create the application.
 	 */
-	public SupplierGUI() {
+	public GestionnaireGUI() {
 		initialize();
 	}
 
@@ -167,60 +167,60 @@ public class SupplierGUI {
 		JPanel choicePnl = new JPanel();
 		mainFrame.getContentPane().add(choicePnl);
 
-		JLabel supplierchoiceLbl = new JLabel("Référence du fournisseur à afficher : ");
-		choicePnl.add(supplierchoiceLbl);
+		JLabel gestionnairechoiceLbl = new JLabel("Référence du fournisseur à afficher : ");
+		choicePnl.add(gestionnairechoiceLbl);
 
-		supplierChoiceIpt = new JTextField();
-		choicePnl.add(supplierChoiceIpt);
-		supplierChoiceIpt.setColumns(10);
+		gestionnaireChoiceIpt = new JTextField();
+		choicePnl.add(gestionnaireChoiceIpt);
+		gestionnaireChoiceIpt.setColumns(10);
 
-		JButton supplierChoiceSearchBtn = new JButton("Rechercher");
-		supplierChoiceSearchBtn.addActionListener(new ActionListener() {
+		JButton gestionnaireChoiceSearchBtn = new JButton("Rechercher");
+		gestionnaireChoiceSearchBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Attention, il faudra faire davantage de vérifications sur la valeur entrée par l'utilisateur
-				if (supplierChoiceIpt.getText().length() > 0) {
-					int id = Integer.parseInt(supplierChoiceIpt.getText());
-					displaySupplier(id);
+				if (gestionnaireChoiceIpt.getText().length() > 0) {
+					int id = Integer.parseInt(gestionnaireChoiceIpt.getText());
+					displayGestionnaire(id);
 				} else {
 					JOptionPane.showMessageDialog(new JFrame(), "Vous devez entrer une référence de fournisseur", "Dialog",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
-		choicePnl.add(supplierChoiceSearchBtn);
+		choicePnl.add(gestionnaireChoiceSearchBtn);
 
-		JPanel supplierDisplayPnl = new JPanel();
-		mainFrame.getContentPane().add(supplierDisplayPnl);
+		JPanel gestionnaireDisplayPnl = new JPanel();
+		mainFrame.getContentPane().add(gestionnaireDisplayPnl);
 
-		JLabel supplierSelectedLbl = new JLabel("Fournisseur sélectionné : ");
-		supplierDisplayPnl.add(supplierSelectedLbl);
+		JLabel gestionnaireSelectedLbl = new JLabel("Fournisseur sélectionné : ");
+		gestionnaireDisplayPnl.add(gestionnaireSelectedLbl);
 
-		supplierNameLbl = new JLabel("");
-		supplierDisplayPnl.add(supplierNameLbl);
+		gestionnaireNameLbl = new JLabel("");
+		gestionnaireDisplayPnl.add(gestionnaireNameLbl);
 
-		supplierAddressLbl = new JLabel("");
-		supplierDisplayPnl.add(supplierAddressLbl);
+		gestionnaireAddressLbl = new JLabel("");
+		gestionnaireDisplayPnl.add(gestionnaireAddressLbl);
 
-		supplierMailLbl = new JLabel("");
-		supplierDisplayPnl.add(supplierMailLbl);
+		gestionnaireMailLbl = new JLabel("");
+		gestionnaireDisplayPnl.add(gestionnaireMailLbl);
 	}
 
-	public void displaySupplier(int id) {
+	public void displayGestionnaire(int id) {
 		// On récupère le fournisseur en BDD
-		SupplierDAO suppDao = new SupplierDAO();
-		Supplier supp = suppDao.get(id);
+		GestionnaireDAO suppDao = new GestionnaireDAO();
+		Gestionnaire supp = suppDao.get(id);
 
 		if (supp != null) {
 			// On met à jour les libellés représentant le fournisseur
-			supplierNameLbl.setText(supp.getName() + " -");
-			supplierAddressLbl.setText(supp.getAddress() + " -");
-			supplierMailLbl.setText(supp.getEmail());
+			gestionnaireNameLbl.setText(supp.getName() + " -");
+			gestionnaireAddressLbl.setText(supp.getAddress() + " -");
+			gestionnaireMailLbl.setText(supp.getEmail());
 		} else {
 			JOptionPane.showMessageDialog(new JFrame(), "Erreur lors de la récupération du fournisseur", "Dialog",
 					JOptionPane.ERROR_MESSAGE);
-			supplierNameLbl.setText("");
-			supplierAddressLbl.setText("");
-			supplierMailLbl.setText("");
+			gestionnaireNameLbl.setText("");
+			gestionnaireAddressLbl.setText("");
+			gestionnaireMailLbl.setText("");
 		}
 	}
 

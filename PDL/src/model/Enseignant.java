@@ -16,8 +16,8 @@ public class Enseignant extends Personne {
 	 * @param tel téléphone de l'enseignant
 	 * @param mail adresse mail de l'enseignant
 	 */
-	public Enseignant(int id, String nom, String prenom, String mail, String tel) {
-		super(id, nom, prenom, mail,tel);
+	public Enseignant(int id, String nom, String prenom,  String tel,String mail,String mdp) {
+		super(id, nom, prenom,tel ,mail,mdp);
 	}
 	
 	/**

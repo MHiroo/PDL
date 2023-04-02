@@ -26,6 +26,10 @@ public class Personne {
 	 * tel
 	 */
 	protected String tel;
+	/**
+	 * mdp mot de passe
+	 */
+	protected String mdp;
 	
 	/**
 	 * Constructor
@@ -34,19 +38,22 @@ public class Personne {
 	 * @param prenom prénom de la personne
 	 * @param mail adresse mail de la personne
 	 * @param tel numéro de téléphone de la personne
+	 * @param mdp mot de passe de la personne
 	 */
-	public Personne(int id, String nom, String prenom, String mail, String tel) {
+	public Personne(int id, String nom, String prenom, String tel, String mail, String mdp ) {
 		this.id=id;
 		this.nom=nom;
 		this.prenom=prenom;
 		this.mail=mail;
 		this.tel=tel;
+		this.mdp=mdp;
 	}
-	public Personne(int id, String nom, String prenom, String mail) {
+	public Personne(int id, String nom, String prenom, String mail,String mdp) {
 		this.id=id;
 		this.nom=nom;
 		this.prenom=prenom;
 		this.mail=mail;
+		this.mdp=mdp;
 	}
 	
 	/**
@@ -60,42 +67,42 @@ public class Personne {
 	 * getter pour l'attribut nom
 	 * @return valeur du nom
 	 */
-	public String getNom() {
+	public String getName() {
 		return nom;
 	}
 	/**
 	 * setter pour l'attribut nom
 	 * @param nom : nouvelle valeur du nom
 	 */
-	public void setNom(String nom) {
+	public void setName(String nom) {
 		this.nom = nom;
 	}
 	/**
 	 * getter pour l'attribut prénom
 	 * @return valeur du prénom
 	 */
-	public String getPrenom() {
+	public String getFirstName() {
 		return prenom;
 	}
 	/**
 	 * setter pour l'attribut prénom
 	 * @param prenom : nouvelle valeur du prénom
 	 */
-	public void setPrenom(String prenom) {
+	public void setFirstName(String prenom) {
 		this.prenom=prenom;
 	}
 	/**
 	* getter pour l'attribut mail
 	* @return valeur de l'adresse mail
 	*/
-	public String getMail() {
+	public String getEmail() {
 		return mail;
 	}
 	/**
 	 * setter pour l'attribut mail
 	 * @param mail : nouvelle valeur de l'adresse mail
 	 */
-	public void setMail(String mail) {
+	public void setEmail(String mail) {
 		this.mail = mail;
 	}
 	/**
@@ -112,18 +119,33 @@ public class Personne {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
+	
+	/**
+	* getter pour l'attribut mdp
+	* @return valeur du mot de passe
+	*/
+	public String getMdp() {
+		return mdp;
+	}
+	/**
+	 * setter pour l'attribut mdp
+	 * @param tel : nouvelle valeur du mot de passe
+	 */
+	public void setMdp(String mdp) {
+		this.mdp = mdp;
+	}
 	/**
 	 * Affiche les caractéristiques de la personne  
 	 */
 	public void display()
 	{
-		System.out.println("id: "+this.id+"  ;nom: "+this.nom+"  ;prenom: "+this.prenom+"   ;mail: "+this.mail+"   ;tel: "+this.tel);
+		System.out.println("id: "+this.id+"  ;nom: "+this.nom+"  ;prenom: "+this.prenom+"   ;mail: "+this.mail+"   ;tel: "+this.tel+"   ;mdp: "+this.mdp);
 	}
 	/**
 	 * Affiche les caractéristiques de la personne sauf le telephone
 	 */
 	public void display2()
 	{
-		System.out.println("id: "+this.id+"  ;nom: "+this.nom+"  ;prenom: "+this.prenom+"   ;mail: "+this.mail );
+		System.out.println("id: "+this.id+"  ;nom: "+this.nom+"  ;prenom: "+this.prenom+"   ;mail: "+this.mail+"   ;mdp: "+this.mdp );
 	}
 }

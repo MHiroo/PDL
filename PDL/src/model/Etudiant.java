@@ -21,11 +21,12 @@ public class Etudiant extends Personne {
 	 * @param nom nom de l'�tudiant
 	 * @param prenom pr�nom de l'�tudiant
 	 * @param mail adresse mail de l'�tudiant
+	 * @param mdp mot de passe de l'étudiant
 	 * @param filiere filiere de l'�tudiant
 	 * @param groupe groupe de l'étudiant
 	 */
-	public Etudiant(int id, String nom, String prenom, String mail, String filiere, int groupe) {
-		super(id, nom, prenom, mail);
+	public Etudiant(int id, int groupe, String nom, String prenom, String filiere, String mail,String mdp) {
+		super(id, nom, prenom, mail,mdp);
 		this.filiere=filiere;
 		this.groupe=groupe;
 	}

@@ -11,14 +11,15 @@ public class ConnectionDAO {
 	 * Parametres de connexion a la base de donnees oracle
 	 * URL, LOGIN et PASS sont des constantes
 	 */
-	// À utiliser si vous êtes sur une machine personnelle :
+	// ï¿½ utiliser si vous ï¿½tes sur une machine personnelle :
 	//final static String URL   = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl";
+	//sinon :"jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
 	
-	// À utiliser si vous êtes sur une machine de l'école :
-	final static String URL   = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
+	// ï¿½ utiliser si vous ï¿½tes sur une machine de l'ï¿½cole :
+	final static String URL   =  "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl";
 
-	final static String LOGIN = "C##BDD9_17";   // remplacer les ********. Exemple C##BDD1_1
-	final static String PASS  = "BDD917";   // remplacer les ********. Exemple BDD11
+	final static String LOGIN = "C##BDD9_19";   // remplacer les ********. Exemple C##BDD1_1
+	final static String PASS  = "BDD919";   // remplacer les ********. Exemple BDD11
 	
 	/**
 	 * Constructor
