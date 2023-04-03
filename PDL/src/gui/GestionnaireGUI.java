@@ -9,8 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import dao.GestionnaireDAO;
-import model.Personne;
+import dao.EtudiantDAO;
+import model.Etudiant;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -18,210 +18,155 @@ import java.awt.event.ActionEvent;
 
 public class GestionnaireGUI {
 
-	private JFrame modifierFrame;
-	private JFrame supprimerFrame;
-	private JFrame insererFrame;
-	private JFrame gestionnaireFrame;
-	private JFrame accueilFrame;
-	private JFrame mainFrame;
-	private JTextField gestionnaireChoiceIpt;
-	private JLabel gestionnaireNameLbl;
-	private JLabel gestionnaireTelLbl;
-	private JLabel gestionnaireMailLbl;
+    private JFrame frame;
+    private JTextField textFieldId;
+    private JTextField textFieldGroupe;
+    private JTextField textFieldNom;
+    private JTextField textFieldPrenom;
+    private JTextField textFieldFiliere;
+    private JTextField textFieldEmail;
+    private JTextField textFieldMdp;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GestionnaireGUI window = new GestionnaireGUI();
-					window.accueilFrame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    GestionnaireGUI window = new GestionnaireGUI();
+                    window.frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
-	/**
-	 * Create the application.
-	 */
-	public GestionnaireGUI() {
-		initialize();
-	}
+    /**
+     * Create the application.
+     */
+    public GestionnaireGUI() {
+        initialize();
+    }
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		/**
-		 * création de la fenêtre d'accueil
-		 */
-		accueilFrame = new JFrame();
-		accueilFrame.setTitle("Accueil");
-		accueilFrame.setBounds(100, 100, 800, 800);
-		accueilFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		accueilFrame.getContentPane().setLayout(new BoxLayout(accueilFrame.getContentPane(), BoxLayout.Y_AXIS));
+    /**
+     * Initialize the contents of the frame.
+     */
+    private void initialize() {
+        frame = new JFrame();
+        frame.setBounds(100, 100, 450, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 
-		JPanel choicePn0 = new JPanel();
-		accueilFrame.getContentPane().add(choicePn0);
+        JPanel panelId = new JPanel();
+        frame.getContentPane().add(panelId);
 
-		/**
-		 * Bouton sur accueil qui affiche la fenêtre gestionnaires
-		 */
-		JButton button0 = new JButton("fenêtre gestionnaire");
-		button0.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				gestionnaireFrame.setVisible(true);
-			}
-		});
-		choicePn0.add(button0);
-		/**
-		 * création de la fenêtre gestionnaire
-		 */
-		gestionnaireFrame = new JFrame();
-		gestionnaireFrame.setTitle("Fournisseurs");
-		gestionnaireFrame.setBounds(100, 100, 800, 800);
-		gestionnaireFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		gestionnaireFrame.getContentPane().setLayout(new BoxLayout(gestionnaireFrame.getContentPane(), BoxLayout.Y_AXIS));
+        JLabel lblId = new JLabel("Id:");
+        panelId.add(lblId);
 
-		JPanel choicePn01 = new JPanel();
-		gestionnaireFrame.getContentPane().add(choicePn01);
+        textFieldId = new JTextField();
+        panelId.add(textFieldId);
+        textFieldId.setColumns(10);
 
-		/**
-		 * Bouton sur gestionnaires qui affiche la fenêtre d'affichage des gestionnaires
-		 */
-		JButton button01 = new JButton("fenêtre Afficher");
-		button01.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainFrame.setVisible(true);
-			}
-		});
-		choicePn01.add(button01);
+        JPanel panelGroupe = new JPanel();
+        frame.getContentPane().add(panelGroupe);
 
-		/**
-		 * Bouton sur gestionnaires qui affiche la fenêtre de modification des gestionnaires
-		 */
-		JButton button02 = new JButton("fenêtre modifier");
-		button02.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				modifierFrame.setVisible(true);
-			}
-		});
-		choicePn01.add(button02);
-		/**
-		 * création de la fenêtre de modification des gestionnaires
-		 */
-		modifierFrame = new JFrame();
-		modifierFrame.setTitle("Fournisseurs");
-		modifierFrame.setBounds(100, 100, 800, 800);
-		modifierFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		modifierFrame.getContentPane().setLayout(new BoxLayout(modifierFrame.getContentPane(), BoxLayout.Y_AXIS));
+        JLabel lblGroupe = new JLabel("Groupe:");
+        panelGroupe.add(lblGroupe);
 
-		/**
-		 * Bouton sur gestionnaires qui affiche la fenêtre de suppression des gestionnaires
-		 */
-		JButton button03 = new JButton("fenêtre supprimer");
-		button03.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				supprimerFrame.setVisible(true);
-			}
-		});
-		choicePn01.add(button03);
-		/**
-		 * Création de la fenêtre de suppression des gestionnaires
-		 */
-		supprimerFrame = new JFrame();
-		supprimerFrame.setTitle("Fournisseurs");
-		supprimerFrame.setBounds(100, 100, 800, 800);
-		supprimerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		supprimerFrame.getContentPane().setLayout(new BoxLayout(supprimerFrame.getContentPane(), BoxLayout.Y_AXIS));
+        textFieldGroupe = new JTextField();
+        panelGroupe.add(textFieldGroupe);
+        textFieldGroupe.setColumns(10);
 
-		/**
-		 * Bouton sur gestionnaires qui affiche la fenêtre d'insertion des gestionnaires
-		 */
-		JButton button04 = new JButton("fenêtre insérer");
-		button04.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				insererFrame.setVisible(true);
-			}
-		});
-		choicePn01.add(button04);
-		/**
-		 * Création de la feêtre d'insertion des gestionnaires
-		 */
-		insererFrame = new JFrame();
-		insererFrame.setTitle("Fournisseurs");
-		insererFrame.setBounds(100, 100, 800, 800);
-		insererFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		insererFrame.getContentPane().setLayout(new BoxLayout(insererFrame.getContentPane(), BoxLayout.Y_AXIS));
+        JPanel panelNom = new JPanel();
+        frame.getContentPane().add(panelNom);
 
-		mainFrame = new JFrame();
-		mainFrame.setTitle("Affichage des gestionnaires");
-		mainFrame.setBounds(100, 300, 800, 150);
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.getContentPane().setLayout(new BoxLayout(mainFrame.getContentPane(), BoxLayout.Y_AXIS));
+        JLabel lblNom = new JLabel("Nom:");
+        panelNom.add(lblNom);
 
-		JPanel choicePnl = new JPanel();
-		mainFrame.getContentPane().add(choicePnl);
+        textFieldNom = new JTextField();
+        panelNom.add(textFieldNom);
+        textFieldNom.setColumns(10);
 
-		JLabel gestionnairechoiceLbl = new JLabel("Référence du gestionnaire à afficher : ");
-		choicePnl.add(gestionnairechoiceLbl);
+        JPanel panelPrenom = new JPanel();
+        frame.getContentPane().add(panelPrenom);
 
-		gestionnaireChoiceIpt = new JTextField();
-		choicePnl.add(gestionnaireChoiceIpt);
-		gestionnaireChoiceIpt.setColumns(10);
+        JLabel lblPrenom = new JLabel("Prenom:");
+        panelPrenom.add(lblPrenom);
 
-		JButton gestionnaireChoiceSearchBtn = new JButton("Rechercher");
-		gestionnaireChoiceSearchBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Attention, il faudra faire davantage de vérifications sur la valeur entrée par l'utilisateur
-				if (gestionnaireChoiceIpt.getText().length() > 0) {
-					int id = Integer.parseInt(gestionnaireChoiceIpt.getText());
-					displayGestionnaire(id);
-				} else {
-					JOptionPane.showMessageDialog(new JFrame(), "Vous devez entrer une référence de gestionnaire", "Dialog",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-		choicePnl.add(gestionnaireChoiceSearchBtn);
+        textFieldPrenom = new JTextField();
+        panelPrenom.add(textFieldPrenom);
+        textFieldPrenom.setColumns(10);
 
-		JPanel gestionnaireDisplayPnl = new JPanel();
-		mainFrame.getContentPane().add(gestionnaireDisplayPnl);
+        JPanel panelFiliere = new JPanel();
+        frame.getContentPane().add(panelFiliere);
 
-		JLabel gestionnaireSelectedLbl = new JLabel("Fournisseur sélectionné : ");
-		gestionnaireDisplayPnl.add(gestionnaireSelectedLbl);
+        JLabel lblFiliere = new JLabel("Filiere:");
+        panelFiliere.add(lblFiliere);
 
-		gestionnaireNameLbl = new JLabel("");
-		gestionnaireDisplayPnl.add(gestionnaireNameLbl);
+        textFieldFiliere = new JTextField();
+        panelFiliere.add(textFieldFiliere);
+        textFieldFiliere.setColumns(10);
 
-		gestionnaireTelLbl = new JLabel("");
-		gestionnaireDisplayPnl.add(gestionnaireTelLbl);
+        JPanel panelEmail = new JPanel();
+        frame.getContentPane().add(panelEmail);
 
-		gestionnaireMailLbl = new JLabel("");
-		gestionnaireDisplayPnl.add(gestionnaireMailLbl);
-	}
+        JLabel lblEmail = new JLabel("Email:");
+        panelEmail.add(lblEmail);
 
-	public void displayGestionnaire(int id) {
-		// On récupère le gestionnaire en BDD
-		GestionnaireDAO suppDao = new GestionnaireDAO();
-		Personne supp = suppDao.get(id);
+        textFieldEmail = new JTextField();
+        panelEmail.add(textFieldEmail);
+        textFieldEmail.setColumns(10);
 
-		if (supp != null) {
-			// On met à jour les libellés représentant le gestionnaire
-			gestionnaireNameLbl.setText(supp.getName() + " -");
-			gestionnaireTelLbl.setText(supp.getTel() + " -");
-			gestionnaireMailLbl.setText(supp.getEmail());
-		} else {
-			JOptionPane.showMessageDialog(new JFrame(), "Erreur lors de la récupération du gestionnaire", "Dialog",
-					JOptionPane.ERROR_MESSAGE);
-			gestionnaireNameLbl.setText("");
-			gestionnaireTelLbl.setText("");
-			gestionnaireMailLbl.setText("");
-		}
-	}
+        JPanel panelMdp = new JPanel();
+        frame.getContentPane().add(panelMdp);
 
+        JLabel lblMdp = new JLabel("Mot de passe:");
+        panelMdp.add(lblMdp);
+
+        textFieldMdp = new JTextField();
+        panelMdp.add(textFieldMdp);
+        textFieldMdp.setColumns(10);
+
+        JPanel panelBoutons = new JPanel();
+        frame.getContentPane().add(panelBoutons);
+        JButton btnAjouter = new JButton("Ajouter");
+        btnAjouter.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Récupérer les données saisies par l'utilisateur
+                int id = Integer.parseInt(textFieldId.getText());
+                int groupe = Integer.parseInt(textFieldGroupe.getText());
+                String nom = textFieldNom.getText();
+                String prenom = textFieldPrenom.getText();
+                String filiere = textFieldFiliere.getText();
+                String email = textFieldEmail.getText();
+                String mdp = textFieldMdp.getText();
+                
+                // Créer un objet Etudiant avec les données récupérées
+                Etudiant etudiant = new Etudiant(id, groupe, nom, prenom, filiere, email, mdp);
+                
+                // Appeler la méthode d'ajout d'un étudiant dans la base de données
+                EtudiantDAO etudiantDAO = new EtudiantDAO();
+                etudiantDAO.add(etudiant);
+            }
+        });
+        panelBoutons.add(btnAjouter);
+
+        JButton btnSupprimer = new JButton("Supprimer");
+        btnSupprimer.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Récupérer l'identifiant de l'étudiant à supprimer
+                int id = Integer.parseInt(textFieldId.getText());
+                
+                // Appeler la méthode de suppression d'un étudiant de la base de données
+                EtudiantDAO etudiantDAO = new EtudiantDAO();
+                etudiantDAO.delete(id);
+            }
+        });
+        panelBoutons.add(btnSupprimer);
+    }
 }
+
+
+       
