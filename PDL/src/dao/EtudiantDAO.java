@@ -100,12 +100,7 @@ public class EtudiantDAO extends ConnectionDAO {
 			ps.setString(4, etudiant.getFiliere());
 			ps.setString(5, etudiant.getEmail());
 			ps.setString(6, etudiant.getMdp());
-			ps.setInt(7, etudiant.getId());
-
-			
-			
-
-		
+			ps.setInt(7, etudiant.getId());	
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -145,26 +140,19 @@ public class EtudiantDAO extends ConnectionDAO {
 	    int returnValue = 0;
 
 	    try {
-	        // connexion a la base de donnees
-	        con = DriverManager.getConnection(URL, LOGIN, PASS);
 
-	        // verification si l'etudiant possede des articles
-	        ps = con.prepareStatement("SELECT COUNT(*) AS nb FROM article WHERE idetud = ?");
-	        ps.setInt(1, id);
-	        rs = ps.executeQuery();
-	        rs.next();
-	        int nbArticles = rs.getInt("nb");
+			// tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			// preparation de l'instruction SQL, le ? represente la valeur de l'ID
+			// a communiquer dans la suppression.
+			// le getter permet de recuperer la valeur de l'ID du fournisseur
+			ps = con.prepareStatement("DELETE FROM etudiant WHERE idetud = ?");
+			ps.setInt(1, id);
 
-	        if (nbArticles > 0) {
-	            System.out.println("Impossible de supprimer cet étudiant : il possède des articles.");
-	        } else {
-	            // suppression de l'etudiant
-	            ps = con.prepareStatement("DELETE FROM etudiant WHERE idetud = ?");
-	            ps.setInt(1, id);
-	            returnValue = ps.executeUpdate();
-	        }
+			// Execution de la requete
+			returnValue = ps.executeUpdate();
 
-	    } catch (Exception e) {
+		} catch (Exception e) {
 	        e.printStackTrace();
 	    } finally {
 	        // fermeture du preparedStatement et de la connexion
