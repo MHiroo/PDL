@@ -6,7 +6,7 @@ import model.*;
 /**
  * Classe d'acces aux donnees contenues dans la table etudiant
  * 
- * @author Hiroo MIZUNO
+ * @author G9 Jaune canaris
  * @version 1.0
  * */
 public class EtudiantDAO extends ConnectionDAO {
@@ -72,56 +72,6 @@ public class EtudiantDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
-	/**
-	 * Permet de modifier un mot de passe dans la table etudiant.
-	 * Le mode est auto-commit par defaut : chaque modification est validee
-	 * 
-	 * @param etudiant le etudiant a modifier
-	 * @return retourne le nombre de lignes modifiees dans la table
-	 */
-	public int updateMdp(Etudiant etudiant) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		int returnValue = 0;
-
-		// connexion a la base de donnees
-		try {
-
-			// tentative de connexion
-			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			// preparation de l'instruction SQL, chaque ? represente une valeur
-			// a communiquer dans la modification.
-			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("UPDATE etudiant set motdepasse = ?,WHERE idetud = ?");
-			ps.setString(1, etudiant.getMdp());
-			ps.setInt(2, etudiant.getId());
-			
-			
-
-		
-
-			// Execution de la requete
-			returnValue = ps.executeUpdate();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			// fermeture du preparedStatement et de la connexion
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-			} catch (Exception ignore) {
-			}
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (Exception ignore) {
-			}
-		}
-		return returnValue;
-	}
 
 	/**
 	 * Permet de modifier un etudiant dans la table etudiant.
@@ -143,12 +93,15 @@ public class EtudiantDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans la modification.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("UPDATE etudiant set  nomEtudiant = ?, prenomEtudiant = ?, filiere = ?, email = ? WHERE idetud = ?");
+			ps = con.prepareStatement("UPDATE etudiant SET idgroupe = ?, nomEtudiant = ?, prenomEtudiant = ?, filiere = ?, email = ?, motdepasse = ? WHERE idetud = ?");
+			ps.setInt(1, etudiant.getGroupe());
 			ps.setString(2, etudiant.getName());
 			ps.setString(3, etudiant.getFirstName());
 			ps.setString(4, etudiant.getFiliere());
 			ps.setString(5, etudiant.getEmail());
+			ps.setString(6, etudiant.getMdp());
 			ps.setInt(7, etudiant.getId());
+
 			
 			
 
@@ -179,49 +132,59 @@ public class EtudiantDAO extends ConnectionDAO {
 
 	/**
 	 * Permet de supprimer un etudiant par id dans la table etudiant.
+	 * Si ce dernier possede des articles, la suppression n'a pas lieu.
 	 * Le mode est auto-commit par defaut : chaque suppression est validee
 	 * 
 	 * @param id l'id du etudiant à supprimer
 	 * @return retourne le nombre de lignes supprimees dans la table
 	 */
 	public int delete(int id) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		int returnValue = 0;
+	    Connection con = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    int returnValue = 0;
 
-		// connexion a la base de donnees
-		try {
+	    try {
+	        // connexion a la base de donnees
+	        con = DriverManager.getConnection(URL, LOGIN, PASS);
 
-			// tentative de connexion
-			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			// preparation de l'instruction SQL, le ? represente la valeur de l'ID
-			// a communiquer dans la suppression.
-			// le getter permet de recuperer la valeur de l'ID du etudiant
-			ps = con.prepareStatement("DELETE FROM etudiant WHERE idetud = ?");
-			ps.setInt(1, id);
+	        // verification si l'etudiant possede des articles
+	        ps = con.prepareStatement("SELECT COUNT(*) AS nb FROM article WHERE idetud = ?");
+	        ps.setInt(1, id);
+	        rs = ps.executeQuery();
+	        rs.next();
+	        int nbArticles = rs.getInt("nb");
 
-			// Execution de la requete
-			returnValue = ps.executeUpdate();
+	        if (nbArticles > 0) {
+	            System.out.println("Impossible de supprimer cet étudiant : il possède des articles.");
+	        } else {
+	            // suppression de l'etudiant
+	            ps = con.prepareStatement("DELETE FROM etudiant WHERE idetud = ?");
+	            ps.setInt(1, id);
+	            returnValue = ps.executeUpdate();
+	        }
 
-		} catch (Exception e) {
-				e.printStackTrace();
-		} finally {
-			// fermeture du preparedStatement et de la connexion
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-			} catch (Exception ignore) {
-			}
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (Exception ignore) {
-			}
-		}
-		return returnValue;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        // fermeture du preparedStatement et de la connexion
+	        try {
+	            if (ps != null) {
+	                ps.close();
+	            }
+	        } catch (Exception ignore) {
+	        }
+	        try {
+	            if (con != null) {
+	                con.close();
+	            }
+	        } catch (Exception ignore) {
+	        }
+	    }
+	    return returnValue;
 	}
+
+
 
 
 	/**
