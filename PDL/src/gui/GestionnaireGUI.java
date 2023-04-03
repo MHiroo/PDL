@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import dao.GestionnaireDAO;
-import model.Gestionnaire;
+import model.Personne;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -21,12 +21,12 @@ public class GestionnaireGUI {
 	private JFrame modifierFrame;
 	private JFrame supprimerFrame;
 	private JFrame insererFrame;
-	private JFrame fournisseurFrame;
+	private JFrame gestionnaireFrame;
 	private JFrame accueilFrame;
 	private JFrame mainFrame;
 	private JTextField gestionnaireChoiceIpt;
 	private JLabel gestionnaireNameLbl;
-	private JLabel gestionnaireAddressLbl;
+	private JLabel gestionnaireTelLbl;
 	private JLabel gestionnaireMailLbl;
 
 	/**
@@ -69,29 +69,29 @@ public class GestionnaireGUI {
 		accueilFrame.getContentPane().add(choicePn0);
 
 		/**
-		 * Bouton sur accueil qui affiche la fenêtre fournisseurs
+		 * Bouton sur accueil qui affiche la fenêtre gestionnaires
 		 */
-		JButton button0 = new JButton("fenêtre fournisseur");
+		JButton button0 = new JButton("fenêtre gestionnaire");
 		button0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fournisseurFrame.setVisible(true);
+				gestionnaireFrame.setVisible(true);
 			}
 		});
 		choicePn0.add(button0);
 		/**
-		 * création de la fenêtre fournisseur
+		 * création de la fenêtre gestionnaire
 		 */
-		fournisseurFrame = new JFrame();
-		fournisseurFrame.setTitle("Fournisseurs");
-		fournisseurFrame.setBounds(100, 100, 800, 800);
-		fournisseurFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		fournisseurFrame.getContentPane().setLayout(new BoxLayout(fournisseurFrame.getContentPane(), BoxLayout.Y_AXIS));
+		gestionnaireFrame = new JFrame();
+		gestionnaireFrame.setTitle("Fournisseurs");
+		gestionnaireFrame.setBounds(100, 100, 800, 800);
+		gestionnaireFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gestionnaireFrame.getContentPane().setLayout(new BoxLayout(gestionnaireFrame.getContentPane(), BoxLayout.Y_AXIS));
 
 		JPanel choicePn01 = new JPanel();
-		fournisseurFrame.getContentPane().add(choicePn01);
+		gestionnaireFrame.getContentPane().add(choicePn01);
 
 		/**
-		 * Bouton sur fournisseurs qui affiche la fenêtre d'affichage des fournisseurs
+		 * Bouton sur gestionnaires qui affiche la fenêtre d'affichage des gestionnaires
 		 */
 		JButton button01 = new JButton("fenêtre Afficher");
 		button01.addActionListener(new ActionListener() {
@@ -102,7 +102,7 @@ public class GestionnaireGUI {
 		choicePn01.add(button01);
 
 		/**
-		 * Bouton sur fournisseurs qui affiche la fenêtre de modification des fournisseurs
+		 * Bouton sur gestionnaires qui affiche la fenêtre de modification des gestionnaires
 		 */
 		JButton button02 = new JButton("fenêtre modifier");
 		button02.addActionListener(new ActionListener() {
@@ -112,7 +112,7 @@ public class GestionnaireGUI {
 		});
 		choicePn01.add(button02);
 		/**
-		 * création de la fenêtre de modification des fournisseurs
+		 * création de la fenêtre de modification des gestionnaires
 		 */
 		modifierFrame = new JFrame();
 		modifierFrame.setTitle("Fournisseurs");
@@ -121,7 +121,7 @@ public class GestionnaireGUI {
 		modifierFrame.getContentPane().setLayout(new BoxLayout(modifierFrame.getContentPane(), BoxLayout.Y_AXIS));
 
 		/**
-		 * Bouton sur fournisseurs qui affiche la fenêtre de suppression des fournisseurs
+		 * Bouton sur gestionnaires qui affiche la fenêtre de suppression des gestionnaires
 		 */
 		JButton button03 = new JButton("fenêtre supprimer");
 		button03.addActionListener(new ActionListener() {
@@ -131,7 +131,7 @@ public class GestionnaireGUI {
 		});
 		choicePn01.add(button03);
 		/**
-		 * Création de la fenêtre de suppression des fournisseurs
+		 * Création de la fenêtre de suppression des gestionnaires
 		 */
 		supprimerFrame = new JFrame();
 		supprimerFrame.setTitle("Fournisseurs");
@@ -140,7 +140,7 @@ public class GestionnaireGUI {
 		supprimerFrame.getContentPane().setLayout(new BoxLayout(supprimerFrame.getContentPane(), BoxLayout.Y_AXIS));
 
 		/**
-		 * Bouton sur fournisseurs qui affiche la fenêtre d'insertion des fournisseurs
+		 * Bouton sur gestionnaires qui affiche la fenêtre d'insertion des gestionnaires
 		 */
 		JButton button04 = new JButton("fenêtre insérer");
 		button04.addActionListener(new ActionListener() {
@@ -150,7 +150,7 @@ public class GestionnaireGUI {
 		});
 		choicePn01.add(button04);
 		/**
-		 * Création de la feêtre d'insertion des fournisseurs
+		 * Création de la feêtre d'insertion des gestionnaires
 		 */
 		insererFrame = new JFrame();
 		insererFrame.setTitle("Fournisseurs");
@@ -159,7 +159,7 @@ public class GestionnaireGUI {
 		insererFrame.getContentPane().setLayout(new BoxLayout(insererFrame.getContentPane(), BoxLayout.Y_AXIS));
 
 		mainFrame = new JFrame();
-		mainFrame.setTitle("Affichage des fournisseurs");
+		mainFrame.setTitle("Affichage des gestionnaires");
 		mainFrame.setBounds(100, 300, 800, 150);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.getContentPane().setLayout(new BoxLayout(mainFrame.getContentPane(), BoxLayout.Y_AXIS));
@@ -167,7 +167,7 @@ public class GestionnaireGUI {
 		JPanel choicePnl = new JPanel();
 		mainFrame.getContentPane().add(choicePnl);
 
-		JLabel gestionnairechoiceLbl = new JLabel("Référence du fournisseur à afficher : ");
+		JLabel gestionnairechoiceLbl = new JLabel("Référence du gestionnaire à afficher : ");
 		choicePnl.add(gestionnairechoiceLbl);
 
 		gestionnaireChoiceIpt = new JTextField();
@@ -182,7 +182,7 @@ public class GestionnaireGUI {
 					int id = Integer.parseInt(gestionnaireChoiceIpt.getText());
 					displayGestionnaire(id);
 				} else {
-					JOptionPane.showMessageDialog(new JFrame(), "Vous devez entrer une référence de fournisseur", "Dialog",
+					JOptionPane.showMessageDialog(new JFrame(), "Vous devez entrer une référence de gestionnaire", "Dialog",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -198,28 +198,28 @@ public class GestionnaireGUI {
 		gestionnaireNameLbl = new JLabel("");
 		gestionnaireDisplayPnl.add(gestionnaireNameLbl);
 
-		gestionnaireAddressLbl = new JLabel("");
-		gestionnaireDisplayPnl.add(gestionnaireAddressLbl);
+		gestionnaireTelLbl = new JLabel("");
+		gestionnaireDisplayPnl.add(gestionnaireTelLbl);
 
 		gestionnaireMailLbl = new JLabel("");
 		gestionnaireDisplayPnl.add(gestionnaireMailLbl);
 	}
 
 	public void displayGestionnaire(int id) {
-		// On récupère le fournisseur en BDD
+		// On récupère le gestionnaire en BDD
 		GestionnaireDAO suppDao = new GestionnaireDAO();
-		Gestionnaire supp = suppDao.get(id);
+		Personne supp = suppDao.get(id);
 
 		if (supp != null) {
-			// On met à jour les libellés représentant le fournisseur
+			// On met à jour les libellés représentant le gestionnaire
 			gestionnaireNameLbl.setText(supp.getName() + " -");
-			gestionnaireAddressLbl.setText(supp.getAddress() + " -");
+			gestionnaireTelLbl.setText(supp.getTel() + " -");
 			gestionnaireMailLbl.setText(supp.getEmail());
 		} else {
-			JOptionPane.showMessageDialog(new JFrame(), "Erreur lors de la récupération du fournisseur", "Dialog",
+			JOptionPane.showMessageDialog(new JFrame(), "Erreur lors de la récupération du gestionnaire", "Dialog",
 					JOptionPane.ERROR_MESSAGE);
 			gestionnaireNameLbl.setText("");
-			gestionnaireAddressLbl.setText("");
+			gestionnaireTelLbl.setText("");
 			gestionnaireMailLbl.setText("");
 		}
 	}
