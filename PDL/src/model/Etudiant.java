@@ -36,7 +36,7 @@ public class Etudiant extends Personne {
 	* @return valeur de la filiere
 	*/
 	public String getFiliere() {
-		return tel;
+		return filiere;
 	}
 	/**
 	 * setter pour l'attribut filiere
