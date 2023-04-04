@@ -284,12 +284,12 @@ public class GestionnaireGUI {
             public void actionPerformed(ActionEvent e) {
                 // Récupérer les données saisies par l'utilisateur
             	int id = Integer.parseInt(textFieldId1.getText());
-                int groupe = Integer.parseInt(textFieldGroupe.getText());
-                String nom = textFieldNom.getText();
-                String prenom = textFieldPrenom.getText();
-                String filiere = textFieldFiliere.getText();
-                String email = textFieldEmail.getText();
-                String mdp = textFieldMdp.getText();
+                int groupe = Integer.parseInt(textFieldGroupeModif.getText());
+                String nom = textFieldNomModif.getText();
+                String prenom = textFieldPrenomModif.getText();
+                String filiere = textFieldFiliereModif.getText();
+                String email = textFieldEmailModif.getText();
+                String mdp = textFieldMdpModif.getText();
                 
                 // Créer un objet Etudiant avec les données récupérées
                 Etudiant etudiant = new Etudiant(id, groupe, nom, prenom, filiere, email, mdp);
