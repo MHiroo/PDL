@@ -55,6 +55,12 @@ public class Personne {
 		this.mail=mail;
 		this.mdp=mdp;
 	}
+	public Personne(String nom, String prenom, String mail,String mdp) {
+		this.nom=nom;
+		this.prenom=prenom;
+		this.mail=mail;
+		this.mdp=mdp;
+	}
 	
 	/**
 	 * getter pour l'attribut reference

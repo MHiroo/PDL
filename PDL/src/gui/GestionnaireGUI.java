@@ -19,7 +19,16 @@ import java.awt.event.ActionEvent;
 public class GestionnaireGUI {
 
     private JFrame frame;
-    private JTextField textFieldId;
+    private JFrame frameModif;
+    private JFrame frameSuppr;
+    private JTextField textFieldId1;
+    private JTextField textFieldId2;
+    private JTextField textFieldGroupeModif;
+    private JTextField textFieldNomModif;
+    private JTextField textFieldPrenomModif;
+    private JTextField textFieldFiliereModif;
+    private JTextField textFieldEmailModif;
+    private JTextField textFieldMdpModif;
     private JTextField textFieldGroupe;
     private JTextField textFieldNom;
     private JTextField textFieldPrenom;
@@ -58,20 +67,10 @@ public class GestionnaireGUI {
         frame.setBounds(100, 100, 450, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-
-        JPanel panelId = new JPanel();
-        frame.getContentPane().add(panelId);
-
-        JLabel lblId = new JLabel("Id:");
-        panelId.add(lblId);
-
-        textFieldId = new JTextField();
-        panelId.add(textFieldId);
-        textFieldId.setColumns(10);
-
+        
         JPanel panelGroupe = new JPanel();
         frame.getContentPane().add(panelGroupe);
-
+        
         JLabel lblGroupe = new JLabel("Groupe:");
         panelGroupe.add(lblGroupe);
 
@@ -118,7 +117,7 @@ public class GestionnaireGUI {
         textFieldEmail = new JTextField();
         panelEmail.add(textFieldEmail);
         textFieldEmail.setColumns(10);
-
+        
         JPanel panelMdp = new JPanel();
         frame.getContentPane().add(panelMdp);
 
@@ -128,6 +127,98 @@ public class GestionnaireGUI {
         textFieldMdp = new JTextField();
         panelMdp.add(textFieldMdp);
         textFieldMdp.setColumns(10);
+        
+        
+        frameModif = new JFrame();
+        frameModif.setBounds(100, 100, 450, 300);
+        frameModif.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameModif.getContentPane().setLayout(new BoxLayout(frameModif.getContentPane(), BoxLayout.Y_AXIS));
+        
+        JPanel panelModif = new JPanel();
+        frameModif.getContentPane().add(panelModif);
+        
+        JLabel lblModif = new JLabel("Id:");
+        panelModif.add(lblModif);
+        
+        textFieldId1 = new JTextField();
+        panelModif.add(textFieldId1);
+        textFieldId1.setColumns(10);
+        
+        JPanel panelGroupeModif = new JPanel();
+        frameModif.getContentPane().add(panelGroupeModif);
+        
+        JLabel lblGroupeModif = new JLabel("Groupe:");
+        panelGroupeModif.add(lblGroupeModif);
+
+        textFieldGroupeModif = new JTextField();
+        panelGroupeModif.add(textFieldGroupeModif);
+        textFieldGroupeModif.setColumns(10);
+
+        JPanel panelNomModif = new JPanel();
+        frameModif.getContentPane().add(panelNomModif);
+
+        JLabel lblNomModif = new JLabel("Nom:");
+        panelNomModif.add(lblNomModif);
+
+        textFieldNomModif = new JTextField();
+        panelNomModif.add(textFieldNomModif);
+        textFieldNomModif.setColumns(10);
+
+        JPanel panelPrenomModif = new JPanel();
+        frameModif.getContentPane().add(panelPrenomModif);
+
+        JLabel lblPrenomModif = new JLabel("Prenom:");
+        panelPrenomModif.add(lblPrenomModif);
+
+        textFieldPrenomModif = new JTextField();
+        panelPrenomModif.add(textFieldPrenomModif);
+        textFieldPrenomModif.setColumns(10);
+
+        JPanel panelFiliereModif = new JPanel();
+        frameModif.getContentPane().add(panelFiliereModif);
+
+        JLabel lblFiliereModif = new JLabel("Filiere:");
+        panelFiliereModif.add(lblFiliereModif);
+
+        textFieldFiliereModif = new JTextField();
+        panelFiliereModif.add(textFieldFiliereModif);
+        textFieldFiliereModif.setColumns(10);
+
+        JPanel panelEmailModif = new JPanel();
+        frameModif.getContentPane().add(panelEmailModif);
+
+        JLabel lblEmailModif = new JLabel("Email:");
+        panelEmailModif.add(lblEmailModif);
+
+        textFieldEmailModif = new JTextField();
+        panelEmailModif.add(textFieldEmailModif);
+        textFieldEmailModif.setColumns(10);
+
+        JPanel panelMdpModif = new JPanel();
+        frameModif.getContentPane().add(panelMdpModif);
+
+        JLabel lblMdpModif = new JLabel("Mot de passe:");
+        panelMdpModif.add(lblMdpModif);
+
+        textFieldMdpModif = new JTextField();
+        panelMdpModif.add(textFieldMdpModif);
+        textFieldMdpModif.setColumns(10);
+
+        frameSuppr = new JFrame();
+        frameSuppr.setBounds(100, 100, 450, 300);
+        frameSuppr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameSuppr.getContentPane().setLayout(new BoxLayout(frameSuppr.getContentPane(), BoxLayout.Y_AXIS));
+        
+        JPanel panelSuppr = new JPanel();
+        frameSuppr.getContentPane().add(panelSuppr);
+        
+        JLabel lblSuppr = new JLabel("Id:");
+        panelSuppr.add(lblSuppr);
+        
+        textFieldId2 = new JTextField();
+        panelSuppr.add(textFieldId2);
+        textFieldId2.setColumns(10);
+        
 
         JPanel panelBoutons = new JPanel();
         frame.getContentPane().add(panelBoutons);
@@ -135,7 +226,6 @@ public class GestionnaireGUI {
         btnAjouter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Récupérer les données saisies par l'utilisateur
-                int id = Integer.parseInt(textFieldId.getText());
                 int groupe = Integer.parseInt(textFieldGroupe.getText());
                 String nom = textFieldNom.getText();
                 String prenom = textFieldPrenom.getText();
@@ -144,7 +234,7 @@ public class GestionnaireGUI {
                 String mdp = textFieldMdp.getText();
                 
                 // Créer un objet Etudiant avec les données récupérées
-                Etudiant etudiant = new Etudiant(id, groupe, nom, prenom, filiere, email, mdp);
+                Etudiant etudiant = new Etudiant(groupe, nom, prenom, filiere, email, mdp);
                 
                 // Appeler la méthode d'ajout d'un étudiant dans la base de données
                 EtudiantDAO etudiantDAO = new EtudiantDAO();
@@ -153,26 +243,47 @@ public class GestionnaireGUI {
         });
         panelBoutons.add(btnAjouter);
         
-
-        JButton btnSupprimer = new JButton("Supprimer");
-        btnSupprimer.addActionListener(new ActionListener() {
+        JPanel panelBoutonSuppr = new JPanel();
+        frameSuppr.getContentPane().add(panelBoutonSuppr);
+        JButton btnSupprimer1 = new JButton("Supprimer");
+        btnSupprimer1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	frameSuppr.setVisible(true);
+            }
+        });
+        panelBoutons.add(btnSupprimer1);
+       
+        
+        JButton btnSupprimer2 = new JButton("Supprimer");
+        btnSupprimer2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Récupérer l'identifiant de l'étudiant à supprimer
-                int id = Integer.parseInt(textFieldId.getText());
+                int id = Integer.parseInt(textFieldId2.getText());
                 
                 // Appeler la méthode de suppression d'un étudiant de la base de données
                 EtudiantDAO etudiantDAO = new EtudiantDAO();
                 etudiantDAO.delete(id);
             }
         });
-        panelBoutons.add(btnSupprimer);
+        panelBoutonSuppr.add(btnSupprimer2);
         
         
-        JButton btnModifier = new JButton("Modifier");
-        btnModifier.addActionListener(new ActionListener() {
+        JButton btnModifier1 = new JButton("Modifier");
+        btnModifier1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	frameModif.setVisible(true);
+            }
+        });
+        panelBoutons.add(btnModifier1);
+        
+        
+        JPanel panelBoutonModif = new JPanel();
+        frameModif.getContentPane().add(panelBoutonModif);
+        JButton btnModifier2 = new JButton("Modifier");
+        btnModifier2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Récupérer les données saisies par l'utilisateur
-                int id = Integer.parseInt(textFieldId.getText());
+            	int id = Integer.parseInt(textFieldId1.getText());
                 int groupe = Integer.parseInt(textFieldGroupe.getText());
                 String nom = textFieldNom.getText();
                 String prenom = textFieldPrenom.getText();
@@ -188,9 +299,7 @@ public class GestionnaireGUI {
                 etudiantDAO.update(etudiant);
             }
         });
-        panelBoutons.add(btnModifier);
+        panelBoutonModif.add(btnModifier2);
     }
 }
-
-
        

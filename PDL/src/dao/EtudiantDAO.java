@@ -39,7 +39,7 @@ public class EtudiantDAO extends ConnectionDAO {
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
 			ps = con.prepareStatement("INSERT INTO etudiant(idetud,idgroupe, nomEtudiant, prenomEtudiant, filiere, email, motdepasse) VALUES( ?, ?, ?, ?, ?, ?, ?)");
-			ps.setInt(1, etudiant.getId());
+			ps.setInt(1, getList().get(getList().size()-1).getId()+1);
 			ps.setInt(2, etudiant.getGroupe());
 			ps.setString(3, etudiant.getName());
 			ps.setString(4, etudiant.getFirstName());
