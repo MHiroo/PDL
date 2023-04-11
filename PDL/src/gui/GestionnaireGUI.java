@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.EventQueue;
+import javax.swing.*;
 
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
@@ -35,6 +36,7 @@ public class GestionnaireGUI {
     private JTextField textFieldFiliere;
     private JTextField textFieldEmail;
     private JTextField textFieldMdp;
+    private JComboBox groupeBox;
 
     /**
      * Launch the application.
@@ -68,15 +70,18 @@ public class GestionnaireGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         
+        
         JPanel panelGroupe = new JPanel();
         frame.getContentPane().add(panelGroupe);
         
         JLabel lblGroupe = new JLabel("Groupe:");
         panelGroupe.add(lblGroupe);
 
-        textFieldGroupe = new JTextField();
-        panelGroupe.add(textFieldGroupe);
-        textFieldGroupe.setColumns(10);
+        groupeBox = new JComboBox();
+        groupeBox.addItem(1);
+        groupeBox.addItem(2);
+        groupeBox.addItem(3);
+        panelGroupe.add(groupeBox);
 
         JPanel panelNom = new JPanel();
         frame.getContentPane().add(panelNom);
@@ -226,7 +231,7 @@ public class GestionnaireGUI {
         btnAjouter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Récupérer les données saisies par l'utilisateur
-                int groupe = Integer.parseInt(textFieldGroupe.getText());
+                int groupe = (int)groupeBox.getSelectedItem();
                 String nom = textFieldNom.getText();
                 String prenom = textFieldPrenom.getText();
                 String filiere = textFieldFiliere.getText();
