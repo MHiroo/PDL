@@ -11,10 +11,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import dao.EtudiantDAO;
+import dao.GroupeDAO;
 import model.Etudiant;
+import model.Groupe_Etudiant;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class GestionnaireGUI {
@@ -76,11 +79,15 @@ public class GestionnaireGUI {
         
         JLabel lblGroupe = new JLabel("Groupe:");
         panelGroupe.add(lblGroupe);
-
+        
+        GroupeDAO groupeDAO = new GroupeDAO();
+ 
+        
         groupeBox = new JComboBox();
-        groupeBox.addItem(1);
-        groupeBox.addItem(2);
-        groupeBox.addItem(3);
+        for (int i = 0; i < groupeDAO.getList().size(); i++) {
+        groupeBox.addItem(groupeDAO.getList().get(i).getId());
+        }
+        
         panelGroupe.add(groupeBox);
 
         JPanel panelNom = new JPanel();

@@ -29,6 +29,14 @@ public class Groupe_Etudiant {
 		this.idGrpEtudiant=idGrpEtudiant;
 		this.num=num;
 		this.capaciteMax=capaciteMax;
+		
+	/**
+	* getter pour l'attribut idGroupe
+	* @return id du groupe
+	*/
+	}
+	public int getId() {
+		return idGrpEtudiant;
 	}
 	
 	/**
