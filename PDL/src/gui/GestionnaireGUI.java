@@ -22,6 +22,15 @@ import java.awt.event.ActionEvent;
 
 public class GestionnaireGUI {
 
+	private JFrame UC2frame;
+	private JFrame UC3frame;
+	private JFrame UC4frame;
+	private JFrame UC5frame;
+	private JFrame UC6frame;
+	private JFrame UC7frame;
+	private JFrame UC8frame;
+	private JFrame UC9frame;
+	private JFrame pframe;
     private JFrame frame;
     private JFrame frameModif;
     private JFrame frameSuppr;
@@ -49,7 +58,7 @@ public class GestionnaireGUI {
             public void run() {
                 try {
                     GestionnaireGUI window = new GestionnaireGUI();
-                    window.frame.setVisible(true);
+                    window.pframe.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -68,6 +77,96 @@ public class GestionnaireGUI {
      * Initialize the contents of the frame.
      */
     private void initialize() {
+    	/**
+    	 * Création de la fenêtre principale
+    	 */
+    	pframe = new JFrame();
+    	pframe.setBounds(100, 100, 450, 300);
+        pframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pframe.getContentPane().setLayout(new BoxLayout(pframe.getContentPane(), BoxLayout.Y_AXIS));
+    	
+        /**
+         * Création du panel comportant les UC part 1
+         */
+    	JPanel panelUC1 = new JPanel();
+    	pframe.getContentPane().add(panelUC1);
+    	
+    	/**
+         * Création du panel comportant les UC part 2
+         */
+    	JPanel panelUC2 = new JPanel();
+    	pframe.getContentPane().add(panelUC2);
+    	
+    	/**
+         * Création du panel comportant les UC part 3
+         */
+    	JPanel panelUC3 = new JPanel();
+    	pframe.getContentPane().add(panelUC3);   	
+    	
+    	/**
+    	 * Création de la fenêtre UC2
+    	 */
+    	UC2frame = new JFrame();
+    	UC2frame.setBounds(100, 100, 450, 300);
+        UC2frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC2frame.getContentPane().setLayout(new BoxLayout(UC2frame.getContentPane(), BoxLayout.Y_AXIS));
+        
+    	/**
+    	 * Création de la fenêtre UC3
+    	 */
+    	UC3frame = new JFrame();
+    	UC3frame.setBounds(100, 100, 450, 300);
+        UC3frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC3frame.getContentPane().setLayout(new BoxLayout(UC3frame.getContentPane(), BoxLayout.Y_AXIS));
+        
+    	/**
+    	 * Création de la fenêtre UC4
+    	 */
+    	UC4frame = new JFrame();
+    	UC4frame.setBounds(100, 100, 450, 300);
+        UC4frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC4frame.getContentPane().setLayout(new BoxLayout(UC4frame.getContentPane(), BoxLayout.Y_AXIS));
+        
+    	/**
+    	 * Création de la fenêtre UC5
+    	 */
+    	UC5frame = new JFrame();
+    	UC5frame.setBounds(100, 100, 450, 300);
+        UC5frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC5frame.getContentPane().setLayout(new BoxLayout(UC5frame.getContentPane(), BoxLayout.Y_AXIS));
+        
+    	/**
+    	 * Création de la fenêtre UC6
+    	 */
+    	UC6frame = new JFrame();
+    	UC6frame.setBounds(100, 100, 450, 300);
+        UC6frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC6frame.getContentPane().setLayout(new BoxLayout(UC6frame.getContentPane(), BoxLayout.Y_AXIS));
+        
+    	/**
+    	 * Création de la fenêtre UC7
+    	 */
+    	UC7frame = new JFrame();
+    	UC7frame.setBounds(100, 100, 450, 300);
+        UC7frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC7frame.getContentPane().setLayout(new BoxLayout(UC7frame.getContentPane(), BoxLayout.Y_AXIS));
+        
+    	/**
+    	 * Création de la fenêtre UC8
+    	 */
+    	UC8frame = new JFrame();
+    	UC8frame.setBounds(100, 100, 450, 300);
+        UC8frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC8frame.getContentPane().setLayout(new BoxLayout(UC8frame.getContentPane(), BoxLayout.Y_AXIS));
+        
+    	/**
+    	 * Création de la fenêtre UC9
+    	 */
+    	UC9frame = new JFrame();
+    	UC9frame.setBounds(100, 100, 450, 300);
+        UC9frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC9frame.getContentPane().setLayout(new BoxLayout(UC9frame.getContentPane(), BoxLayout.Y_AXIS));
+    	
     	/**
     	 * Création de la fenetre pour le UC Créer/modifier un étudiant
     	 */
@@ -373,6 +472,105 @@ public class GestionnaireGUI {
             }
         });
         panelBoutonModif.add(btnModifier2);
+        
+        /**
+         * Création du bouton du UC créer modifier etudiant
+         */
+        JButton btnUC1 = new JButton("Créer/Modifier un étudiant");
+        btnUC1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	frame.setVisible(true);
+            }
+        });
+        panelUC1.add(btnUC1);
+        
+        /**
+         * Création du bouton du UC 2
+         */
+        JButton btnUC2 = new JButton("UC2");
+        btnUC2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	UC2frame.setVisible(true);
+            }
+        });
+        panelUC1.add(btnUC2);
+        
+        /**
+         * Création du bouton du UC 3
+         */
+        JButton btnUC3 = new JButton("UC3");
+        btnUC3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	UC3frame.setVisible(true);
+            }
+        });
+        panelUC1.add(btnUC3);
+        
+        /**
+         * Création du bouton du UC 4
+         */
+        JButton btnUC4 = new JButton("UC4");
+        btnUC4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	UC4frame.setVisible(true);
+            }
+        });
+        panelUC2.add(btnUC4);
+        
+        /**
+         * Création du bouton du UC 5
+         */
+        JButton btnUC5 = new JButton("UC5");
+        btnUC5.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	UC5frame.setVisible(true);
+            }
+        });
+        panelUC2.add(btnUC5);
+        
+        /**
+         * Création du bouton du UC 6
+         */
+        JButton btnUC6 = new JButton("UC6");
+        btnUC6.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	UC6frame.setVisible(true);
+            }
+        });
+        panelUC2.add(btnUC6);
+        
+        /**
+         * Création du bouton du UC 7
+         */
+        JButton btnUC7 = new JButton("UC7");
+        btnUC7.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	UC7frame.setVisible(true);
+            }
+        });
+        panelUC3.add(btnUC7);
+        
+        /**
+         * Création du bouton du UC 8
+         */
+        JButton btnUC8 = new JButton("UC8");
+        btnUC8.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	UC8frame.setVisible(true);
+            }
+        });
+        panelUC3.add(btnUC8);
+        
+        /**
+         * Création du bouton du UC 9
+         */
+        JButton btnUC9 = new JButton("UC9");
+        btnUC9.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	UC9frame.setVisible(true);
+            }
+        });
+        panelUC3.add(btnUC9);
     }
 }
        
