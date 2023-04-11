@@ -68,28 +68,34 @@ public class GestionnaireGUI {
      * Initialize the contents of the frame.
      */
     private void initialize() {
+    	/**
+    	 * Création de la fenetre pour le UC Créer/modifier un étudiant
+    	 */
         frame = new JFrame();
         frame.setBounds(100, 100, 450, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         
-        
+        /**
+         * Création du panel comportant la sélection du groupe pour ajouter un étudiant
+         */
         JPanel panelGroupe = new JPanel();
         frame.getContentPane().add(panelGroupe);
         
         JLabel lblGroupe = new JLabel("Groupe:");
         panelGroupe.add(lblGroupe);
         
-        GroupeDAO groupeDAO = new GroupeDAO();
- 
-        
+        //On récupère l'id des groupes créer das la BDD pour les afficher ds le menu déroulant
+        GroupeDAO groupeDAO = new GroupeDAO();  
         groupeBox = new JComboBox();
         for (int i = 0; i < groupeDAO.getList().size(); i++) {
         groupeBox.addItem(groupeDAO.getList().get(i).getId());
         }
-        
         panelGroupe.add(groupeBox);
 
+        /**
+         * Création du panel comportant la sélection du nom pour ajouter un étudiant
+         */
         JPanel panelNom = new JPanel();
         frame.getContentPane().add(panelNom);
 
@@ -100,6 +106,9 @@ public class GestionnaireGUI {
         panelNom.add(textFieldNom);
         textFieldNom.setColumns(10);
 
+        /**
+         * Création du panel comportant la sélection du prénom pour ajouter un étudiant
+         */
         JPanel panelPrenom = new JPanel();
         frame.getContentPane().add(panelPrenom);
 
@@ -110,6 +119,9 @@ public class GestionnaireGUI {
         panelPrenom.add(textFieldPrenom);
         textFieldPrenom.setColumns(10);
 
+        /**
+         * Création du panel comportant la sélection de la filière pour ajouter un étudiant
+         */
         JPanel panelFiliere = new JPanel();
         frame.getContentPane().add(panelFiliere);
 
@@ -120,6 +132,9 @@ public class GestionnaireGUI {
         panelFiliere.add(textFieldFiliere);
         textFieldFiliere.setColumns(10);
 
+		/**
+		 * Création du panel comportant la sélection du mail pour ajouter un étudiant
+		 */
         JPanel panelEmail = new JPanel();
         frame.getContentPane().add(panelEmail);
 
@@ -130,6 +145,9 @@ public class GestionnaireGUI {
         panelEmail.add(textFieldEmail);
         textFieldEmail.setColumns(10);
         
+        /**
+         * Création du panel comportant la sélection du mdp pour ajouter un étudiant
+         */
         JPanel panelMdp = new JPanel();
         frame.getContentPane().add(panelMdp);
 
@@ -140,12 +158,17 @@ public class GestionnaireGUI {
         panelMdp.add(textFieldMdp);
         textFieldMdp.setColumns(10);
         
-        
+        /**
+         * Création de la fenêtre de modif d'un étudiant
+         */
         frameModif = new JFrame();
         frameModif.setBounds(100, 100, 450, 300);
         frameModif.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameModif.getContentPane().setLayout(new BoxLayout(frameModif.getContentPane(), BoxLayout.Y_AXIS));
         
+        /**
+         * Création du panel comportant la sélection de l'id pour modifier un étudiant
+         */
         JPanel panelModif = new JPanel();
         frameModif.getContentPane().add(panelModif);
         
@@ -156,6 +179,9 @@ public class GestionnaireGUI {
         panelModif.add(textFieldId1);
         textFieldId1.setColumns(10);
         
+        /**
+         * Création du panel comportant la sélection du groupe pour modifier un étudiant
+         */
         JPanel panelGroupeModif = new JPanel();
         frameModif.getContentPane().add(panelGroupeModif);
         
@@ -166,6 +192,9 @@ public class GestionnaireGUI {
         panelGroupeModif.add(textFieldGroupeModif);
         textFieldGroupeModif.setColumns(10);
 
+		/**
+		 * Création du panel comportant la sélection du nom pour modifier un étudiant
+		 */
         JPanel panelNomModif = new JPanel();
         frameModif.getContentPane().add(panelNomModif);
 
@@ -176,6 +205,9 @@ public class GestionnaireGUI {
         panelNomModif.add(textFieldNomModif);
         textFieldNomModif.setColumns(10);
 
+        /**
+         * Création du panel comportant la sélection du prénom pour modifier un étudiant
+         */
         JPanel panelPrenomModif = new JPanel();
         frameModif.getContentPane().add(panelPrenomModif);
 
@@ -186,6 +218,9 @@ public class GestionnaireGUI {
         panelPrenomModif.add(textFieldPrenomModif);
         textFieldPrenomModif.setColumns(10);
 
+        /**
+         * Création du panel comportant la sélection de la filière pour modifier un étudiant
+         */
         JPanel panelFiliereModif = new JPanel();
         frameModif.getContentPane().add(panelFiliereModif);
 
@@ -196,6 +231,9 @@ public class GestionnaireGUI {
         panelFiliereModif.add(textFieldFiliereModif);
         textFieldFiliereModif.setColumns(10);
 
+        /**
+         * Création du panel comportant la sélection du mail pour modifier un étudiant
+         */
         JPanel panelEmailModif = new JPanel();
         frameModif.getContentPane().add(panelEmailModif);
 
@@ -206,6 +244,9 @@ public class GestionnaireGUI {
         panelEmailModif.add(textFieldEmailModif);
         textFieldEmailModif.setColumns(10);
 
+        /**
+         * Création du panel comportant la sélection du mdp pour modifier un étudiant
+         */
         JPanel panelMdpModif = new JPanel();
         frameModif.getContentPane().add(panelMdpModif);
 
@@ -216,11 +257,17 @@ public class GestionnaireGUI {
         panelMdpModif.add(textFieldMdpModif);
         textFieldMdpModif.setColumns(10);
 
+        /**
+         * Création de la fenêtre de suppression d'un étudiant
+         */
         frameSuppr = new JFrame();
         frameSuppr.setBounds(100, 100, 450, 300);
         frameSuppr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameSuppr.getContentPane().setLayout(new BoxLayout(frameSuppr.getContentPane(), BoxLayout.Y_AXIS));
         
+        /**
+         * Création du panel comportant la sélection de l'id pour supprimer un étudiant
+         */
         JPanel panelSuppr = new JPanel();
         frameSuppr.getContentPane().add(panelSuppr);
         
@@ -231,9 +278,14 @@ public class GestionnaireGUI {
         panelSuppr.add(textFieldId2);
         textFieldId2.setColumns(10);
         
-
+        /**
+         * Création du panel qui comportera tous les boutons de la fenêtre UC créer/modifier un étudiant
+         */
         JPanel panelBoutons = new JPanel();
         frame.getContentPane().add(panelBoutons);
+        /**
+         * Création du bouton qui permet d'ajouter un étudiant dans la BDD
+         */
         JButton btnAjouter = new JButton("Ajouter");
         btnAjouter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -255,6 +307,9 @@ public class GestionnaireGUI {
         });
         panelBoutons.add(btnAjouter);
         
+        /**
+         * Création du bouton qui permet d'ouvrir la fenêtre de suppression d'un étudiant
+         */
         JPanel panelBoutonSuppr = new JPanel();
         frameSuppr.getContentPane().add(panelBoutonSuppr);
         JButton btnSupprimer1 = new JButton("Supprimer");
@@ -265,7 +320,9 @@ public class GestionnaireGUI {
         });
         panelBoutons.add(btnSupprimer1);
        
-        
+        /**
+         * création du bouton qui permet de supprimer un étudiant dans la BDD
+         */
         JButton btnSupprimer2 = new JButton("Supprimer");
         btnSupprimer2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -279,7 +336,9 @@ public class GestionnaireGUI {
         });
         panelBoutonSuppr.add(btnSupprimer2);
         
-        
+        /**
+         * Création du bouton qui permet d'ouvrir la fenêtre de modification d'un étudiant
+         */
         JButton btnModifier1 = new JButton("Modifier");
         btnModifier1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -288,7 +347,9 @@ public class GestionnaireGUI {
         });
         panelBoutons.add(btnModifier1);
         
-        
+        /**
+         * Création du bouton qui permet de modifier un étudiant dans la BDD
+         */
         JPanel panelBoutonModif = new JPanel();
         frameModif.getContentPane().add(panelBoutonModif);
         JButton btnModifier2 = new JButton("Modifier");
