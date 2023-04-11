@@ -93,7 +93,9 @@ public class SignInGUI {
                 // Appeler la méthode d'authentification d'un étudiant dans la base de données
                 EtudiantDAO etudiantDAO = new EtudiantDAO();
                 etudiant = etudiantDAO.signIn(email,mdp);
-                System.out.println(etudiant.getId());
+                
+                EtudiantGUI etudiantGUI = new EtudiantGUI();
+                etudiantGUI.setVisible(true);
      
             }
             
