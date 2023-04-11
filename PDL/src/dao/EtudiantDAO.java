@@ -284,7 +284,67 @@ public class EtudiantDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
+	/**
+	 * Permet d'authentifier un etudiant par son email et son mot de passe dans la table etudiant.
+	 * Le mode est auto-commit par defaut : chaque suppression est validee
+	 * 
+	 * @param email l'email de l'etudiant 
+	 * @param mdp mot de passe de l'etudiant 
+	 * @return retourne l'étudiant qui se connecte
+	 */
+	public Etudiant signIn(String email, String mdp) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Etudiant returnValue = null;
 
+		// connexion a la base de donnees
+		try {
+
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT * FROM etudiant WHERE email like ? and motdepasse like ?");
+			ps.setString(1, email);
+			ps.setString(2, mdp);
+
+			// on execute la requete
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			if (rs.next()) {
+				returnValue = new Etudiant(rs.getInt("idetud"),
+										   rs.getInt("idgroupe"),
+									       rs.getString("nomEtudiant"),
+									       rs.getString("prenomEtudiant"),
+									       rs.getString("filiere"),
+									       rs.getString("email"),
+										   rs.getString("motdepasse"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	
 	/**
 	 * ATTENTION : Cette méthode n'a pas vocation à être executée lors d'une utilisation normale du programme !
 	 * Elle existe uniquement pour TESTER les méthodes écrites au-dessus !
