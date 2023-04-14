@@ -49,6 +49,7 @@ public class GestionnaireGUI {
     private JTextField textFieldEmail;
     private JTextField textFieldMdp;
     private JComboBox groupeBox;
+    private JComboBox idBox;
 
     /**
      * Launch the application.
@@ -274,10 +275,14 @@ public class GestionnaireGUI {
         JLabel lblModif = new JLabel("Id:");
         panelModif.add(lblModif);
         
-        textFieldId1 = new JTextField();
-        panelModif.add(textFieldId1);
-        textFieldId1.setColumns(10);
-        
+      //On récupère l'id des étudiants crées dans la BDD pour les afficher ds le menu déroulant 
+        EtudiantDAO etudiantDAO = new EtudiantDAO();
+        idBox = new JComboBox();
+        for (int i = 0; i < etudiantDAO.getList().size(); i++) {
+        idBox.addItem(etudiantDAO.getList().get(i).getId());
+        }
+        panelModif.add(idBox);
+
         /**
          * Création du panel comportant la sélection du groupe pour modifier un étudiant
          */
