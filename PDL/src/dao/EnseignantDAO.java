@@ -285,6 +285,65 @@ public class EnseignantDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
+	/**
+	 * Permet d'authentifier un enseignant par son email et son mot de passe dans la table enseignant.
+	 * Le mode est auto-commit par defaut : chaque suppression est validee
+	 * 
+	 * @param email l'email de l'enseignant 
+	 * @param mdp mot de passe de l'enseignant 
+	 * @return retourne l'étudiant qui se connecte
+	 */
+	public Enseignant signIn(String email, String mdp) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Enseignant returnValue = null;
+
+		// connexion a la base de donnees
+		try {
+
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT * FROM enseignant WHERE email like ? and motdepasse like ?");
+			ps.setString(1, email);
+			ps.setString(2, mdp);
+
+			// on execute la requete
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			if (rs.next()) {
+				returnValue = new Enseignant(rs.getInt("idEnseignant"),
+						   rs.getString("nomEnseignant"),
+					       rs.getString("prenomEnseignant"),
+					       rs.getString("tel"),
+					       rs.getString("email"),
+						   rs.getString("motdepasse"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
 
 	
 	

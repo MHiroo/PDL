@@ -9,14 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import dao.EtudiantDAO;
-import model.Etudiant;
+import dao.EnseignantDAO;
+import model.Enseignant;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class SignInEtudiantGUI {
+public class SignInEnseignantGUI {
 
      JFrame frame;
     private JTextField textFieldId;
@@ -31,7 +31,7 @@ public class SignInEtudiantGUI {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                	SignInEtudiantGUI window = new SignInEtudiantGUI();
+                	SignInEnseignantGUI window = new SignInEnseignantGUI();
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -43,7 +43,7 @@ public class SignInEtudiantGUI {
     /**
      * Create the application.
      */
-    public SignInEtudiantGUI() {
+    public SignInEnseignantGUI() {
         initialize();
     }
 
@@ -87,14 +87,14 @@ public class SignInEtudiantGUI {
                 String email = textFieldEmail.getText();
                 String mdp = textFieldMdp.getText();
                 
-                // Créer un objet Etudiant avec les données récupérées
-                Etudiant etudiant = new Etudiant( 0,  0,  "",  "",  "", "", "");
+                // Créer un objet Enseignant avec les données récupérées
+                Enseignant enseignant = new Enseignant( 0, "",  "",  "", "", "");
                 
                 // Appeler la méthode d'authentification d'un étudiant dans la base de données
-                EtudiantDAO etudiantDAO = new EtudiantDAO();
-                etudiant = etudiantDAO.signIn(email,mdp);
+                EnseignantDAO enseignantDAO = new EnseignantDAO();
+                enseignant = enseignantDAO.signIn(email,mdp);
                 
-                EtudiantGUI window = new EtudiantGUI();
+                EnseignantGUI window = new EnseignantGUI();
                 frame = new JFrame();
                 window.frame.setVisible(true);
      

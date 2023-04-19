@@ -9,14 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import dao.EtudiantDAO;
-import model.Etudiant;
+import dao.GestionnaireDAO;
+import model.Personne;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class SignInEtudiantGUI {
+public class SignInGestionnaireGUI {
 
      JFrame frame;
     private JTextField textFieldId;
@@ -31,7 +31,7 @@ public class SignInEtudiantGUI {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                	SignInEtudiantGUI window = new SignInEtudiantGUI();
+                	SignInGestionnaireGUI window = new SignInGestionnaireGUI();
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -43,7 +43,7 @@ public class SignInEtudiantGUI {
     /**
      * Create the application.
      */
-    public SignInEtudiantGUI() {
+    public SignInGestionnaireGUI() {
         initialize();
     }
 
@@ -87,14 +87,14 @@ public class SignInEtudiantGUI {
                 String email = textFieldEmail.getText();
                 String mdp = textFieldMdp.getText();
                 
-                // Créer un objet Etudiant avec les données récupérées
-                Etudiant etudiant = new Etudiant( 0,  0,  "",  "",  "", "", "");
+                // Créer un objet gestionnaire avec les données récupérées
+                Personne gestionnaire = new Personne( 0,  "",  "",  "", "", "");
                 
-                // Appeler la méthode d'authentification d'un étudiant dans la base de données
-                EtudiantDAO etudiantDAO = new EtudiantDAO();
-                etudiant = etudiantDAO.signIn(email,mdp);
+                // Appeler la méthode d'authentification d'un gestionnaire dans la base de données
+                GestionnaireDAO gestionnaireDAO = new GestionnaireDAO();
+                gestionnaire = gestionnaireDAO.signIn(email,mdp);
                 
-                EtudiantGUI window = new EtudiantGUI();
+                GestionnaireGUI window = new GestionnaireGUI();
                 frame = new JFrame();
                 window.frame.setVisible(true);
      
@@ -103,19 +103,20 @@ public class SignInEtudiantGUI {
         });
         panelBoutons.add(btnConnecter);
         
-	//Ajout bouton retour
-	        
-	        JPanel panelBoutonRetour = new JPanel();
-	        JButton retourBtn = new JButton("Retour");
-	        retourBtn.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent event) {
-	                frame.dispose(); // ferme la fenêtre actuelle
-	                new UserGUI(); // affiche la fenêtre précédente
-	            }
-	        });
-	        panelBoutonRetour.add(retourBtn);
-	        frame.getContentPane().add(panelBoutonRetour);
         
+        
+        //Ajout bouton retour
+        
+        JPanel panelBoutonRetour = new JPanel();
+        JButton retourBtn = new JButton("Retour");
+        retourBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                frame.dispose(); // ferme la fenêtre actuelle
+                new UserGUI(); // affiche la fenêtre précédente
+            }
+        });
+        panelBoutonRetour.add(retourBtn);
+        frame.getContentPane().add(panelBoutonRetour);
 
     }
    

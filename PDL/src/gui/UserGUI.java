@@ -77,11 +77,7 @@ public class UserGUI {
         btnGestionnaire.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 
-                // Créer un objet Etudiant avec les données récupérées
-            	Personne gestionnaire = new Personne( 0,  "",  "",  "", "", "");
-                
-                
-            	GestionnaireGUI window = new GestionnaireGUI();
+            	SignInGestionnaireGUI window = new SignInGestionnaireGUI();
                 frame = new JFrame();
                 window.frame.setVisible(true);
      
@@ -97,11 +93,7 @@ public class UserGUI {
         btnEnseignant.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 
-                // Créer un objet Etudiant avec les données récupérées
-            	Enseignant enseignant = new Enseignant( 0,  "",  "",  "", "", "");
-                
-                
-            	EnseignantGUI window = new EnseignantGUI();
+            	SignInEnseignantGUI window = new SignInEnseignantGUI();
                 frame = new JFrame();
                 window.frame.setVisible(true);
      
@@ -116,7 +108,7 @@ public class UserGUI {
         btnEtudiant.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                                 
-                SignInGUI window = new SignInGUI();
+                SignInEtudiantGUI window = new SignInEtudiantGUI();
                 frame = new JFrame();
                 window.frame.setVisible(true);
      
@@ -130,11 +122,7 @@ public class UserGUI {
         btnAdmin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 
-                // Créer un objet Etudiant avec les données récupérées
-                Personne admin = new Personne( 0,  "",  "",  "", "", "");
-                
-                
-                AdminGUI window = new AdminGUI();
+            	SignInAdminGUI window = new SignInAdminGUI();
                 frame = new JFrame();
                 window.frame.setVisible(true);
      

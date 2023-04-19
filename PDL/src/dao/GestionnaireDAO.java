@@ -285,7 +285,64 @@ public class GestionnaireDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
+	/**
+	 * Permet d'authentifier un gestionnaire par son email et son mot de passe dans la table gestionnaire.
+	 * Le mode est auto-commit par defaut : chaque suppression est validee
+	 * 
+	 * @param email l'email de l'gestionnaire 
+	 * @param mdp mot de passe de l'gestionnaire 
+	 * @return retourne l'étudiant qui se connecte
+	 */
+	public Personne signIn(String email, String mdp) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Personne returnValue = null;
 
+		// connexion a la base de donnees
+		try {
+
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT * FROM gestionnaire WHERE email like ? and motdepasse like ?");
+			ps.setString(1, email);
+			ps.setString(2, mdp);
+
+			// on execute la requete
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			if (rs.next()) {
+				returnValue = new Personne(rs.getInt("idgst"),
+									       rs.getString("nomGst"),
+									       rs.getString("prenomGst"),
+									       rs.getString("email"),
+										   rs.getString("motdepasse"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
 	
 	
 }

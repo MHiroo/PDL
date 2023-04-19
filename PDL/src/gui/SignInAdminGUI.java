@@ -9,14 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import dao.EtudiantDAO;
-import model.Etudiant;
+import dao.AdminDAO;
+import model.Personne;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class SignInEtudiantGUI {
+public class SignInAdminGUI {
 
      JFrame frame;
     private JTextField textFieldId;
@@ -31,7 +31,7 @@ public class SignInEtudiantGUI {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                	SignInEtudiantGUI window = new SignInEtudiantGUI();
+                	SignInAdminGUI window = new SignInAdminGUI();
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -43,7 +43,7 @@ public class SignInEtudiantGUI {
     /**
      * Create the application.
      */
-    public SignInEtudiantGUI() {
+    public SignInAdminGUI() {
         initialize();
     }
 
@@ -87,14 +87,14 @@ public class SignInEtudiantGUI {
                 String email = textFieldEmail.getText();
                 String mdp = textFieldMdp.getText();
                 
-                // Créer un objet Etudiant avec les données récupérées
-                Etudiant etudiant = new Etudiant( 0,  0,  "",  "",  "", "", "");
+                // Créer un objet Administratif avec les données récupérées
+                Personne admin = new Personne( 0, "",  "",  "", "", "");
                 
-                // Appeler la méthode d'authentification d'un étudiant dans la base de données
-                EtudiantDAO etudiantDAO = new EtudiantDAO();
-                etudiant = etudiantDAO.signIn(email,mdp);
+                // Appeler la méthode d'authentification d'un administratif dans la base de données
+                AdminDAO adminDAO = new AdminDAO();
+                admin = adminDAO.signIn(email,mdp);
                 
-                EtudiantGUI window = new EtudiantGUI();
+                AdminGUI window = new AdminGUI();
                 frame = new JFrame();
                 window.frame.setVisible(true);
      
@@ -115,7 +115,6 @@ public class SignInEtudiantGUI {
 	        });
 	        panelBoutonRetour.add(retourBtn);
 	        frame.getContentPane().add(panelBoutonRetour);
-        
 
     }
    
