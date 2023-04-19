@@ -18,7 +18,7 @@ import java.awt.event.ActionEvent;
 
 public class EtudiantGUI {
 
-    private JFrame frame;
+    JFrame frame;
     private JFrame frameListeCours;
     private JFrame framePlanning;
     private JFrame frameListeAbsences;

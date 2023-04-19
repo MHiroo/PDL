@@ -18,7 +18,7 @@ import java.awt.event.ActionEvent;
 
 public class SignInGUI {
 
-    private JFrame frame;
+     JFrame frame;
     private JTextField textFieldId;
     private JTextField textFieldEmail;
     private JTextField textFieldMdp;
@@ -94,8 +94,9 @@ public class SignInGUI {
                 EtudiantDAO etudiantDAO = new EtudiantDAO();
                 etudiant = etudiantDAO.signIn(email,mdp);
                 
-                EtudiantGUI etudiantGUI = new EtudiantGUI();
-                etudiantGUI.setVisible(true);
+                EtudiantGUI window = new EtudiantGUI();
+                frame = new JFrame();
+                window.frame.setVisible(true);
      
             }
             
