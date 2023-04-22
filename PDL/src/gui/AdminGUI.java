@@ -20,7 +20,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
-public class GestionnaireGUI {
+public class AdminGUI {
 
 	private JFrame UC2frame;
 	private JFrame UC3frame;
@@ -58,7 +58,7 @@ public class GestionnaireGUI {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    GestionnaireGUI window = new GestionnaireGUI();
+                    AdminGUI window = new AdminGUI();
                     window.pframe.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -70,7 +70,7 @@ public class GestionnaireGUI {
     /**
      * Create the application.
      */
-    public GestionnaireGUI() {
+    public AdminGUI() {
         initialize();
     }
 

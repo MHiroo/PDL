@@ -4,28 +4,28 @@ import java.util.ArrayList;
 import model.*;
 
 /**
- * Classe d'acces aux donnees contenues dans la table etudiant
+ * Classe d'acces aux donnees contenues dans la table groupe
  * 
  * @author G9 Jaune canaris
  * @version 1.0
  * */
-public class EtudiantDAO extends ConnectionDAO {
+public class GroupeDAO extends ConnectionDAO {
 	/**
 	 * Constructor
 	 * 
 	 */
-	public EtudiantDAO() {
+	public GroupeDAO() {
 		super();
 	}
 
 	/**
-	 * Permet d'ajouter un etudiant dans la table etudiant.
+	 * Permet d'ajouter un groupe dans la table groupe.
 	 * Le mode est auto-commit par defaut : chaque insertion est validee
 	 * 
-	 * @param etudiant l'etudiant a ajouter
+	 * @param groupe l'etudiant a ajouter
 	 * @return retourne le nombre de lignes ajoutees dans la table
 	 */
-	public int add(Etudiant etudiant) {
+	public int add(Groupe_Etudiant groupe) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -38,21 +38,16 @@ public class EtudiantDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO etudiant(idetud,idgroupe, nomEtudiant, prenomEtudiant, filiere, email, motdepasse) VALUES( ?, ?, ?, ?, ?, ?, ?)");
-			ps.setInt(1, getList().get(getList().size()-1).getId()+1);
-			ps.setInt(2, etudiant.getGroupe());
-			ps.setString(3, etudiant.getName());
-			ps.setString(4, etudiant.getFirstName());
-			ps.setString(5, etudiant.getFiliere());
-			ps.setString(6, etudiant.getEmail());
-			ps.setString(7, etudiant.getMdp());
-
+			ps = con.prepareStatement("INSERT INTO groupeetudiant(idgroupe,capacitemax, num) VALUES( ?, ?, ?)");
+			ps.setInt(1, groupe.getId());
+			ps.setInt(2, groupe.getNum());
+			ps.setInt(3, groupe.getcapaciteMax());
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
 
 		} catch (Exception e) {
 			if (e.getMessage().contains("ORA-00001"))
-				System.out.println("Cet identifiant de etudiant existe déjà. Ajout impossible !");
+				System.out.println("Cet identifiant de groupe existe déjà. Ajout impossible !");
 			else
 				e.printStackTrace();
 		} finally {
@@ -74,13 +69,13 @@ public class EtudiantDAO extends ConnectionDAO {
 	}
 
 	/**
-	 * Permet de modifier un etudiant dans la table etudiant.
+	 * Permet de modifier un groupe dans la table groupe.
 	 * Le mode est auto-commit par defaut : chaque modification est validee
 	 * 
-	 * @param etudiant le etudiant a modifier
+	 * @param groupe le groupe a modifier
 	 * @return retourne le nombre de lignes modifiees dans la table
 	 */
-	public int update(Etudiant etudiant) {
+	public int update(Groupe_Etudiant groupe) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -93,14 +88,10 @@ public class EtudiantDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans la modification.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("UPDATE etudiant SET idgroupe = ?, nomEtudiant = ?, prenomEtudiant = ?, filiere = ?, email = ?, motdepasse = ? WHERE idetud = ?");
-			ps.setInt(1, etudiant.getGroupe());
-			ps.setString(2, etudiant.getName());
-			ps.setString(3, etudiant.getFirstName());
-			ps.setString(4, etudiant.getFiliere());
-			ps.setString(5, etudiant.getEmail());
-			ps.setString(6, etudiant.getMdp());
-			ps.setInt(7, etudiant.getId());	
+			ps = con.prepareStatement("UPDATE groupeetudiant SET idgroupe = ?, num = ?, capacitemax = ? WHERE idgroupe = ?");
+			ps.setInt(1, groupe.getId());
+			ps.setInt(2, groupe.getNum());
+			ps.setInt(3, groupe.getcapaciteMax());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -126,11 +117,11 @@ public class EtudiantDAO extends ConnectionDAO {
 	}
 
 	/**
-	 * Permet de supprimer un etudiant par id dans la table etudiant.
+	 * Permet de supprimer un groupe par id dans la table etudiant.
 	 * Si ce dernier possede des articles, la suppression n'a pas lieu.
 	 * Le mode est auto-commit par defaut : chaque suppression est validee
 	 * 
-	 * @param id l'id du etudiant à supprimer
+	 * @param id l'id du groupe à supprimer
 	 * @return retourne le nombre de lignes supprimees dans la table
 	 */
 	public int delete(int id) {
@@ -146,7 +137,7 @@ public class EtudiantDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, le ? represente la valeur de l'ID
 			// a communiquer dans la suppression.
 			// le getter permet de recuperer la valeur de l'ID du fournisseur
-			ps = con.prepareStatement("DELETE FROM etudiant WHERE idetud = ?");
+			ps = con.prepareStatement("DELETE FROM groupeetudiant WHERE idgroupe = ?");
 			ps.setInt(1, id);
 
 			// Execution de la requete
@@ -176,23 +167,23 @@ public class EtudiantDAO extends ConnectionDAO {
 
 
 	/**
-	 * Permet de recuperer un etudiant a partir de sa reference
+	 * Permet de recuperer un groupe a partir de sa reference
 	 * 
-	 * @param reference la reference du etudiant a recuperer
-	 * @return le etudiant trouve;
-	 * 			null si aucun etudiant ne correspond a cette reference
+	 * @param reference la reference du groupe a recuperer
+	 * @return le groupe trouve;
+	 * 			null si aucun groupe ne correspond a cette reference
 	 */
-	public Etudiant get(int id) {
+	public Groupe_Etudiant get(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Etudiant returnValue = null;
+		Groupe_Etudiant returnValue = null;
 
 		// connexion a la base de donnees
 		try {
 
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM etudiant WHERE idetud = ?");
+			ps = con.prepareStatement("SELECT * FROM groupeetudiant WHERE idgroupe = ?");
 			ps.setInt(1, id);
 
 			// on execute la requete
@@ -200,13 +191,9 @@ public class EtudiantDAO extends ConnectionDAO {
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
-				returnValue = new Etudiant(rs.getInt("idetud"),
-										   rs.getInt("idgroupe"),
-									       rs.getString("nomEtudiant"),
-									       rs.getString("prenomEtudiant"),
-									       rs.getString("filiere"),
-									       rs.getString("email"),
-										   rs.getString("motdepasse"));
+				returnValue = new Groupe_Etudiant(rs.getInt("idgroupe"),
+										   rs.getInt("num"),
+									       rs.getInt("capacitemax"));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -239,28 +226,24 @@ public class EtudiantDAO extends ConnectionDAO {
 	 * 
 	 * @return une ArrayList de etudiant
 	 */
-	public ArrayList<Etudiant> getList() {
+	public ArrayList<Groupe_Etudiant> getList() {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		ArrayList<Etudiant> returnValue = new ArrayList<Etudiant>();
+		ArrayList<Groupe_Etudiant> returnValue = new ArrayList<Groupe_Etudiant>();
 
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM etudiant ORDER BY idetud");
+			ps = con.prepareStatement("SELECT * FROM groupeetudiant ORDER BY idgroupe");
 
 			// on execute la requete
 			rs = ps.executeQuery();
 			// on parcourt les lignes du resultat
 			while (rs.next()) {
-				returnValue.add(new Etudiant(rs.getInt("idetud"),
-						                     rs.getInt("idgroupe"),
-											       rs.getString("nomEtudiant"),
-											       rs.getString("prenomEtudiant"),
-											       rs.getString("filiere"),
-											       rs.getString("email"),
-												   rs.getString("motdepasse")));
+				returnValue.add(new Groupe_Etudiant(rs.getInt("idgroupe"),
+						                     rs.getInt("capacitemax"),
+											       rs.getInt("num")));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -284,67 +267,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
-	/**
-	 * Permet d'authentifier un etudiant par son email et son mot de passe dans la table etudiant.
-	 * Le mode est auto-commit par defaut : chaque suppression est validee
-	 * 
-	 * @param email l'email de l'etudiant 
-	 * @param mdp mot de passe de l'etudiant 
-	 * @return retourne l'étudiant qui se connecte
-	 */
-	public Etudiant signIn(String email, String mdp) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Etudiant returnValue = null;
 
-		// connexion a la base de donnees
-		try {
-
-			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM etudiant WHERE email like ? and motdepasse like ?");
-			ps.setString(1, email);
-			ps.setString(2, mdp);
-
-			// on execute la requete
-			// rs contient un pointeur situe juste avant la premiere ligne retournee
-			rs = ps.executeQuery();
-			// passe a la premiere (et unique) ligne retournee
-			if (rs.next()) {
-				returnValue = new Etudiant(rs.getInt("idetud"),
-										   rs.getInt("idgroupe"),
-									       rs.getString("nomEtudiant"),
-									       rs.getString("prenomEtudiant"),
-									       rs.getString("filiere"),
-									       rs.getString("email"),
-										   rs.getString("motdepasse"));
-			}
-		} catch (Exception ee) {
-			ee.printStackTrace();
-		} finally {
-			// fermeture du ResultSet, du PreparedStatement et de la Connexion
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-			} catch (Exception ignore) {
-			}
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-			} catch (Exception ignore) {
-			}
-			try {
-				if (con != null) {
-					con.close();
-				}
-			} catch (Exception ignore) {
-			}
-		}
-		return returnValue;
-	}
-	
 	/**
 	 * ATTENTION : Cette méthode n'a pas vocation à être executée lors d'une utilisation normale du programme !
 	 * Elle existe uniquement pour TESTER les méthodes écrites au-dessus !
@@ -354,31 +277,31 @@ public class EtudiantDAO extends ConnectionDAO {
 	 */
 	public static void main(String[] args) throws SQLException {
 		int returnValue;
-		EtudiantDAO EtudiantDAO = new EtudiantDAO();
+		GroupeDAO groupeDAO = new GroupeDAO();
 		// Ce test va utiliser directement votre BDD, on essaie d'éviter les collisions avec vos données en prenant de grands ID
-		int[] ids = {424242, 424243, 424244};
+		int[] ids = {3, 2, 4};
 		// test du constructeur
-		Etudiant s1 = new Etudiant(ids[0],  1,  "nom",  "prenom",  "filiere",  "mail", "mdp");
-		Etudiant s2 = new Etudiant(ids[1],  1,  "nom",  "prenom",  "filiere",  "mail", "mdp");
-		Etudiant s3 = new Etudiant(ids[2],  1,  "nom",  "prenom",  "filiere",  "mail", "mdp");
+		Groupe_Etudiant s1 = new Groupe_Etudiant(ids[0],  40, 16);
+		Groupe_Etudiant s2 = new Groupe_Etudiant(ids[1],  40, 17);
+		Groupe_Etudiant s3 = new Groupe_Etudiant(ids[2],  40, 18);
 		// test de la methode add
-		returnValue = EtudiantDAO.add(s1);
-		System.out.println(returnValue + " etudiant ajoute");
-		returnValue = EtudiantDAO.add(s2);
-		System.out.println(returnValue + " etudiant ajoute");
-		returnValue = EtudiantDAO.add(s3);
-		System.out.println(returnValue + " etudiant ajoute");
+		returnValue = groupeDAO.add(s1);
+		System.out.println(returnValue + " groupe ajoute");
+		returnValue = groupeDAO.add(s2);
+		System.out.println(returnValue + " groupe ajoute");
+		returnValue = groupeDAO.add(s3);
+		System.out.println(returnValue + " groupe ajoute");
 		System.out.println();
 		
 		// test de la methode get
-		Etudiant sg = EtudiantDAO.get(1);
+		Groupe_Etudiant sg = groupeDAO.get(1);
 		// appel implicite de la methode toString de la classe Object (a eviter)
 		System.out.println(sg);
 		System.out.println();
 		
 		// test de la methode getList
-		ArrayList<Etudiant> list = EtudiantDAO.getList();
-		for (Etudiant s : list) {
+		ArrayList<Groupe_Etudiant> list = groupeDAO.getList();
+		for (Groupe_Etudiant s : list) {
 			// appel explicite de la methode toString de la classe Object (a privilegier)
 			System.out.println(s.toString());
 		}
@@ -388,7 +311,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		returnValue = 0;
 		for (int id : ids) {
 //			returnValue = EtudiantDAO.delete(id);
-			System.out.println(returnValue + " etudiant supprime");
+			System.out.println(returnValue + " groupe supprime");
 		}
 		
 		System.out.println();

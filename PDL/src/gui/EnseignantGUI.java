@@ -16,18 +16,18 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class EtudiantGUI {
+public class EnseignantGUI {
 
-    JFrame frame;
+     JFrame frame;
     private JFrame frameListeCours;
     private JFrame framePlanning;
-    private JFrame frameListeAbsences;
+    private JFrame frameAppel;
     
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    EtudiantGUI window = new EtudiantGUI();
+                    EnseignantGUI window = new EnseignantGUI();
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -38,45 +38,45 @@ public class EtudiantGUI {
     /**
      * Create the application.
      */
-    public EtudiantGUI() {
+    public EnseignantGUI() {
         initialize();
     }
     
     private void initialize() {
     	  /**
-         * Création de la fenêtre d'accueil de l'étudiant
+         * Cr�ation de la fen�tre d'accueil de l'enseignant
          */
         frame = new JFrame();
         frame.setBounds(100, 100, 450, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
        /**
-        * Création de la fenêtre de la liste des cours de l'étudiant
+        * Cr�ation de la fen�tre de la liste des cours de l'enseignant
         */
         frameListeCours = new JFrame();
         frameListeCours.setBounds(100, 100, 450, 300);
         frameListeCours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameListeCours.getContentPane().setLayout(new BoxLayout(frameListeCours.getContentPane(), BoxLayout.Y_AXIS));
         /**
-         * Création de la fenêtre Planning de l'étudiant
+         * Cr�ation de la fen�tre Planning de l'enseignant
          */
          framePlanning = new JFrame();
          framePlanning.setBounds(100, 100, 450, 300);
          framePlanning.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          framePlanning.getContentPane().setLayout(new BoxLayout(framePlanning.getContentPane(), BoxLayout.Y_AXIS));
          /**
-          * Création de la fenêtre Liste d'absence de l'étudiant
+          * Cr�ation de la fen�tre Faire l'appel de l'enseignant
           */
-         frameListeAbsences = new JFrame();
-         frameListeAbsences.setBounds(100, 100, 450, 300);
-         frameListeAbsences.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         frameListeAbsences.getContentPane().setLayout(new BoxLayout(frameListeAbsences.getContentPane(), BoxLayout.Y_AXIS));
+         frameAppel = new JFrame();
+         frameAppel.setBounds(100, 100, 450, 300);
+         frameAppel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         frameAppel.getContentPane().setLayout(new BoxLayout(frameAppel.getContentPane(), BoxLayout.Y_AXIS));
         /**
-         * Création du bouton pour accéder à liste des cours de l'étudiant
+         * Cr�ation du bouton pour acc�der � liste des cours de l'enseignant
          */
         JPanel ListeCours = new JPanel();
         frame.getContentPane().add(ListeCours);
-        JButton ListeCour = new JButton("Accéder Liste Cours");
+        JButton ListeCour = new JButton("Acc�der Liste Cours");
         ListeCour.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
             	frameListeCours.setVisible(true);
@@ -86,11 +86,11 @@ public class EtudiantGUI {
    
     
 	    /**
-	     * Création du bouton pour accéder au planning de l'étudiant
+	     * Cr�ation du bouton pour acc�der au planning de l'enseignant
 	     */
 	    JPanel Planning = new JPanel();
 	    frame.getContentPane().add(Planning);
-	    JButton PLANNING = new JButton("Accéder au Planning");
+	    JButton PLANNING = new JButton("Acc�der au Planning");
 	    PLANNING.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	        	framePlanning.setVisible(true);
@@ -99,17 +99,17 @@ public class EtudiantGUI {
 	    Planning.add(PLANNING);
 	    
 	    /**
-	     * Création du bouton pour accéder à la liste d'absence de l'étudiant
+	     * Cr�ation du bouton pour acc�der � la liste d'absence de l'enseignant
 	     */
-	    JPanel ListeAbsences = new JPanel();
-	    frame.getContentPane().add(ListeAbsences);
-	    JButton LISTEABSENCES = new JButton("Accéder à la liste d'absences");
-	    LISTEABSENCES.addActionListener(new ActionListener() {
+	    JPanel Appel = new JPanel();
+	    frame.getContentPane().add(Appel);
+	    JButton APPEL = new JButton("Faire l'Appel");
+	    APPEL.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		frameListeAbsences.setVisible(true);
+	    		frameAppel.setVisible(true);
 	        }
 	    });
-	    ListeAbsences.add(LISTEABSENCES);
+	    Appel.add(APPEL);
 	    }
 
 }
