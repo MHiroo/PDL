@@ -30,6 +30,7 @@ public class GestionnaireGUI {
 	private JFrame UC7frame;
 	private JFrame UC8frame;
 	private JFrame UC9frame;
+	private JFrame UC10frame;
 	private JFrame pframe;
      JFrame frame;
     private JFrame frameModif;
@@ -49,7 +50,9 @@ public class GestionnaireGUI {
     private JTextField textFieldEmail;
     private JTextField textFieldMdp;
     private JComboBox groupeBox;
+    private JComboBox groupeBoxM;
     private JComboBox idBox;
+    private JComboBox idBoxS;
 
     /**
      * Launch the application.
@@ -102,7 +105,13 @@ public class GestionnaireGUI {
          * Cr�ation du panel comportant les UC part 3
          */
     	JPanel panelUC3 = new JPanel();
-    	pframe.getContentPane().add(panelUC3);   	
+    	pframe.getContentPane().add(panelUC3); 
+    	
+    	/**
+         * Cr�ation du panel comportant les UC part 4
+         */
+    	JPanel panelUC4 = new JPanel();
+    	pframe.getContentPane().add(panelUC4);   
     	
     	/**
     	 * Cr�ation de la fen�tre UC2
@@ -168,6 +177,14 @@ public class GestionnaireGUI {
         UC9frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         UC9frame.getContentPane().setLayout(new BoxLayout(UC9frame.getContentPane(), BoxLayout.Y_AXIS));
     	
+        /**
+    	 * Cr�ation de la fen�tre UC10
+    	 */
+    	UC10frame = new JFrame();
+    	UC10frame.setBounds(100, 100, 450, 300);
+        UC10frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC10frame.getContentPane().setLayout(new BoxLayout(UC10frame.getContentPane(), BoxLayout.Y_AXIS));
+        
     	/**
     	 * Cr�ation de la fenetre pour le UC Cr�er/modifier un �tudiant
     	 */
@@ -291,10 +308,13 @@ public class GestionnaireGUI {
         
         JLabel lblGroupeModif = new JLabel("Groupe:");
         panelGroupeModif.add(lblGroupeModif);
-
-        textFieldGroupeModif = new JTextField();
-        panelGroupeModif.add(textFieldGroupeModif);
-        textFieldGroupeModif.setColumns(10);
+        
+        GroupeDAO groupeDAOmodif = new GroupeDAO();  
+        groupeBoxM = new JComboBox();
+        for (int i = 0; i < groupeDAOmodif.getList().size(); i++) {
+        groupeBoxM.addItem(groupeDAOmodif.getList().get(i).getId());
+        }
+        panelGroupeModif.add(groupeBoxM);
 
 		/**
 		 * Cr�ation du panel comportant la s�lection du nom pour modifier un �tudiant
@@ -378,9 +398,12 @@ public class GestionnaireGUI {
         JLabel lblSuppr = new JLabel("Id:");
         panelSuppr.add(lblSuppr);
         
-        textFieldId2 = new JTextField();
-        panelSuppr.add(textFieldId2);
-        textFieldId2.setColumns(10);
+        EtudiantDAO etudiantDAOsup = new EtudiantDAO();
+        idBoxS = new JComboBox();
+        for (int i = 0; i < etudiantDAOsup.getList().size(); i++) {
+        idBoxS.addItem(etudiantDAOsup.getList().get(i).getId());
+        }
+        panelSuppr.add(idBoxS);
         
         /**
          * Cr�ation du panel qui comportera tous les boutons de la fen�tre UC cr�er/modifier un �tudiant
@@ -481,7 +504,7 @@ public class GestionnaireGUI {
         /**
          * Cr�ation du bouton du UC cr�er modifier etudiant
          */
-        JButton btnUC1 = new JButton("Cr�er/Modifier un �tudiant");
+        JButton btnUC1 = new JButton("Créer/Modifier un étudiant");
         btnUC1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	frame.setVisible(true);
@@ -492,7 +515,7 @@ public class GestionnaireGUI {
         /**
          * Cr�ation du bouton du UC 2
          */
-        JButton btnUC2 = new JButton("UC2");
+        JButton btnUC2 = new JButton("Traiter un justificatif");
         btnUC2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC2frame.setVisible(true);
@@ -503,7 +526,7 @@ public class GestionnaireGUI {
         /**
          * Cr�ation du bouton du UC 3
          */
-        JButton btnUC3 = new JButton("UC3");
+        JButton btnUC3 = new JButton("Déclencher une pénalité");
         btnUC3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC3frame.setVisible(true);
@@ -514,7 +537,7 @@ public class GestionnaireGUI {
         /**
          * Cr�ation du bouton du UC 4
          */
-        JButton btnUC4 = new JButton("UC4");
+        JButton btnUC4 = new JButton("Créer/Modifier un type d'absence");
         btnUC4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC4frame.setVisible(true);
@@ -525,7 +548,7 @@ public class GestionnaireGUI {
         /**
          * Cr�ation du bouton du UC 5
          */
-        JButton btnUC5 = new JButton("UC5");
+        JButton btnUC5 = new JButton("Créer/Modifier un groupe d'étudiant");
         btnUC5.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC5frame.setVisible(true);
@@ -536,7 +559,7 @@ public class GestionnaireGUI {
         /**
          * Cr�ation du bouton du UC 6
          */
-        JButton btnUC6 = new JButton("UC6");
+        JButton btnUC6 = new JButton("Créer/Modifier un cours");
         btnUC6.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC6frame.setVisible(true);
@@ -547,7 +570,7 @@ public class GestionnaireGUI {
         /**
          * Cr�ation du bouton du UC 7
          */
-        JButton btnUC7 = new JButton("UC7");
+        JButton btnUC7 = new JButton("Créer/Modifier un planning");
         btnUC7.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC7frame.setVisible(true);
@@ -558,7 +581,7 @@ public class GestionnaireGUI {
         /**
          * Cr�ation du bouton du UC 8
          */
-        JButton btnUC8 = new JButton("UC8");
+        JButton btnUC8 = new JButton("Créer/Modifier un étudiant");
         btnUC8.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC8frame.setVisible(true);
@@ -569,13 +592,24 @@ public class GestionnaireGUI {
         /**
          * Cr�ation du bouton du UC 9
          */
-        JButton btnUC9 = new JButton("UC9");
+        JButton btnUC9 = new JButton("Créer/Modifier un enseignant");
         btnUC9.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC9frame.setVisible(true);
             }
         });
         panelUC3.add(btnUC9);
+        
+        /**
+         * Cr�ation du bouton du UC 10
+         */
+        JButton btnUC10 = new JButton("Définir les quotas");
+        btnUC10.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	UC10frame.setVisible(true);
+            }
+        });
+        panelUC4.add(btnUC10);
     }
 }
        
