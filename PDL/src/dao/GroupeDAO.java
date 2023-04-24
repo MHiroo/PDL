@@ -38,8 +38,8 @@ public class GroupeDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO groupeetudiant(idgroupe,capacitemax, num) VALUES( ?, ?, ?)");
-			ps.setInt(1, groupe.getId());
+			ps = con.prepareStatement("INSERT INTO groupeetudiant(idgroupe,num, capacitemax) VALUES( ?, ?, ?)");
+			ps.setInt(1, getList().get(getList().size()-1).getId()+1);
 			ps.setInt(2, groupe.getNum());
 			ps.setInt(3, groupe.getcapaciteMax());
 			// Execution de la requete
@@ -88,10 +88,10 @@ public class GroupeDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans la modification.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("UPDATE groupeetudiant SET idgroupe = ?, num = ?, capacitemax = ? WHERE idgroupe = ?");
-			ps.setInt(1, groupe.getId());
+			ps = con.prepareStatement("UPDATE groupeetudiant SET capacitemax = ?, num = ? WHERE idgroupe = ?");
+			ps.setInt(1, groupe.getcapaciteMax());
 			ps.setInt(2, groupe.getNum());
-			ps.setInt(3, groupe.getcapaciteMax());
+			ps.setInt(3, groupe.getId());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();

@@ -11,11 +11,11 @@ public class Groupe_Etudiant {
 	 */
 	public int idGrpEtudiant;
 	/**
-	 * numéro du groupe
+	 * numï¿½ro du groupe
 	 */
 	private int num;
 	/**
-	 * Capacité maximum du groupe
+	 * Capacitï¿½ maximum du groupe
 	 */
 	private int capaciteMax;
 	
@@ -71,5 +71,9 @@ public class Groupe_Etudiant {
 		System.out.println(idGrpEtudiant);
 		System.out.println(num);
 		System.out.println(capaciteMax);
+	}
+	public Groupe_Etudiant(int num, int capaciteMax) {
+		this.num=num;
+		this.capaciteMax=capaciteMax;
 	}
 }

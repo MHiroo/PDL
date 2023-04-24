@@ -61,7 +61,13 @@ public class Personne {
 		this.mail=mail;
 		this.mdp=mdp;
 	}
-	
+	public Personne(String nom, String prenom,String tel, String mail,String mdp) {
+		this.nom=nom;
+		this.prenom=prenom;
+		this.tel=tel;
+		this.mail=mail;
+		this.mdp=mdp;
+	}
 	/**
 	 * getter pour l'attribut reference
 	 * @return valeur de la reference Personne
@@ -145,7 +151,7 @@ public class Personne {
 	 */
 	public void display()
 	{
-		System.out.println("id: "+this.id+"  ;nom: "+this.nom+"  ;prenom: "+this.prenom+"   ;mail: "+this.mail+"   ;tel: "+this.tel+"   ;mdp: "+this.mdp);
+		System.out.println("id: "+this.id+"  ;nom: "+this.nom+"  ;prenom: "+this.prenom+"   ;tel: "+this.tel+"   ;mail: "+this.mail+"   ;mdp: "+this.mdp);
 	}
 	/**
 	 * Affiche les caractéristiques de la personne sauf le telephone

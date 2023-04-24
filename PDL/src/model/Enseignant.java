@@ -20,6 +20,9 @@ public class Enseignant extends Personne {
 		super(id, nom, prenom,tel ,mail,mdp);
 	}
 	
+	public Enseignant(String nom, String prenom, String tel, String mail, String mdp) {
+		super(nom, prenom, tel, mail, mdp);
+	}
 	/**
 	 * Affiche les caractéristiques de l'enseignant
 	 */

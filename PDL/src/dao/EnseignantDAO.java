@@ -22,13 +22,13 @@ public class EnseignantDAO extends ConnectionDAO {
 	 * Permet d'ajouter un enseignant dans la table enseignant.
 	 * Le mode est auto-commit par defaut : chaque insertion est validee
 	 * 
-	 * @param enseignant le enseignant a ajouter
+	 * @param enseignant l'enseignant a ajouter
 	 * @return retourne le nombre de lignes ajoutees dans la table
 	 */
 	public int add(Enseignant enseignant) {
 		Connection con = null;
 		PreparedStatement ps = null;
-		int returnValue = 0;
+		int returnValue = 0; 
 
 		// connexion a la base de donnees
 		try {
@@ -38,7 +38,7 @@ public class EnseignantDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO enseignant(idEnseignant, nomEnseignant, prenomEnseignant, tel, email, motdepasse) VALUES( ?, ?, ?, ?, ?, ?, ?)");
+			ps = con.prepareStatement("INSERT INTO enseignant(idEnseignant, nomEnseignant, prenomEnseignant, tel, email, motdepasse) VALUES( ?, ?, ?, ?, ?, ?)");
 			ps.setInt(1, getList().get(getList().size()-1).getId()+1);
 			ps.setString(2, enseignant.getName());
 			ps.setString(3, enseignant.getFirstName());
@@ -79,7 +79,7 @@ public class EnseignantDAO extends ConnectionDAO {
 	 * @param enseignant le enseignant a modifier
 	 * @return retourne le nombre de lignes modifiees dans la table
 	 */
-	public int update(Personne enseignant) {
+	public int update(Enseignant enseignant) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -92,7 +92,7 @@ public class EnseignantDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans la modification.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("UPDATE enseignant set  nomEnseignant = ?, prenomEnseignant = ?, tel = ?, email = ?, motdepasse = ? WHERE idGst = ?");
+			ps = con.prepareStatement("UPDATE enseignant set  nomEnseignant = ?, prenomEnseignant = ?, tel = ?, email = ?, motdepasse = ? WHERE idenseignant = ?");
 			ps.setString(1, enseignant.getName());
 			ps.setString(2, enseignant.getFirstName());
 			ps.setString(3, enseignant.getTel());
@@ -185,11 +185,11 @@ public class EnseignantDAO extends ConnectionDAO {
 	 * @return le enseignant trouve;
 	 * 			null si aucun enseignant ne correspond a cette reference
 	 */
-	public Personne get(int id) {
+	public Enseignant get(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Personne returnValue = null;
+		Enseignant returnValue = null;
 
 		// connexion a la base de donnees
 		try {
@@ -203,7 +203,7 @@ public class EnseignantDAO extends ConnectionDAO {
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
-				returnValue = new Personne(rs.getInt("idEnseignant"),
+				returnValue = new Enseignant(rs.getInt("idEnseignant"),
 									       rs.getString("nomEnseignant"),
 									       rs.getString("prenomEnseignant"),
 									       rs.getString("tel"),
@@ -241,11 +241,11 @@ public class EnseignantDAO extends ConnectionDAO {
 	 * 
 	 * @return une ArrayList de enseignant
 	 */
-	public ArrayList<Personne> getList() {
+	public ArrayList<Enseignant> getList() {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		ArrayList<Personne> returnValue = new ArrayList<Personne>();
+		ArrayList<Enseignant> returnValue = new ArrayList<Enseignant>();
 
 		// connexion a la base de donnees
 		try {
@@ -256,7 +256,7 @@ public class EnseignantDAO extends ConnectionDAO {
 			rs = ps.executeQuery();
 			// on parcourt les lignes du resultat
 			while (rs.next()) {
-				returnValue.add(new Personne(rs.getInt("idEnseignant"),
+				returnValue.add(new Enseignant(rs.getInt("idEnseignant"),
 											       rs.getString("nomEnseignant"),
 											       rs.getString("prenomEnseignant"),
 											       rs.getString("tel"),
@@ -345,6 +345,53 @@ public class EnseignantDAO extends ConnectionDAO {
 		return returnValue;
 	}
 
-	
+	/**
+	 * ATTENTION : Cette méthode n'a pas vocation à être executée lors d'une utilisation normale du programme !
+	 * Elle existe uniquement pour TESTER les méthodes écrites au-dessus !
+	 * 
+	 * @param args non utilisés
+	 * @throws SQLException si une erreur se produit lors de la communication avec la BDD
+	 */
+	public static void main(String[] args) throws SQLException {
+		int returnValue;
+		EnseignantDAO EnseignantDAO = new EnseignantDAO();
+		// Ce test va utiliser directement votre BDD, on essaie d'éviter les collisions avec vos données en prenant de grands ID
+		int[] ids = {424242, 424243, 424244};
+		// test du constructeur
+		Enseignant s1 = new Enseignant(ids[0], "nom",  "prenom",  "Tel",  "mail", "mdp");
+		Enseignant s2 = new Enseignant(ids[1], "nom",  "prenom",  "Tel",  "mail", "mdp");
+		Enseignant s3 = new Enseignant(ids[2], "nom",  "prenom",  "Tel",  "mail", "mdp");
+		// test de la methode add
+		returnValue = EnseignantDAO.add(s1);
+		System.out.println(returnValue + " enseignant ajoute");
+		returnValue = EnseignantDAO.add(s2);
+		System.out.println(returnValue + " enseignant ajoute");
+		returnValue = EnseignantDAO.add(s3);
+		System.out.println(returnValue + " enseignant ajoute");
+		System.out.println();
+		
+		// test de la methode get
+		Enseignant sg = EnseignantDAO.get(1);
+		// appel implicite de la methode toString de la classe Object (a eviter)
+		System.out.println(sg);
+		System.out.println();
+		
+		// test de la methode getList
+		ArrayList<Enseignant> list = EnseignantDAO.getList();
+		for (Enseignant s : list) {
+			// appel explicite de la methode toString de la classe Object (a privilegier)
+			System.out.println(s.toString());
+		}
+		System.out.println();
+		// test de la methode delete
+		// On supprime les 3 articles qu'on a créé
+		returnValue = 0;
+		for (int id : ids) {
+//			returnValue = EnseignantDAO.delete(id);
+			System.out.println(returnValue + " enseignant supprime");
+		}
+		
+		System.out.println();
+	}
 	
 }
