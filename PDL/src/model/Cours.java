@@ -27,6 +27,10 @@ public class Cours {
 	 */
 	private int repNbrHTD;
 	/**
+	 * repNbrHTP
+	 */
+	private int repNbrHTP;
+	/**
 	 * repNbrHExam
 	 */
 	private int repNbrHExam;
@@ -41,12 +45,13 @@ public class Cours {
 	 * @param justificatif du cours
 	 * @param decision du cours
 	 */
-	public Cours(int id, String nom,int masseHoraire,int repNbrHAmphi, int repNbrHTD, int repNbrHExam) {
+	public Cours(int id, String nom,int masseHoraire,int repNbrHAmphi, int repNbrHTD,int repNbrHTP, int repNbrHExam) {
 		this.id=id;
 		this.nom=nom;
 		this.masseHoraire=masseHoraire;
 		this.repNbrHAmphi=repNbrHAmphi;
 		this.repNbrHTD=repNbrHTD;
+		this.repNbrHTD=repNbrHTP;
 		this.repNbrHExam=repNbrHExam;
 	}
 	
@@ -108,11 +113,25 @@ public class Cours {
 		return repNbrHTD;
 	}
 	/**
+	 * getter pour l'attribut repNbrHTP
+	 * @return valeur du repNbrHTP
+	 */
+	public int getRepNbrHTP(int repNbrHTP) {
+		return repNbrHTP;
+	}
+	/**
 	 * setter pour l'attribut repNbrHTD
 	 * @param repNbrHTD : nouvelle valeur de la repNbrHTD
 	 */
 	public void setRepNbrHTD(int repNbrHTD) {
 		this.repNbrHTD = repNbrHTD;
+	}
+	/**
+	 * setter pour l'attribut repNbrHTP
+	 * @param repNbrHTP : nouvelle valeur de la repNbrHTP
+	 */
+	public void setRepNbrHTP(int repNbrHTP) {
+		this.repNbrHTP = repNbrHTP;
 	}
 	/**
 	 * getter pour l'attribut repNbrHExam
@@ -137,6 +156,7 @@ public class Cours {
 		System.out.println(masseHoraire);
 		System.out.println(repNbrHAmphi);
 		System.out.println(repNbrHTD);
+		System.out.println(repNbrHTP);
 		System.out.println(repNbrHExam);
 	}
 	

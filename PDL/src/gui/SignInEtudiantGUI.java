@@ -107,8 +107,10 @@ public class SignInEtudiantGUI {
 	                frame.setVisible(true);
                 }
                 else {
+                	frame.setVisible(false);
 	                EtudiantGUI window = new EtudiantGUI();
 	                frame = new JFrame();
+	                window.frame.setLocationRelativeTo(null);
 	                window.frame.setVisible(true);
                 }
             }

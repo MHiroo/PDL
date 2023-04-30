@@ -105,6 +105,7 @@ public class SignInAdminGUI {
 	                frame.setVisible(true);
                 }
                 else {
+                	frame.setVisible(false);
 	                AdminGUI window = new AdminGUI();
 	                frame = new JFrame();
 	                window.frame.setVisible(true);

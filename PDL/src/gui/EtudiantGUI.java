@@ -80,6 +80,7 @@ public class EtudiantGUI {
         JButton ListeCour = new JButton("Accéder Liste Cours");
         ListeCour.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		frameListeCours.setLocationRelativeTo(null);
             	frameListeCours.setVisible(true);
             }
         });
@@ -94,6 +95,7 @@ public class EtudiantGUI {
 	    JButton PLANNING = new JButton("Accéder au Planning");
 	    PLANNING.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
+	    		framePlanning.setLocationRelativeTo(null);
 	        	framePlanning.setVisible(true);
 	        }
 	    });
@@ -107,6 +109,7 @@ public class EtudiantGUI {
 	    JButton LISTEABSENCES = new JButton("Accéder à la liste d'absences");
 	    LISTEABSENCES.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
+	    		frameListeAbsences.setLocationRelativeTo(null);
 	    		frameListeAbsences.setVisible(true);
 	        }
 	    });

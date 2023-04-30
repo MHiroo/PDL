@@ -145,7 +145,7 @@ public class GestionnaireGUI {
     	 */
     	UC2frame = new JFrame();
     	UC2frame.setBounds(100, 100, 450, 300);
-        UC2frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC2frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         UC2frame.getContentPane().setLayout(new BoxLayout(UC2frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
@@ -153,7 +153,7 @@ public class GestionnaireGUI {
     	 */
     	UC3frame = new JFrame();
     	UC3frame.setBounds(100, 100, 450, 300);
-        UC3frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC3frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         UC3frame.getContentPane().setLayout(new BoxLayout(UC3frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
@@ -161,7 +161,7 @@ public class GestionnaireGUI {
     	 */
     	UC4frame = new JFrame();
     	UC4frame.setBounds(100, 100, 450, 300);
-        UC4frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC4frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         UC4frame.getContentPane().setLayout(new BoxLayout(UC4frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
@@ -169,7 +169,7 @@ public class GestionnaireGUI {
     	 */
     	UC5frame = new JFrame();
     	UC5frame.setBounds(100, 100, 450, 300);
-        UC5frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC5frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         UC5frame.getContentPane().setLayout(new BoxLayout(UC5frame.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
@@ -203,7 +203,7 @@ public class GestionnaireGUI {
          */
         frameModifGroupe = new JFrame();
         frameModifGroupe.setBounds(100, 100, 450, 300);
-        frameModifGroupe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameModifGroupe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frameModifGroupe.getContentPane().setLayout(new BoxLayout(frameModifGroupe.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
@@ -254,7 +254,7 @@ public class GestionnaireGUI {
          */
         frameSupprGroupe = new JFrame();
         frameSupprGroupe.setBounds(100, 100, 450, 300);
-        frameSupprGroupe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameSupprGroupe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frameSupprGroupe.getContentPane().setLayout(new BoxLayout(frameSupprGroupe.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
@@ -278,7 +278,7 @@ public class GestionnaireGUI {
     	 */
     	UC6frame = new JFrame();
     	UC6frame.setBounds(100, 100, 450, 300);
-        UC6frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC6frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         UC6frame.getContentPane().setLayout(new BoxLayout(UC6frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
@@ -286,7 +286,7 @@ public class GestionnaireGUI {
     	 */
     	UC7frame = new JFrame();
     	UC7frame.setBounds(100, 100, 450, 300);
-        UC7frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC7frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         UC7frame.getContentPane().setLayout(new BoxLayout(UC7frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
@@ -294,7 +294,7 @@ public class GestionnaireGUI {
     	 */
     	UC8frame = new JFrame();
     	UC8frame.setBounds(100, 100, 450, 300);
-        UC8frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC8frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         UC8frame.getContentPane().setLayout(new BoxLayout(UC8frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
@@ -302,7 +302,7 @@ public class GestionnaireGUI {
     	 */
     	UC9frame = new JFrame();
     	UC9frame.setBounds(100, 100, 450, 300);
-        UC9frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        UC9frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         UC9frame.getContentPane().setLayout(new BoxLayout(UC9frame.getContentPane(), BoxLayout.Y_AXIS));
     	
         /**
@@ -375,7 +375,7 @@ public class GestionnaireGUI {
     	 */
         frame = new JFrame();
         frame.setBounds(100, 100, 450, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
@@ -465,7 +465,7 @@ public class GestionnaireGUI {
          */
         frameModifEns = new JFrame();
         frameModifEns.setBounds(100, 100, 450, 300);
-        frameModifEns.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameModifEns.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frameModifEns.getContentPane().setLayout(new BoxLayout(frameModifEns.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
@@ -555,7 +555,7 @@ public class GestionnaireGUI {
          */
         frameSupprEns = new JFrame();
         frameSupprEns.setBounds(100, 100, 450, 300);
-        frameSupprEns.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameSupprEns.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frameSupprEns.getContentPane().setLayout(new BoxLayout(frameSupprEns.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
@@ -579,7 +579,7 @@ public class GestionnaireGUI {
          */
         frameModif = new JFrame();
         frameModif.setBounds(100, 100, 450, 300);
-        frameModif.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameModif.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frameModif.getContentPane().setLayout(new BoxLayout(frameModif.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
@@ -685,7 +685,7 @@ public class GestionnaireGUI {
          */
         frameSuppr = new JFrame();
         frameSuppr.setBounds(100, 100, 450, 300);
-        frameSuppr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameSuppr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frameSuppr.getContentPane().setLayout(new BoxLayout(frameSuppr.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
@@ -741,6 +741,7 @@ public class GestionnaireGUI {
         JButton btnSupprimer1 = new JButton("Supprimer");
         btnSupprimer1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frameSuppr.setLocationRelativeTo(null);
             	frameSuppr.setVisible(true);
             }
         });
@@ -768,6 +769,7 @@ public class GestionnaireGUI {
         JButton btnModifier1 = new JButton("Modifier");
         btnModifier1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frameModif.setLocationRelativeTo(null);
             	frameModif.setVisible(true);
             }
         });
@@ -806,6 +808,7 @@ public class GestionnaireGUI {
         JButton btnUC1 = new JButton("Créer/Modifier un étudiant");
         btnUC1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frame.setLocationRelativeTo(null);
             	frame.setVisible(true);
             }
         });
@@ -817,6 +820,7 @@ public class GestionnaireGUI {
         JButton btnUC2 = new JButton("Traiter un justificatif");
         btnUC2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	UC2frame.setLocationRelativeTo(null);
             	UC2frame.setVisible(true);
             }
         });
@@ -828,6 +832,7 @@ public class GestionnaireGUI {
         JButton btnUC3 = new JButton("Déclencher une pénalité");
         btnUC3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	UC3frame.setLocationRelativeTo(null);
             	UC3frame.setVisible(true);
             }
         });
@@ -839,6 +844,7 @@ public class GestionnaireGUI {
         JButton btnUC4 = new JButton("Créer/Modifier un type d'absence");
         btnUC4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	UC4frame.setLocationRelativeTo(null);
             	UC4frame.setVisible(true);
             }
         });
@@ -850,6 +856,7 @@ public class GestionnaireGUI {
         JButton btnUC5 = new JButton("Créer/Modifier un groupe d'étudiant");
         btnUC5.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	UC5frame.setLocationRelativeTo(null);
             	UC5frame.setVisible(true);
             }
         });
@@ -886,6 +893,7 @@ public class GestionnaireGUI {
         JButton btnModifierGroupe = new JButton("Modifier");
         btnModifierGroupe.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frameModifGroupe.setLocationRelativeTo(null);
             	frameModifGroupe.setVisible(true);
             }
         });
@@ -922,6 +930,7 @@ public class GestionnaireGUI {
         JButton btnSupprimerGroupe = new JButton("Supprimer");
         btnSupprimerGroupe.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frameSupprGroupe.setLocationRelativeTo(null);
             	frameSupprGroupe.setVisible(true);
             }
         });
@@ -950,6 +959,7 @@ public class GestionnaireGUI {
         JButton btnUC6 = new JButton("Créer/Modifier un cours");
         btnUC6.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	UC6frame.setLocationRelativeTo(null);
             	UC6frame.setVisible(true);
             }
         });
@@ -961,6 +971,7 @@ public class GestionnaireGUI {
         JButton btnUC7 = new JButton("Créer/Modifier un planning");
         btnUC7.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	UC7frame.setLocationRelativeTo(null);
             	UC7frame.setVisible(true);
             }
         });
@@ -972,6 +983,7 @@ public class GestionnaireGUI {
         JButton btnUC8 = new JButton("Définir les quotas");
         btnUC8.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	UC8frame.setLocationRelativeTo(null);
             	UC8frame.setVisible(true);
             }
         });
@@ -983,6 +995,7 @@ public class GestionnaireGUI {
         JButton btnUC9 = new JButton("Créer/Modifier un enseignant");
         btnUC9.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	UC9frame.setLocationRelativeTo(null);
             	UC9frame.setVisible(true);
             }
         });
@@ -1022,6 +1035,7 @@ public class GestionnaireGUI {
         JButton btnModifierEns = new JButton("Modifier");
         btnModifierEns.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frameModifEns.setLocationRelativeTo(null);
             	frameModifEns.setVisible(true);
             }
         });
@@ -1061,6 +1075,7 @@ public class GestionnaireGUI {
         JButton btnSupprimerEns = new JButton("Supprimer");
         btnSupprimerEns.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frameSupprEns.setLocationRelativeTo(null);
             	frameSupprEns.setVisible(true);
             }
         });

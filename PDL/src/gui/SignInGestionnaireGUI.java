@@ -105,6 +105,7 @@ public class SignInGestionnaireGUI {
 	                frame.setVisible(true);
                 }
                 else {
+                frame.setVisible(false);
                 GestionnaireGUI window = new GestionnaireGUI();
                 frame = new JFrame();
                 window.frame.setVisible(true);

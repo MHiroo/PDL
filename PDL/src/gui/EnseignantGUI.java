@@ -80,6 +80,7 @@ public class EnseignantGUI {
         JButton ListeCour = new JButton("Acc�der Liste Cours");
         ListeCour.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		frameListeCours.setLocationRelativeTo(null);
             	frameListeCours.setVisible(true);
             }
         });
@@ -94,6 +95,7 @@ public class EnseignantGUI {
 	    JButton PLANNING = new JButton("Acc�der au Planning");
 	    PLANNING.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
+	    		framePlanning.setLocationRelativeTo(null);
 	        	framePlanning.setVisible(true);
 	        }
 	    });
@@ -107,6 +109,7 @@ public class EnseignantGUI {
 	    JButton APPEL = new JButton("Faire l'Appel");
 	    APPEL.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
+	    		frameAppel.setLocationRelativeTo(null);
 	    		frameAppel.setVisible(true);
 	        }
 	    });

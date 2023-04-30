@@ -25,11 +25,11 @@ public class Planning {
 	/**
 	 * nbreHeure
 	 */
-	private int nbreHeure;
+	private double duree;
 	/**
 	 * Répartition
 	 */
-	private String typeRepartition;
+	private String salle;
 	
 	/**
 	 * Constructor
@@ -38,14 +38,15 @@ public class Planning {
 	 * @param cours du planning
 	 * @param date du planning
 	 * @param nbreHeure du planning
-	 * @param typeRepartition du planning
+	 * @param salle du planning
 	 */
-	public Planning(int id, Enseignant enseignant,Cours cours, Date date, String typeRepartition) {
+	public Planning(int id, Enseignant enseignant,Cours cours, Date date, String salle, double duree) {
 		this.id=id;
 		this.enseignant=enseignant;
 		this.cours=cours;
 		this.date=date;
-		this.typeRepartition=typeRepartition;
+		this.salle=salle;
+		this.duree= duree;
 	}
 	
 	/**
@@ -98,18 +99,32 @@ public class Planning {
 		this.date = date;
 	}
 	/**
-	 * getter pour l'attribut typeRepartition
-	 * @return valeur de la typeRepartition
+	 * getter pour l'attribut salle
+	 * @return valeur de la salle
 	 */
-	public String getTypeRepartition(String typeRepartition) {
-		return typeRepartition;
+	public String getsalle(String salle) {
+		return salle;
 	}
 	/**
-	 * setter pour l'attribut typeRepartition
-	 * @param typeRepartition : nouvelle valeur du typeRepartition
+	 * setter pour l'attribut salle
+	 * @param salle : nouvelle valeur du salle
 	 */
-	public void setTypeRepartition(String typeRepartition) {
-		this.typeRepartition = typeRepartition;
+	public void setsalle(String salle) {
+		this.salle = salle;
+	}
+	/**
+	 * getter pour l'attribut duree
+	 * @return valeur de la duree
+	 */
+	public double getDuree(double duree) {
+		return duree;
+	}
+	/**
+	 * setter pour l'attribut duree
+	 * @param duree : nouvelle valeur de la duree
+	 */
+	public void setDuree(double duree) {
+		this.duree = duree;
 	}
 	
 	/**
@@ -120,7 +135,8 @@ public class Planning {
 		System.out.println( enseignant);
 		System.out.println(cours);
 		System.out.println(date);
-		System.out.println(typeRepartition);
+		System.out.println(salle);
+		System.out.println(duree);
 	}
 
 }

@@ -32,6 +32,7 @@ public class SignInEnseignantGUI {
             public void run() {
                 try {
                 	SignInEnseignantGUI window = new SignInEnseignantGUI();
+                	
                     window.frame.setLocationRelativeTo(null);
                     window.frame.setVisible(true);
                 } catch (Exception e) {
@@ -105,8 +106,10 @@ public class SignInEnseignantGUI {
 	                frame.setVisible(true);
                 }
                 else {
+                	frame.setVisible(false);
 	                EnseignantGUI window = new EnseignantGUI();
 	                frame = new JFrame();
+	                window.frame.setLocationRelativeTo(null);
 	                window.frame.setVisible(true);
                 }
             }
