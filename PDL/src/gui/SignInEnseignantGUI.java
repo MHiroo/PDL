@@ -1,5 +1,5 @@
 package gui;
-
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -32,6 +32,7 @@ public class SignInEnseignantGUI {
             public void run() {
                 try {
                 	SignInEnseignantGUI window = new SignInEnseignantGUI();
+                    window.frame.setLocationRelativeTo(null);
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -94,10 +95,20 @@ public class SignInEnseignantGUI {
                 EnseignantDAO enseignantDAO = new EnseignantDAO();
                 enseignant = enseignantDAO.signIn(email,mdp);
                 
-                EnseignantGUI window = new EnseignantGUI();
-                frame = new JFrame();
-                window.frame.setVisible(true);
-     
+                if (enseignant==null) {
+                	
+                    JPanel panel = new JPanel();
+                    frame.getContentPane().add(panel);
+                    JLabel lbl = new JLabel("Erreur: Email ou Mot de passe erronés");
+                    lbl.setForeground(Color.RED);
+                    panel.add(lbl);
+	                frame.setVisible(true);
+                }
+                else {
+	                EnseignantGUI window = new EnseignantGUI();
+	                frame = new JFrame();
+	                window.frame.setVisible(true);
+                }
             }
             
         });
@@ -110,7 +121,10 @@ public class SignInEnseignantGUI {
 	        retourBtn.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent event) {
 	                frame.dispose(); // ferme la fenêtre actuelle
-	                new UserGUI(); // affiche la fenêtre précédente
+	                UserGUI window = new UserGUI();
+	                frame = new JFrame();
+	                window.frame.setLocationRelativeTo(null);
+	                window.frame.setVisible(true);
 	            }
 	        });
 	        panelBoutonRetour.add(retourBtn);

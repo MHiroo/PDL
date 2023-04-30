@@ -28,6 +28,7 @@ public class EtudiantGUI {
             public void run() {
                 try {
                     EtudiantGUI window = new EtudiantGUI();
+                    window.frame.setLocationRelativeTo(null);
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

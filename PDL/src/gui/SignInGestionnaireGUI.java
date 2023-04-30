@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -32,6 +33,7 @@ public class SignInGestionnaireGUI {
             public void run() {
                 try {
                 	SignInGestionnaireGUI window = new SignInGestionnaireGUI();
+                    window.frame.setLocationRelativeTo(null);
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -93,11 +95,20 @@ public class SignInGestionnaireGUI {
                 // Appeler la méthode d'authentification d'un gestionnaire dans la base de données
                 GestionnaireDAO gestionnaireDAO = new GestionnaireDAO();
                 gestionnaire = gestionnaireDAO.signIn(email,mdp);
-                
+                if (gestionnaire==null) {
+                	
+                	JPanel panel = new JPanel();
+                    frame.getContentPane().add(panel);
+                    JLabel lbl = new JLabel("Erreur: Email ou Mot de passe erronés");
+                    lbl.setForeground(Color.RED);
+                    panel.add(lbl);
+	                frame.setVisible(true);
+                }
+                else {
                 GestionnaireGUI window = new GestionnaireGUI();
                 frame = new JFrame();
                 window.frame.setVisible(true);
-     
+                }
             }
             
         });
@@ -112,7 +123,10 @@ public class SignInGestionnaireGUI {
         retourBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 frame.dispose(); // ferme la fenêtre actuelle
-                new UserGUI(); // affiche la fenêtre précédente
+                UserGUI window = new UserGUI();
+                frame = new JFrame();
+                window.frame.setLocationRelativeTo(null);
+                window.frame.setVisible(true);
             }
         });
         panelBoutonRetour.add(retourBtn);

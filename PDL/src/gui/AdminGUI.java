@@ -59,6 +59,7 @@ public class AdminGUI {
             public void run() {
                 try {
                     AdminGUI window = new AdminGUI();
+                    window.pframe.setLocationRelativeTo(null);
                     window.pframe.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

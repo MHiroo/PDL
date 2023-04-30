@@ -88,6 +88,7 @@ public class GestionnaireGUI {
             public void run() {
                 try {
                     GestionnaireGUI window = new GestionnaireGUI();
+                    window.pframe.setLocationRelativeTo(null);
                     window.pframe.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

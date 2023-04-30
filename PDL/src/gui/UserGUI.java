@@ -24,7 +24,7 @@ import java.awt.event.ActionEvent;
 
 public class UserGUI {
 
-    private JFrame frame;
+    public JFrame frame;
     
     /**
      * Launch the application
@@ -35,6 +35,8 @@ public class UserGUI {
             public void run() {
                 try {
                 	UserGUI window = new UserGUI();
+                	window.frame.pack();
+                	window.frame.setLocationRelativeTo(null);
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -76,9 +78,11 @@ public class UserGUI {
         JButton btnGestionnaire = new JButton("Gestionnaire");
         btnGestionnaire.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frame.setVisible(false);
                 
             	SignInGestionnaireGUI window = new SignInGestionnaireGUI();
                 frame = new JFrame();
+                window.frame.setLocationRelativeTo(null);
                 window.frame.setVisible(true);
      
             }
@@ -92,9 +96,10 @@ public class UserGUI {
         JButton btnEnseignant = new JButton("Enseignant");
         btnEnseignant.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+            	frame.setVisible(false);
             	SignInEnseignantGUI window = new SignInEnseignantGUI();
                 frame = new JFrame();
+                window.frame.setLocationRelativeTo(null);
                 window.frame.setVisible(true);
      
             }
@@ -107,9 +112,10 @@ public class UserGUI {
         JButton btnEtudiant = new JButton("Etudiant");
         btnEtudiant.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                                
+            	frame.setVisible(false);
                 SignInEtudiantGUI window = new SignInEtudiantGUI();
                 frame = new JFrame();
+                window.frame.setLocationRelativeTo(null);
                 window.frame.setVisible(true);
      
             }
@@ -121,9 +127,11 @@ public class UserGUI {
         JButton btnAdmin = new JButton("Administratif");
         btnAdmin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frame.setVisible(false);
                 
             	SignInAdminGUI window = new SignInAdminGUI();
                 frame = new JFrame();
+                window.frame.setLocationRelativeTo(null);
                 window.frame.setVisible(true);
      
             }
@@ -135,9 +143,6 @@ public class UserGUI {
         
         
 
-      
-        frame.pack();
-        frame.setLocationRelativeTo(null);
 
     }
    

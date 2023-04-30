@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -32,6 +33,7 @@ public class SignInAdminGUI {
             public void run() {
                 try {
                 	SignInAdminGUI window = new SignInAdminGUI();
+                    window.frame.setLocationRelativeTo(null);
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -93,11 +95,20 @@ public class SignInAdminGUI {
                 // Appeler la méthode d'authentification d'un administratif dans la base de données
                 AdminDAO adminDAO = new AdminDAO();
                 admin = adminDAO.signIn(email,mdp);
-                
-                AdminGUI window = new AdminGUI();
-                frame = new JFrame();
-                window.frame.setVisible(true);
-     
+                if (admin==null) {
+                	
+                	JPanel panel = new JPanel();
+                    frame.getContentPane().add(panel);
+                    JLabel lbl = new JLabel("Erreur: Email ou Mot de passe erronés");
+                    lbl.setForeground(Color.RED);
+                    panel.add(lbl);
+	                frame.setVisible(true);
+                }
+                else {
+	                AdminGUI window = new AdminGUI();
+	                frame = new JFrame();
+	                window.frame.setVisible(true);
+                }
             }
             
         });
@@ -110,7 +121,10 @@ public class SignInAdminGUI {
 	        retourBtn.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent event) {
 	                frame.dispose(); // ferme la fenêtre actuelle
-	                new UserGUI(); // affiche la fenêtre précédente
+	                UserGUI window = new UserGUI();
+	                frame = new JFrame();
+	                window.frame.setLocationRelativeTo(null);
+	                window.frame.setVisible(true);
 	            }
 	        });
 	        panelBoutonRetour.add(retourBtn);
