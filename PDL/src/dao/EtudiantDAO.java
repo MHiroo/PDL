@@ -10,6 +10,7 @@ import model.*;
  * @version 1.0
  * */
 public class EtudiantDAO extends ConnectionDAO {
+	
 	/**
 	 * Constructor
 	 * 
@@ -136,7 +137,6 @@ public class EtudiantDAO extends ConnectionDAO {
 	public int delete(int id) {
 	    Connection con = null;
 	    PreparedStatement ps = null;
-	    ResultSet rs = null;
 	    int returnValue = 0;
 
 	    try {
@@ -297,7 +297,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Etudiant returnValue = null;
-
+		
 		// connexion a la base de donnees
 		try {
 
@@ -342,9 +342,148 @@ public class EtudiantDAO extends ConnectionDAO {
 			} catch (Exception ignore) {
 			}
 		}
+		
 		return returnValue;
 	}
 	
+	
+	/**
+	 * Permet de recuperer tous les noms de cours stockes dans la table cours
+	 * 
+	 * @return une ArrayList de noms de cours
+	 */
+	public ArrayList<String> getNomCours(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> returnValue = new ArrayList<String>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT nomCours FROM COURS WHERE (idCours=(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe))");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getString("nomCours"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer tous les masses horaires stockes dans la table cours
+	 * 
+	 * @return une ArrayList de masse Horaire
+	 */
+	public ArrayList<String> getMasseHoraire(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> returnValue = new ArrayList<String>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT masseHoraire FROM Cours WHERE idCours=(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getString("masseHoraire"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	
+	/**
+	 * Permet de recuperer tous les noms d'enseignants stockes dans la table enseignant
+	 * 
+	 * @return une ArrayList de noms d'enseignants
+	 */
+	public ArrayList<String> getNomEnseignant(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> returnValue = new ArrayList<String>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT nomEnseignant FROM Enseignant WHERE idEnseignant=(SELECT idEnseignant FROM Planning WHERE Planning.idCours =(SELECT idCours FROM Cours WHERE((SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)))");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getString("masseHoraire"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+
 	/**
 	 * ATTENTION : Cette méthode n'a pas vocation à être executée lors d'une utilisation normale du programme !
 	 * Elle existe uniquement pour TESTER les méthodes écrites au-dessus !
@@ -352,6 +491,7 @@ public class EtudiantDAO extends ConnectionDAO {
 	 * @param args non utilisés
 	 * @throws SQLException si une erreur se produit lors de la communication avec la BDD
 	 */
+	/**
 	public static void main(String[] args) throws SQLException {
 		int returnValue;
 		EtudiantDAO EtudiantDAO = new EtudiantDAO();
@@ -393,5 +533,5 @@ public class EtudiantDAO extends ConnectionDAO {
 		
 		System.out.println();
 	}
-	
+	*/
 }

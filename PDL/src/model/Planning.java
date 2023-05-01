@@ -11,6 +11,10 @@ public class Planning {
 	 */
 	public int id;
 	/**
+	 * groupe d'étudiant
+	 */
+	public Groupe_Etudiant groupe;
+	/**
 	 * enseignant
 	 */
 	private Enseignant enseignant;
@@ -40,8 +44,9 @@ public class Planning {
 	 * @param nbreHeure du planning
 	 * @param salle du planning
 	 */
-	public Planning(int id, Enseignant enseignant,Cours cours, Date date, String salle, double duree) {
+	public Planning(int id,Groupe_Etudiant groupe, Enseignant enseignant,Cours cours, Date date, String salle, double duree) {
 		this.id=id;
+		this.groupe= groupe;
 		this.enseignant=enseignant;
 		this.cours=cours;
 		this.date=date;
@@ -55,6 +60,13 @@ public class Planning {
 	 */
 	public int getId() {
 		return id;
+	}
+	/**
+	 * getter pour l'attribut groupe
+	 * @return valeur du groupe
+	 */
+	public Groupe_Etudiant getGroupe() {
+		return groupe;
 	}
 	/**
 	 * getter pour l'attribut enseignant

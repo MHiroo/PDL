@@ -23,6 +23,7 @@ public class SignInEtudiantGUI {
     private JTextField textFieldId;
     private JTextField textFieldEmail;
     private JTextField textFieldMdp;
+    public static int id;
     
     /**
      * Launch the application
@@ -95,7 +96,7 @@ public class SignInEtudiantGUI {
                 // Appeler la méthode d'authentification d'un étudiant dans la base de données
                 EtudiantDAO etudiantDAO = new EtudiantDAO();
                 etudiant = etudiantDAO.signIn(email,mdp);
-
+                
 
                 if (etudiant==null) {
                 	
@@ -107,6 +108,7 @@ public class SignInEtudiantGUI {
 	                frame.setVisible(true);
                 }
                 else {
+                	id = etudiant.getId();
                 	frame.setVisible(false);
 	                EtudiantGUI window = new EtudiantGUI();
 	                frame = new JFrame();

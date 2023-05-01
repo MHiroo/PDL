@@ -54,6 +54,9 @@ public class Cours {
 		this.repNbrHTD=repNbrHTP;
 		this.repNbrHExam=repNbrHExam;
 	}
+	public Cours(String nom) {
+		this.nom=nom;
+	}
 	
 	/**
 	 * getter pour l'attribut reference
