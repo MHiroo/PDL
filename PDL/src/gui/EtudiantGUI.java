@@ -34,6 +34,7 @@ public class EtudiantGUI extends JFrame{
     private JFrame frameListeAbsences;
     
     
+    
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -92,23 +93,28 @@ public class EtudiantGUI extends JFrame{
      // Création du tableau
         EtudiantDAO etudiantDAO = new EtudiantDAO();
         String[][] data = new String[10][4];
-        for (int i = 0; i < etudiantDAO.getNomCours(SignInEtudiantGUI.id).size(); i++) {
-            for (int j = 0; j < 4; j++) {
-            	if (j==0) {
-            		data[i][j] =etudiantDAO.getNomCours(SignInEtudiantGUI.id).get(i);
-            	}
-            	if (j==1) {
-            		data[i][j] =etudiantDAO.getMasseHoraire(SignInEtudiantGUI.id).get(i);
-            	}
-            	/**if (j==2) {
-            		data[i][j] =etudiantDAO.getRepartition(SignInEtudiantGUI.id).get(i);
-            	}*/
-            	if (j==3) {
-            		data[i][j] =etudiantDAO.getNomEnseignant(SignInEtudiantGUI.id).get(i);
-            	
-            	}
-            }
-        }
+        try {
+			for (int i = 0; i < etudiantDAO.getNomCours(SignInEtudiantGUI.id).size(); i++) {
+			    for (int j = 0; j < 4; j++) {
+			    	if (j==0) {
+			    		data[i][j] =etudiantDAO.getNomCours(SignInEtudiantGUI.id).get(i);
+			    	}
+			    	/**if (j==1) {
+			    		data[i][j] =etudiantDAO.getMasseHoraire(SignInEtudiantGUI.id).get(i);
+			    	}
+			    	/**if (j==2) {
+			    		data[i][j] =etudiantDAO.getRepartition(SignInEtudiantGUI.id).get(i);
+			    	}
+			    	if (j==3) {
+			    		data[i][j] =etudiantDAO.getNomEnseignant(SignInEtudiantGUI.id).get(i);
+			    	
+			    	}*/
+			    }
+			}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         String[] columnNames = {"Nom du cours:", "Masse Horaire:", "Repartition:", "Enseignant:"};
         JTable tableau = new JTable(data, columnNames);
 

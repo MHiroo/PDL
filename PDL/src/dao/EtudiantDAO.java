@@ -362,7 +362,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT nomCours FROM COURS WHERE (idCours=(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe))");
+			ps = con.prepareStatement("SELECT nomCours FROM COURS WHERE (idCours=(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= 1 ))=Planning.idGroupe))");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
@@ -397,7 +397,7 @@ public class EtudiantDAO extends ConnectionDAO {
 	 * 
 	 * @return une ArrayList de masse Horaire
 	 */
-	public ArrayList<String> getMasseHoraire(int id) {
+	/**public ArrayList<String> getMasseHoraire(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -443,7 +443,7 @@ public class EtudiantDAO extends ConnectionDAO {
 	 * 
 	 * @return une ArrayList de noms d'enseignants
 	 */
-	public ArrayList<String> getNomEnseignant(int id) {
+	/**public ArrayList<String> getNomEnseignant(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
