@@ -40,3 +40,6 @@ VALUES (1,'https://ent.esigelec.fr/course/view.php?id=6070');
 
 INSERT INTO Intervenant (idEnseignant, idCours)
 VALUES (1,1);
+
+INSERT INTO EstAbs (idEtud, idAbsCla,statut)
+VALUES (1,1,'Non justifie');

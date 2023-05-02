@@ -173,3 +173,15 @@ CREATE SEQUENCE justificatifdistanciel_seq
  INCREMENT BY 1
  NOCACHE
  NOCYCLE;
+ 
+  CREATE TABLE EstAbs
+(
+ idEtud INTEGER,
+ idAbsCla INTEGER,
+ statut VARCHAR2(50)CONSTRAINT CK_statut CHECK (statut IN ('Justifie', 'Non justifie','En verification')),
+ CONSTRAINT PK_Etudiant_eabs PRIMARY KEY(idEtud, idAbsCla),
+ CONSTRAINT FK_idEtud_eabs FOREIGN KEY(idEtud) REFERENCES Etudiant(idEtud) ON DELETE CASCADE,
+ CONSTRAINT FK_idAbsCla_eabs FOREIGN KEY(idAbsCla) REFERENCES AbsenceClassique(idAbsCla) ON DELETE CASCADE
+);
+
+

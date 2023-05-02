@@ -11,55 +11,61 @@ public class PremiereGUI extends JFrame  {
     private JButton button;
     EtudiantDAO etudiantDAO = new EtudiantDAO();
     public PremiereGUI() {
-    	// création du bouton
-        button = new JButton("Récupérer la liste des cours");
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // Connexion à la base de données
-                    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ma_base_de_donnees", "mon_utilisateur", "mon_mot_de_passe");
+    	
+    	
+    	EtudiantDAO etudiantDAO = new EtudiantDAO();
+    	String[][] data = new String[etudiantDAO.getNomCours(SignInEtudiantGUI.id).size()][4];
 
-                    // Requête SQL avec INNER JOIN et sélection du nom du cours
-                    String sql = "SELECT Cours.nom_cours FROM Cours INNER JOIN Enseignant ON Cours.id_enseignant = Enseignant.id_enseignant";
+    	try {
+    	    for (int i = 0; i < etudiantDAO.getNomCours(SignInEtudiantGUI.id).size(); i++) {
+    	        for (int j = 0; j < 4; j++) {
+    	            if (j==0) {
+    	                data[i][j] = etudiantDAO.getNomCours(SignInEtudiantGUI.id).get(i);
+    	            } else if (j==1) {
+    	                data[i][j] = etudiantDAO.getMasseHoraire(SignInEtudiantGUI.id).get(i);
+    	            } else if (j==2) {
+    	                JPanel panel = new JPanel(new GridLayout(1, 3)); // créer un panel qui contient 3 colonnes
+    	                panel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5)); // ajouter une bordure vide pour ajouter une marge
+    	                JLabel label1 = new JLabel(etudiantDAO.getRepartition1(SignInEtudiantGUI.id).get(i)); // ajouter le 1er label
+    	                label1.setForeground(Color.BLUE); // changer la couleur de texte
+    	                panel.add(label1);
+    	                JLabel label2 = new JLabel(etudiantDAO.getRepartition2(SignInEtudiantGUI.id).get(i)); // ajouter le 2ème label
+    	                label2.setForeground(Color.RED); // changer la couleur de texte
+    	                panel.add(label2);
+    	                JLabel label3 = new JLabel(etudiantDAO.getRepartition3(SignInEtudiantGUI.id).get(i)); // ajouter le 3ème label
+    	                label3.setForeground(Color.GREEN); // changer la couleur de texte
+    	                panel.add(label3);
+    	                data[i][j] = ""; // mettre une cellule vide
+    	                tableau.add(panel); // ajouter le panel contenant les labels à la table
+    	            } else if (j==3) {
+    	                data[i][j] = etudiantDAO.getNomEnseignant(SignInEtudiantGUI.id).get(i);
+    	            }
+    	        }
+    	    }
+    	} catch (Exception e1) {
+    	    e1.printStackTrace();
+    	}
 
-                    // Exécution de la requête
-                    Statement statement = conn.createStatement();
-                    ResultSet result = statement.executeQuery(sql);
+    	String[] columnNames = {"Nom du cours:", "Masse Horaire:", "Repartition:", "Enseignant:"};
+    	JTable tableau = new JTable(data, columnNames);
 
-                    // Récupération des noms de cours
-                    ArrayList<String> nomsCours = new ArrayList<>();
-                    while (result.next()) {
-                        String nomCours = result.getString("nom_cours");
-                        nomsCours.add(nomCours);
-                    }
+    	// Modifier l'apparence des colonnes pour que les cellules soient alignées au centre
+    	DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+    	centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+    	tableau.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+    	tableau.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+    	tableau.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 
-                    // Affichage des noms de cours
-                    System.out.println("Liste des noms de cours :");
-                    for (String nomCours : nomsCours) {
-                        System.out.println(nomCours);
-                    }
+    	// Ajouter la table dans un JScrollPane
+    	JScrollPane scrollPane = new JScrollPane(tableau);
 
-                    // Fermeture de la connexion
-                    conn.close();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-
-        // ajout du bouton à la frame
-        add(button);
-
-        // configuration de la frame
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 400);
-        setLocationRelativeTo(null);
-        setVisible(true);
-    }
-    
-    public static void main(String[] args) {
-        new PremiereGUI();
-    }
+    	// Ajouter le JScrollPane et le bouton à la frame
+    	JFrame frame = new JFrame("Tableau avec 3 colonnes");
+    	frame.getContentPane().setLayout(new BorderLayout());
+    	frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+    	frame.getContentPane().add(button, BorderLayout.SOUTH);
+    	frame.pack();
+    	frame.setVisible(true);
 
 
 
