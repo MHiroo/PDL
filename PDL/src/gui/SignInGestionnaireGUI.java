@@ -99,7 +99,7 @@ public class SignInGestionnaireGUI {
                 	
                 	JPanel panel = new JPanel();
                     frame.getContentPane().add(panel);
-                    JLabel lbl = new JLabel("Erreur: Email ou Mot de passe erronés");
+                    JLabel lbl = new JLabel("Erreur: Email ou Mot de passe errones");
                     lbl.setForeground(Color.RED);
                     panel.add(lbl);
 	                frame.setVisible(true);
