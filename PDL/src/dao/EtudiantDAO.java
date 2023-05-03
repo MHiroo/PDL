@@ -663,11 +663,56 @@ public class EtudiantDAO extends ConnectionDAO {
 		return returnValue;
 	}
 	/**
-	 * Permet de recuperer tous les date stockes dans la table AbsenceClassique
+	 * Permet de recuperer tous les date stockes dans la table AbsenceClassique ou AbsenceDistanciel
 	 * 
 	 * @return une ArrayList de date
 	 */
-	public ArrayList<String> getDateAbs(int id) {
+	public ArrayList<Date> getDateAbs(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Date> returnValue = new ArrayList<Date>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT date_abs_cls FROM AbsenceClassique WHERE (idEtud= ?)");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getDate("date_abs_cls"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer tous les noms de cours où l'élève est absent stockes dans la table  Cours
+	 * 
+	 * @return une ArrayList de noms cours
+	 */
+	public ArrayList<String> getNomCoursAbs(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -677,13 +722,104 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("");
+			ps = con.prepareStatement("SELECT nomCours FROM Cours WHERE (idCours =(SELECT idCours FROM AbsenceClassique WHERE (idEtud= ?)))");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
 			// on parcourt les lignes du resultat
 			while (rs.next()) {
-				returnValue.add(rs.getString("date_abs_cls"));
+				returnValue.add(rs.getString("nomCours"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	
+	/**
+	 * Permet de recuperer tous les nombre d'heures par séance où l'élève est absent stockes dans la table  absenceClassique ou absenceDistanciel
+	 * 
+	 * @return une ArrayList de noms cours
+	 */
+	public ArrayList<Integer> getHeureAbs(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Integer> returnValue = new ArrayList<Integer>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT nbrdheure FROM AbsenceClassique WHERE (idEtud= ?)");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getInt("nbrDHeure"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer tous les Statuts des absences stockes dans la table  estAbs
+	 * 
+	 * @return une ArrayList de Statuts
+	 */
+	public ArrayList<String> getStatutAbs(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> returnValue = new ArrayList<String>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT statut FROM AbsenceClassique WHERE (idEtud= ?)");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getString("statut"));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();

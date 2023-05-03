@@ -38,3 +38,9 @@ SELECT masseHoraire FROM Cours WHERE idCours=(SELECT idCours FROM Planning WHERE
 SELECT masseHoraireAmphi FROM Cours WHERE idCours=(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= 1 ))=Planning.idGroupe);
 SELECT masseHoraireTD FROM Cours WHERE idCours=(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= 1 ))=Planning.idGroupe);
 SELECT masseHoraireTP FROM Cours WHERE idCours=(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= 1 ))=Planning.idGroupe);
+
+SELECT date_abs_cls FROM AbsenceClassique WHERE (idEtud= 1);
+SELECT nbrdheure FROM AbsenceClassique WHERE (idEtud= 1);
+SELECT statut FROM AbsenceClassique WHERE (idEtud= 1);
+(SELECT idCours FROM AbsenceClassique WHERE (idEtud= 1))
+SELECT nomCours FROM Cours WHERE (idCours =(SELECT idCours FROM AbsenceClassique WHERE (idEtud= 1)));

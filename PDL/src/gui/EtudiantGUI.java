@@ -28,6 +28,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.awt.event.ActionEvent;
 
 public class EtudiantGUI extends JFrame{
@@ -227,16 +228,16 @@ public class EtudiantGUI extends JFrame{
 					for (int i = 0; i < etudiantDAO3.getDateAbs(SignInEtudiantGUI.id).size(); i++) {
 						for (int j = 0; j < 5; j++) {
 							if (j == 0) {
-								data3[i][j] = etudiantDAO3.getDateAbs(SignInEtudiantGUI.id).get(i);
+								Date d= etudiantDAO3.getDateAbs(SignInEtudiantGUI.id).get(i);
+								data3[i][j] = d+"";
 							} else if (j == 1) {
-								data3[i][j] = etudiantDAO3.getCoursAbs(SignInEtudiantGUI.id).get(i);
+								data3[i][j] = etudiantDAO3.getNomCoursAbs(SignInEtudiantGUI.id).get(i);
 							} else if (j == 2) {
-								data3[i][j] = etudiantDAO3.getHeureAbs(SignInEtudiantGUI.id).get(i);
+								Integer x = etudiantDAO3.getHeureAbs(SignInEtudiantGUI.id).get(i);
+								data3[i][j] = x+ "";
 							} else if (j == 3) {
-								data3[i][j] = etudiantDAO3.getStatutAbs(SignInEtudiantGUI.id).get(i);
-							} else if (j == 4) {
-								
-							}
+								data3[i][j] = etudiantDAO3.getStatutAbs(SignInEtudiantGUI.id).get(i)+"";
+							} 
 						}
 					}
 				} catch (Exception e1) {
@@ -244,7 +245,7 @@ public class EtudiantGUI extends JFrame{
 					e1.printStackTrace();
 				}
 
-				String[] columnNames3 = {"Date:", "Cours:", "Heures d'absence:", "Statut:", "Déposer un justificatif:"};
+				String[] columnNames3 = {"Date:", "Cours:", "Heures d'absence:", "Statut:", "Deposer un justificatif:"};
 				JTable tableau3 = new JTable(data3, columnNames3);
 
 

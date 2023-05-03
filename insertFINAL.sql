@@ -6,10 +6,10 @@ INSERT INTO enseignant (idEnseignant, nomEnseignant, prenomEnseignant, tel, emai
 VALUES (1,'Cabot','Chloé','07345343','chloé.cabot@esigelec.org','azerty');
 INSERT INTO GroupeEtudiant (idgroupe, capacitemax , num) 
 VALUES (1,34,9);
-INSERT INTO absenceclassique (idAbscla, idEtud, idcours, Absenceclassique, nbrdheure, date_abs_cls)
-VALUES (1,1,2,'N',180,TO_DATE('21-03-2023','DD-MM-YYYY'));
-INSERT INTO absencedistanciel (idAbsdis, idEtud, idcours, Absencedistanciel, nbrdheure, date_abs_dst,estjustifier)
-VALUES (1,1,2,'N',180,TO_DATE('21-03-2023','DD-MM-YYYY'),'non');
+INSERT INTO absenceclassique (idAbscla, idEtud, idcours, Absenceclassique, nbrdheure, date_abs_cls,statut)
+VALUES (1,1,1,'N',180,TO_DATE('21-03-2023','DD-MM-YYYY'),'Non justifie');
+INSERT INTO absencedistanciel (idAbsdis, idEtud, idcours, Absencedistanciel, nbrdheure, date_abs_dst,statut_dst)
+VALUES (1,1,1,'N',180,TO_DATE('21-03-2023','DD-MM-YYYY'),'Non justifie');
 INSERT INTO etudiant (idetud, idgroupe, nomEtudiant, prenomEtudiant, filiere, email, motdepasse)
 VALUES (1,1,'Mizuno','Hiroo','classique','hiroo.mizuno@groupe-esigelec.org','azerty');
 INSERT INTO etudiant (idetud, idgroupe, nomEtudiant, prenomEtudiant, filiere, email, motdepasse)
@@ -40,6 +40,3 @@ VALUES (1,'https://ent.esigelec.fr/course/view.php?id=6070');
 
 INSERT INTO Intervenant (idEnseignant, idCours)
 VALUES (1,1);
-
-INSERT INTO EstAbs (idEtud, idAbsCla,statut)
-VALUES (1,1,'Non justifie');
