@@ -53,7 +53,7 @@ public class EtudiantDAO extends ConnectionDAO {
 
 		} catch (Exception e) {
 			if (e.getMessage().contains("ORA-00001"))
-				System.out.println("Cet identifiant de etudiant existe déjà. Ajout impossible !");
+				System.out.println("Cet identifiant de etudiant existe deja�. Ajout impossible !");
 			else
 				e.printStackTrace();
 		} finally {
@@ -131,7 +131,7 @@ public class EtudiantDAO extends ConnectionDAO {
 	 * Si ce dernier possede des articles, la suppression n'a pas lieu.
 	 * Le mode est auto-commit par defaut : chaque suppression est validee
 	 * 
-	 * @param id l'id du etudiant à supprimer
+	 * @param id l'id du etudiant a� supprimer
 	 * @return retourne le nombre de lignes supprimees dans la table
 	 */
 	public int delete(int id) {
@@ -290,7 +290,7 @@ public class EtudiantDAO extends ConnectionDAO {
 	 * 
 	 * @param email l'email de l'etudiant 
 	 * @param mdp mot de passe de l'etudiant 
-	 * @return retourne l'étudiant qui se connecte
+	 * @return retourne l'etudiant qui se connecte
 	 */
 	public Etudiant signIn(String email, String mdp) {
 		Connection con = null;
@@ -774,7 +774,7 @@ public class EtudiantDAO extends ConnectionDAO {
 			rs = ps.executeQuery();
 			// on parcourt les lignes du resultat
 			while (rs.next()) {
-				returnValue.add(rs.getInt("nbrDHeure"));
+				returnValue.add(rs.getInt("nbrdheure"));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -844,17 +844,17 @@ public class EtudiantDAO extends ConnectionDAO {
 		return returnValue;
 	}
 	/**
-	 * ATTENTION : Cette méthode n'a pas vocation à être executée lors d'une utilisation normale du programme !
-	 * Elle existe uniquement pour TESTER les méthodes écrites au-dessus !
+	 * ATTENTION : Cette methode n'a pas vocation a� a�tre executee lors d'une utilisation normale du programme !
+	 * Elle existe uniquement pour TESTER les methodes ecrites au-dessus !
 	 * 
-	 * @param args non utilisés
+	 * @param args non utilises
 	 * @throws SQLException si une erreur se produit lors de la communication avec la BDD
 	 */
 	/**
 	public static void main(String[] args) throws SQLException {
 		int returnValue;
 		EtudiantDAO EtudiantDAO = new EtudiantDAO();
-		// Ce test va utiliser directement votre BDD, on essaie d'éviter les collisions avec vos données en prenant de grands ID
+		// Ce test va utiliser directement votre BDD, on essaie d'eviter les collisions avec vos donnees en prenant de grands ID
 		int[] ids = {424242, 424243, 424244};
 		// test du constructeur
 		Etudiant s1 = new Etudiant(ids[0],  1,  "nom",  "prenom",  "filiere",  "mail", "mdp");
@@ -883,7 +883,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		}
 		System.out.println();
 		// test de la methode delete
-		// On supprime les 3 articles qu'on a créé
+		// On supprime les 3 articles qu'on a cree
 		returnValue = 0;
 		for (int id : ids) {
 //			returnValue = EtudiantDAO.delete(id);

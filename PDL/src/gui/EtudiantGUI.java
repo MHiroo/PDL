@@ -1,5 +1,6 @@
 package gui;
-
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -63,7 +64,7 @@ public class EtudiantGUI extends JFrame{
 
 	private void initialize() {
 		/**
-		 * Création de la fenêtre d'accueil de l'étudiant
+		 * Creation de la fenetre d'accueil de l'etudiant
 		 */
 
 		frame=this;
@@ -76,7 +77,7 @@ public class EtudiantGUI extends JFrame{
 		
 		
 		/**
-		 * Création de la fenêtre de la liste des cours de l'étudiant
+		 * Creation de la fenetre de la liste des cours de l'etudiant
 		 */
 
 		frameListeCours = new JFrame();
@@ -99,7 +100,7 @@ public class EtudiantGUI extends JFrame{
 
 
 
-		// Création du tableau
+		// Creation du tableau
 
 		EtudiantDAO etudiantDAO = new EtudiantDAO();
 		String[][] data = new String[etudiantDAO.getNomCours(SignInEtudiantGUI.id).size()][7];
@@ -133,11 +134,11 @@ public class EtudiantGUI extends JFrame{
 
 
 
-		//Création du bouton retour
+		//Creation du bouton retour
 		JButton retourBtn = new JButton("Retour");
 		retourBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				frameListeCours.dispose(); // ferme la fenêtre actuelle
+				frameListeCours.dispose(); // ferme la fenetre actuelle
 				frame.setVisible(true);
 			}
 		});
@@ -166,28 +167,52 @@ public class EtudiantGUI extends JFrame{
 
 
 		/**
-		 * Création de la fenêtre Planning de l'étudiant
+		 * Creation de la fenetre Planning de l'etudiant
 		 */
 		framePlanning = new JFrame();
-		framePlanning.setBounds(100, 100, 450, 300);
+		framePlanning.setBounds(1500, 1500, 1500, 1000);
 		framePlanning.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		framePlanning.getContentPane().setLayout(new BoxLayout(framePlanning.getContentPane(), BoxLayout.Y_AXIS));
 
+		//Initialisation des composants
+
+
+		JPanel base2 = new JPanel();
+		JPanel upContainer2 = new JPanel();
+		JPanel downContainer2 = new JPanel();
+
+		//each panel gets its own layout
+		upContainer2.setLayout(new GridLayout(1, 1));
+		downContainer2.setLayout(new GridLayout(1, 1));
+		base2.setLayout(new GridLayout(2,1));
+		
 		//Ajout bouton retour
 
 		JPanel panelBoutonRetour2 = new JPanel();
 		JButton retourBtn2 = new JButton("Retour");
 		retourBtn2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				framePlanning.dispose(); // ferme la fenêtre actuelle
+				framePlanning.dispose(); // ferme la fenetre actuelle
 				frame.setVisible(true);
 			}
 		});
 		panelBoutonRetour2.add(retourBtn2);
-		framePlanning.getContentPane().add(panelBoutonRetour2);
 
+		//Creation du calendrier
+		JCalendar calendar = new JCalendar();
 		
+		//Creation de la liste de cours du jour selectionne
 		
+		//distribution of the components in the 2 containers
+		upContainer2.add(calendar);
+		downContainer2.add(panelBoutonRetour2);
+
+		//Ajout des containers au container principal
+		base2.add(upContainer2);
+		base2.add(downContainer2);
+
+		//to finish, we add the main container to the window
+		framePlanning.setContentPane(base2);
 		
 		
 		
@@ -196,7 +221,7 @@ public class EtudiantGUI extends JFrame{
 		
 		
 		/**
-		 * Création de la fenêtre Liste d'absence de l'étudiant
+		 * Creation de la fenetre Liste d'absence de l'etudiant
 		 */
 		frameListeAbsences = new JFrame();
 		frameListeAbsences.setBounds(1500, 1500, 1500, 1000);
@@ -219,24 +244,23 @@ public class EtudiantGUI extends JFrame{
 
 
 
-				// Création du tableau
+				// Creation du tableau
 
-				EtudiantDAO etudiantDAO3 = new EtudiantDAO();
-				String[][] data3 = new String[etudiantDAO3.getDateAbs(SignInEtudiantGUI.id).size()][5];
-
+				
+				String[][] data3 = new String[etudiantDAO.getStatutAbs(SignInEtudiantGUI.id).size()][5];
 				try {
-					for (int i = 0; i < etudiantDAO3.getDateAbs(SignInEtudiantGUI.id).size(); i++) {
+					for (int i = 0; i < etudiantDAO.getStatutAbs(SignInEtudiantGUI.id).size(); i++) {
 						for (int j = 0; j < 5; j++) {
-							if (j == 0) {
-								Date d= etudiantDAO3.getDateAbs(SignInEtudiantGUI.id).get(i);
+							   if (j == 0) {
+								Date d= etudiantDAO.getDateAbs(SignInEtudiantGUI.id).get(i);
 								data3[i][j] = d+"";
-							} else if (j == 1) {
-								data3[i][j] = etudiantDAO3.getNomCoursAbs(SignInEtudiantGUI.id).get(i);
-							} else if (j == 2) {
-								Integer x = etudiantDAO3.getHeureAbs(SignInEtudiantGUI.id).get(i);
+							}  if (j == 1) {
+								data3[i][j] = etudiantDAO.getNomCoursAbs(SignInEtudiantGUI.id).get(i);
+							}  if (j == 2) {
+								Integer x = etudiantDAO.getHeureAbs(SignInEtudiantGUI.id).get(i);
 								data3[i][j] = x+ "";
-							} else if (j == 3) {
-								data3[i][j] = etudiantDAO3.getStatutAbs(SignInEtudiantGUI.id).get(i)+"";
+							}  if (j == 3) {
+								data3[i][j] = etudiantDAO.getStatutAbs(SignInEtudiantGUI.id).get(i);
 							} 
 						}
 					}
@@ -258,7 +282,7 @@ public class EtudiantGUI extends JFrame{
 				JButton retourBtn3 = new JButton("Retour");
 				retourBtn3.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent event) {
-						frameListeAbsences.dispose(); // ferme la fenêtre actuelle
+						frameListeAbsences.dispose(); // ferme la fenetre actuelle
 						frame.setVisible(true);
 					}
 				});
@@ -280,11 +304,11 @@ public class EtudiantGUI extends JFrame{
 
 
 		/**
-		 * Création du bouton pour accéder à liste des cours de l'étudiant
+		 * Creation du bouton pour acceder à liste des cours de l'etudiant
 		 */
 		JPanel ListeCours = new JPanel();
 		this.getContentPane().add(ListeCours);
-		JButton ListeCour = new JButton("Accéder Liste Cours");
+		JButton ListeCour = new JButton("Acceder Liste Cours");
 		ListeCour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameListeCours.setLocationRelativeTo(null);
@@ -295,11 +319,11 @@ public class EtudiantGUI extends JFrame{
 
 
 		/**
-		 * Création du bouton pour accéder au planning de l'étudiant
+		 * Creation du bouton pour acceder au planning de l'etudiant
 		 */
 		JPanel Planning = new JPanel();
 		this.getContentPane().add(Planning);
-		JButton PLANNING = new JButton("Accéder au Planning");
+		JButton PLANNING = new JButton("Acceder au Planning");
 		PLANNING.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				framePlanning.setLocationRelativeTo(null);
@@ -309,11 +333,11 @@ public class EtudiantGUI extends JFrame{
 		Planning.add(PLANNING);
 
 		/**
-		 * Création du bouton pour accéder à la liste d'absence de l'étudiant
+		 * Creation du bouton pour acceder à la liste d'absence de l'etudiant
 		 */
 		JPanel ListeAbsences = new JPanel();
 		this.getContentPane().add(ListeAbsences);
-		JButton LISTEABSENCES = new JButton("Accéder à la liste d'absences");
+		JButton LISTEABSENCES = new JButton("Acceder à la liste d'absences");
 		LISTEABSENCES.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameListeAbsences.setLocationRelativeTo(null);

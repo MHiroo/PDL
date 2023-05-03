@@ -84,15 +84,15 @@ public class SignInEnseignantGUI {
         JButton btnConnecter = new JButton("Se connecter");
         btnConnecter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Récupérer les données saisies par l'utilisateur
+                // Recuperer les donnees saisies par l'utilisateur
                 
                 String email = textFieldEmail.getText();
                 String mdp = textFieldMdp.getText();
                 
-                // Créer un objet Enseignant avec les données récupérées
+                // Creer un objet Enseignant avec les donnees recuperees
                 Enseignant enseignant = new Enseignant( 0, "",  "",  "", "", "");
                 
-                // Appeler la méthode d'authentification d'un étudiant dans la base de données
+                // Appeler la methode d'authentification d'un etudiant dans la base de donnees
                 EnseignantDAO enseignantDAO = new EnseignantDAO();
                 enseignant = enseignantDAO.signIn(email,mdp);
                 
@@ -100,7 +100,7 @@ public class SignInEnseignantGUI {
                 	
                     JPanel panel = new JPanel();
                     frame.getContentPane().add(panel);
-                    JLabel lbl = new JLabel("Erreur: Email ou Mot de passe erronés");
+                    JLabel lbl = new JLabel("Erreur: Email ou Mot de passe errones");
                     lbl.setForeground(Color.RED);
                     panel.add(lbl);
 	                frame.setVisible(true);
