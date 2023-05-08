@@ -1,36 +1,20 @@
 package gui;
-import com.toedter.calendar.JCalendar;
-import com.toedter.calendar.JDateChooser;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
 
-import javax.swing.JFrame;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
-import dao.EnseignantDAO;
+import com.toedter.calendar.JCalendar;
+
 import dao.EtudiantDAO;
-import dao.GroupeDAO;
-import model.Enseignant;
-import model.Etudiant;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-
-import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.awt.event.ActionEvent;
 
 public class EtudiantGUI extends JFrame{
 
@@ -200,6 +184,10 @@ public class EtudiantGUI extends JFrame{
 
 		//Creation du calendrier
 		JCalendar calendar = new JCalendar();
+		java.util.Date utilDate = new java.util.Date();
+		utilDate=calendar.getDate();
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		
 		
 		//Creation de la liste de cours du jour selectionne
 		
