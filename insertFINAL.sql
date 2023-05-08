@@ -31,8 +31,8 @@ VALUES (1,1,TO_DATE('21-03-2023','DD-MM-YYYY'),'N','Covid');
 INSERT INTO justificatifdistanciel (idjustificatifdis , idAbsdis, date_abs_dst, etat, motif) 
 VALUES (1,1,TO_DATE('21-03-2023','DD-MM-YYYY'),'N','Covid');
 
-INSERT INTO Planning (idplanning,idGroupe, idEnseignant, idcours, date_pln, salle,duree)
-VALUES (1,1,1,1,TO_DATE('21-03-2023','DD-MM-YYYY'),'N',120);
+INSERT INTO Planning (idplanning,idGroupe, idEnseignant, idcours, date_pln, salle,duree,heure)
+VALUES (1,1,1,1,TO_DATE('21-03-2023','DD-MM-YYYY'),'N',120,TO_DATE('13:30:00', 'HH24:MI:SS'));
 
 INSERT INTO lien (idlien, lien)
 VALUES (1,'https://ent.esigelec.fr/course/view.php?id=6070');
