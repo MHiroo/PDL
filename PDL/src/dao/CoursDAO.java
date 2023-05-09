@@ -202,11 +202,11 @@ public class CoursDAO extends ConnectionDAO {
 			if (rs.next()) {
 				returnValue = new Cours(rs.getInt("idcours"),
 										   rs.getString("nomcours"),
-									       rs.getInt("massehorraire"),
-									       rs.getInt("massehorraireAmphi"),
-									       rs.getInt("massehorraireTD"),
-									       rs.getInt("massehorraireTP"),
-										   rs.getInt("massehorraireExam"));
+									       rs.getInt("massehoraire"),
+									       rs.getInt("massehoraireAmphi"),
+									       rs.getInt("massehoraireTD"),
+									       rs.getInt("massehoraireTP"),
+										   rs.getInt("massehoraireExam"));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -308,11 +308,11 @@ public class CoursDAO extends ConnectionDAO {
 			while (rs.next()) {
 				returnValue.add(new Cours(rs.getInt("idcours"),
 						                     rs.getString("nomcours"),
-											       rs.getInt("massehorraire"),
-											       rs.getInt("massehorraireAmphi"),
-											       rs.getInt("massehorraireTD"),
-											       rs.getInt("massehorraireTP"),
-												   rs.getInt("massehorraireExam")));
+											       rs.getInt("massehoraire"),
+											       rs.getInt("massehoraireAmphi"),
+											       rs.getInt("massehoraireTD"),
+											       rs.getInt("massehoraireTP"),
+												   rs.getInt("massehoraireExam")));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
