@@ -10,9 +10,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import dao.CoursDAO;
 import dao.EnseignantDAO;
 import dao.EtudiantDAO;
 import dao.GroupeDAO;
+import model.Cours;
 import model.Enseignant;
 import model.Etudiant;
 import model.Groupe_Etudiant;
@@ -40,6 +42,8 @@ public class GestionnaireGUI {
     private JFrame frameSuppr;
     private JFrame frameSupprEns;
     private JFrame frameSupprGroupe;
+    private JFrame frameModifCours;
+    private JFrame frameSupprCours;
     private JTextField textFieldGroupeModif;
     private JTextField textFieldNomModif;
     private JTextField textFieldPrenomModif;
@@ -71,6 +75,16 @@ public class GestionnaireGUI {
     private JTextField textFieldNumM;
     private JTextField textFieldCM;
     private JTextField textFieldCMM;
+    private JTextField textFieldNomCours;
+    private JTextField textFieldMHA;
+    private JTextField textFieldMHE;
+    private JTextField textFieldTP;
+    private JTextField textFieldTD;
+    private JTextField textFieldNomCoursM;
+    private JTextField textFieldMHAM;
+    private JTextField textFieldMHEM;
+    private JTextField textFieldTPM;
+    private JTextField textFieldTDM;
     private JComboBox groupeBox;
     private JComboBox groupeBoxM;
     private JComboBox idBox;
@@ -79,6 +93,9 @@ public class GestionnaireGUI {
     private JComboBox idBoxS;
     private JComboBox idBoxGroupe;
     private JComboBox idBoxGroupeS;
+    private JComboBox idBoxCours;
+    private JComboBox idBoxCoursM;
+    private JComboBox idBoxCoursS;
 
     /**
      * Launch the application.
@@ -109,39 +126,39 @@ public class GestionnaireGUI {
      */
     private void initialize() {
     	/**
-    	 * Cr�ation de la fen�tre principale
+    	 * Creation de la fenetre principale
     	 */
     	pframe = new JFrame();
-    	pframe.setBounds(100, 100, 450, 300);
-        pframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	pframe.setBounds(100, 100, 450, 400);
+    	pframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pframe.getContentPane().setLayout(new BoxLayout(pframe.getContentPane(), BoxLayout.Y_AXIS));
     	
         /**
-         * Cr�ation du panel comportant les UC part 1
+         * Creation du panel comportant les UC part 1
          */
     	JPanel panelUC1 = new JPanel();
     	pframe.getContentPane().add(panelUC1);
     	
     	/**
-         * Cr�ation du panel comportant les UC part 2
+         * Creation du panel comportant les UC part 2
          */
     	JPanel panelUC2 = new JPanel();
     	pframe.getContentPane().add(panelUC2);
     	
     	/**
-         * Cr�ation du panel comportant les UC part 3
+         * Creation du panel comportant les UC part 3
          */
     	JPanel panelUC3 = new JPanel();
     	pframe.getContentPane().add(panelUC3); 
     	
     	/**
-         * Cr�ation du panel comportant les UC part 4
+         * Creation du panel comportant les UC part 4
          */
     	JPanel panelUC4 = new JPanel();
     	pframe.getContentPane().add(panelUC4);   
     	
     	/**
-    	 * Cr�ation de la fen�tre UC2
+    	 * Creation de la fenetre UC2
     	 */
     	UC2frame = new JFrame();
     	UC2frame.setBounds(100, 100, 450, 300);
@@ -149,7 +166,7 @@ public class GestionnaireGUI {
         UC2frame.getContentPane().setLayout(new BoxLayout(UC2frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
-    	 * Cr�ation de la fen�tre UC3
+    	 * Creation de la fenetre UC3
     	 */
     	UC3frame = new JFrame();
     	UC3frame.setBounds(100, 100, 450, 300);
@@ -157,7 +174,7 @@ public class GestionnaireGUI {
         UC3frame.getContentPane().setLayout(new BoxLayout(UC3frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
-    	 * Cr�ation de la fen�tre UC4
+    	 * Creation de la fenetre UC4
     	 */
     	UC4frame = new JFrame();
     	UC4frame.setBounds(100, 100, 450, 300);
@@ -165,7 +182,7 @@ public class GestionnaireGUI {
         UC4frame.getContentPane().setLayout(new BoxLayout(UC4frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
-    	 * Cr�ation de la fen�tre UC5
+    	 * Creation de la fenetre UC5
     	 */
     	UC5frame = new JFrame();
     	UC5frame.setBounds(100, 100, 450, 300);
@@ -173,7 +190,7 @@ public class GestionnaireGUI {
         UC5frame.getContentPane().setLayout(new BoxLayout(UC5frame.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
-         * Creation du panel comportant la sélection du num pour ajouter un groupe
+         * Creation du panel comportant la selection du num pour ajouter un groupe
          */
         JPanel panelNum = new JPanel();
         UC5frame.getContentPane().add(panelNum);
@@ -186,7 +203,7 @@ public class GestionnaireGUI {
         textFieldNum.setColumns(10);
 
         /**
-         * Création du panel comportant la sélection de la capacite max pour ajouter un groupe
+         * Creation du panel comportant la selection de la capacite max pour ajouter un groupe
          */
         JPanel panelCM = new JPanel();
         UC5frame.getContentPane().add(panelCM);
@@ -215,7 +232,7 @@ public class GestionnaireGUI {
         JLabel lblModifGroupe = new JLabel("Id:");
         panelModifGroupe.add(lblModifGroupe);
         
-      //On r�cup�re l'id des �tudiants cr�es dans la BDD pour les afficher ds le menu d�roulant 
+      //On recupere l'id des etudiants crees dans la BDD pour les afficher ds le menu deroulant 
         GroupeDAO groupeDAO = new GroupeDAO();
         idBoxGroupe = new JComboBox();
         for (int i = 0; i < groupeDAO.getList().size(); i++) {
@@ -274,15 +291,196 @@ public class GestionnaireGUI {
         panelSupprGroupe.add(idBoxGroupeS);
         
     	/**
-    	 * Cr�ation de la fen�tre UC6
+    	 * Creation de la fenetre UC6
     	 */
     	UC6frame = new JFrame();
     	UC6frame.setBounds(100, 100, 450, 300);
         UC6frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         UC6frame.getContentPane().setLayout(new BoxLayout(UC6frame.getContentPane(), BoxLayout.Y_AXIS));
         
+        /**
+         * Creation du panel comportant la selection du nom pour ajouter un cours
+         */
+        JPanel panelNomCours = new JPanel();
+        UC6frame.getContentPane().add(panelNomCours);
+
+        JLabel lblNomCours = new JLabel("Nom du cours:");
+        panelNomCours.add(lblNomCours);
+
+        textFieldNomCours = new JTextField();
+        panelNomCours.add(textFieldNomCours);
+        textFieldNomCours.setColumns(10);
+        
+        /**
+         * Creation du panel comportant la selection de la masse horaire amphi pour ajouter un cours
+         */
+        JPanel panelMHA = new JPanel();
+        UC6frame.getContentPane().add(panelMHA);
+
+        JLabel lblMHA = new JLabel("Masse horaire en amphi:");
+        panelMHA.add(lblMHA);
+
+        textFieldMHA = new JTextField();
+        panelMHA.add(textFieldMHA);
+        textFieldMHA.setColumns(10);
+        
+        /**
+         * Creation du panel comportant la selection de la masse horaire TD pour ajouter un cours
+         */
+        JPanel panelTD = new JPanel();
+        UC6frame.getContentPane().add(panelTD);
+
+        JLabel lblTD = new JLabel("Masse horaire en TD:");
+        panelTD.add(lblTD);
+
+        textFieldTD = new JTextField();
+        panelTD.add(textFieldTD);
+        textFieldTD.setColumns(10);
+        
+        /**
+         * Creation du panel comportant la selection de la masse horaire TP pour ajouter un cours
+         */
+        JPanel panelTP = new JPanel();
+        UC6frame.getContentPane().add(panelTP);
+
+        JLabel lblTP = new JLabel("Masse horaire en TP:");
+        panelTP.add(lblTP);
+
+        textFieldTP = new JTextField();
+        panelTP.add(textFieldTP);
+        textFieldTP.setColumns(10);
+        
+        /**
+         * Creation du panel comportant la selection de la masse horaire exam pour ajouter un cours
+         */
+        JPanel panelMHE = new JPanel();
+        UC6frame.getContentPane().add(panelMHE);
+
+        JLabel lblMHE = new JLabel("Masse horaire en exam:");
+        panelMHE.add(lblMHE);
+
+        textFieldMHE = new JTextField();
+        panelMHE.add(textFieldMHE);
+        textFieldMHE.setColumns(10);
+        
+        /**
+         * Creation de la fenetre de modif d'un cours
+         */
+        frameModifCours = new JFrame();
+        frameModifCours.setBounds(100, 100, 450, 300);
+        frameModifCours.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frameModifCours.getContentPane().setLayout(new BoxLayout(frameModifCours.getContentPane(), BoxLayout.Y_AXIS));
+        
+        /**
+         * Creation du panel comportant la selection de l'id pour modifier un cours
+         */
+        JPanel panelModifCours = new JPanel();
+        frameModifCours.getContentPane().add(panelModifCours);
+        
+        JLabel lblModifCours = new JLabel("Id:");
+        panelModifCours.add(lblModifCours);
+        
+        //On recupere l'id des cours crees dans la BDD pour les afficher ds le menu deroulant 
+        CoursDAO coursDAO = new CoursDAO();
+        idBoxCours = new JComboBox();
+        for (int i = 0; i < coursDAO.getList().size(); i++) {
+        	idBoxCours.addItem(coursDAO.getList().get(i).getId());
+        }
+        panelModifCours.add(idBoxCours);
+        
+        
+        /**
+         * Creation du panel comportant la selection du nom pour modifier un cours
+         */
+        JPanel panelNomCoursM = new JPanel();
+        frameModifCours.getContentPane().add(panelNomCoursM);
+
+        JLabel lblNomCoursM = new JLabel("Nom du cours:");
+        panelNomCoursM.add(lblNomCoursM);
+
+        textFieldNomCoursM = new JTextField();
+        panelNomCoursM.add(textFieldNomCoursM);
+        textFieldNomCoursM.setColumns(10);
+        
+        /**
+         * Creation du panel comportant la selection de la masse horaire amphi pour modifier un cours
+         */
+        JPanel panelMHAM = new JPanel();
+        frameModifCours.getContentPane().add(panelMHAM);
+
+        JLabel lblMHAM = new JLabel("Masse horaire en amphi:");
+        panelMHAM.add(lblMHAM);
+
+        textFieldMHAM = new JTextField();
+        panelMHAM.add(textFieldMHAM);
+        textFieldMHAM.setColumns(10);
+        
+        /**
+         * Creation du panel comportant la selection de la masse horaire TD pour modifier un cours
+         */
+        JPanel panelTDM = new JPanel();
+        frameModifCours.getContentPane().add(panelTDM);
+
+        JLabel lblTDM = new JLabel("Masse horaire en TD:");
+        panelTDM.add(lblTDM);
+
+        textFieldTDM = new JTextField();
+        panelTDM.add(textFieldTDM);
+        textFieldTDM.setColumns(10);
+        
+        /**
+         * Creation du panel comportant la selection de la masse horaire TP pour modifier un cours
+         */
+        JPanel panelTPM = new JPanel();
+        frameModifCours.getContentPane().add(panelTPM);
+
+        JLabel lblTPM = new JLabel("Masse horaire en TP:");
+        panelTPM.add(lblTPM);
+
+        textFieldTPM = new JTextField();
+        panelTPM.add(textFieldTPM);
+        textFieldTPM.setColumns(10);
+        
+        /**
+         * Creation du panel comportant la selection de la masse horaire exam pour modifier un cours
+         */
+        JPanel panelMHEM = new JPanel();
+        frameModifCours.getContentPane().add(panelMHEM);
+
+        JLabel lblMHEM = new JLabel("Masse horaire en exam:");
+        panelMHEM.add(lblMHEM);
+
+        textFieldMHEM = new JTextField();
+        panelMHEM.add(textFieldMHEM);
+        textFieldMHEM.setColumns(10);
+        
+        /**
+         * Creation de la fenetre de SUPPR d'un cours
+         */
+        frameSupprCours = new JFrame();
+        frameSupprCours.setBounds(100, 100, 450, 300);
+        frameSupprCours.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frameSupprCours.getContentPane().setLayout(new BoxLayout(frameSupprCours.getContentPane(), BoxLayout.Y_AXIS));
+        
+        /**
+         * Creation du panel comportant la selection de l'id pour supprimer un cours
+         */
+        JPanel panelSupprCours = new JPanel();
+        frameSupprCours.getContentPane().add(panelSupprCours);
+        
+        JLabel lblSupprCours = new JLabel("Id:");
+        panelSupprCours.add(lblSupprCours);
+        
+        //On recupere l'id des cours crees dans la BDD pour les afficher ds le menu deroulant 
+        CoursDAO coursDAO2 = new CoursDAO();
+        idBoxCoursS = new JComboBox();
+        for (int i = 0; i < coursDAO2.getList().size(); i++) {
+        	idBoxCoursS.addItem(coursDAO2.getList().get(i).getId());
+        }
+        panelSupprCours.add(idBoxCoursS);
+        
     	/**
-    	 * Cr�ation de la fen�tre UC7
+    	 * Creation de la fenetre UC7
     	 */
     	UC7frame = new JFrame();
     	UC7frame.setBounds(100, 100, 450, 300);
@@ -290,7 +488,7 @@ public class GestionnaireGUI {
         UC7frame.getContentPane().setLayout(new BoxLayout(UC7frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
-    	 * Cr�ation de la fen�tre UC8
+    	 * Creation de la fenetre UC8
     	 */
     	UC8frame = new JFrame();
     	UC8frame.setBounds(100, 100, 450, 300);
@@ -298,7 +496,7 @@ public class GestionnaireGUI {
         UC8frame.getContentPane().setLayout(new BoxLayout(UC8frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
-    	 * Cr�ation de la fen�tre UC9
+    	 * Creation de la fenetre UC9
     	 */
     	UC9frame = new JFrame();
     	UC9frame.setBounds(100, 100, 450, 300);
@@ -306,7 +504,7 @@ public class GestionnaireGUI {
         UC9frame.getContentPane().setLayout(new BoxLayout(UC9frame.getContentPane(), BoxLayout.Y_AXIS));
     	
         /**
-         * Cr�ation du panel comportant la sélection du nom pour ajouter un enseignant
+         * Creation du panel comportant la selection du nom pour ajouter un enseignant
          */
         JPanel panelNomEns = new JPanel();
         UC9frame.getContentPane().add(panelNomEns);
@@ -319,7 +517,7 @@ public class GestionnaireGUI {
         textFieldNomEns.setColumns(10);
 
         /**
-         * Création du panel comportant la sélection du prénom pour ajouter un enseignant
+         * Creation du panel comportant la selection du prenom pour ajouter un enseignant
          */
         JPanel panelPrenomEns = new JPanel();
         UC9frame.getContentPane().add(panelPrenomEns);
@@ -332,12 +530,12 @@ public class GestionnaireGUI {
         textFieldPrenomEns.setColumns(10);
         
         /**
-         * Création du panel comportant la sélection du tél pour ajouter un enseignant
+         * Creation du panel comportant la selection du tel pour ajouter un enseignant
          */
         JPanel panelTel = new JPanel();
         UC9frame.getContentPane().add(panelTel);
         
-        JLabel lblTel = new JLabel("Tél:");
+        JLabel lblTel = new JLabel("Tel:");
         panelTel.add(lblTel);
         
         textFieldTel = new JTextField();
@@ -345,7 +543,7 @@ public class GestionnaireGUI {
         textFieldTel.setColumns(10);
         
         /**
-         * Création du panel comportant la sélection du mail pour ajouter un enseignant
+         * Creation du panel comportant la selection du mail pour ajouter un enseignant
          */
         JPanel panelEmailEns = new JPanel();
         UC9frame.getContentPane().add(panelEmailEns);
@@ -358,7 +556,7 @@ public class GestionnaireGUI {
         textFieldEmailEns.setColumns(10);
         
         /**
-         * Création du panel comportant la sélection du mdp pour ajouter un enseignant
+         * Creation du panel comportant la selection du mdp pour ajouter un enseignant
          */
         JPanel panelMdpEns = new JPanel();
         UC9frame.getContentPane().add(panelMdpEns);
@@ -371,7 +569,7 @@ public class GestionnaireGUI {
         textFieldMdpEns.setColumns(10);
         
     	/**
-    	 * Cr�ation de la fenetre pour le UC Cr�er/modifier un �tudiant
+    	 * Creation de la fenetre pour le UC Creer/modifier un etudiant
     	 */
         frame = new JFrame();
         frame.setBounds(100, 100, 450, 300);
@@ -379,7 +577,7 @@ public class GestionnaireGUI {
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
-         * Cr�ation du panel comportant la s�lection du groupe pour ajouter un �tudiant
+         * Creation du panel comportant la selection du groupe pour ajouter un etudiant
          */
         JPanel panelGroupe = new JPanel();
         frame.getContentPane().add(panelGroupe);
@@ -387,7 +585,7 @@ public class GestionnaireGUI {
         JLabel lblGroupe = new JLabel("Groupe:");
         panelGroupe.add(lblGroupe);
         
-        //On r�cup�re l'id des groupes cr�er das la BDD pour les afficher ds le menu d�roulant
+        //On recupere l'id des groupes creer das la BDD pour les afficher ds le menu deroulant
         GroupeDAO groupeDAO2 = new GroupeDAO();  
         groupeBox = new JComboBox();
         for (int i = 0; i < groupeDAO2.getList().size(); i++) {
@@ -396,7 +594,7 @@ public class GestionnaireGUI {
         panelGroupe.add(groupeBox);
 
         /**
-         * Cr�ation du panel comportant la s�lection du nom pour ajouter un �tudiant
+         * Creation du panel comportant la selection du nom pour ajouter un etudiant
          */
         JPanel panelNom = new JPanel();
         frame.getContentPane().add(panelNom);
@@ -409,7 +607,7 @@ public class GestionnaireGUI {
         textFieldNom.setColumns(10);
 
         /**
-         * Cr�ation du panel comportant la s�lection du pr�nom pour ajouter un �tudiant
+         * Creation du panel comportant la selection du prenom pour ajouter un etudiant
          */
         JPanel panelPrenom = new JPanel();
         frame.getContentPane().add(panelPrenom);
@@ -422,7 +620,7 @@ public class GestionnaireGUI {
         textFieldPrenom.setColumns(10);
 
         /**
-         * Cr�ation du panel comportant la s�lection de la fili�re pour ajouter un �tudiant
+         * Creation du panel comportant la selection de la filiere pour ajouter un etudiant
          */
         JPanel panelFiliere = new JPanel();
         frame.getContentPane().add(panelFiliere);
@@ -435,7 +633,7 @@ public class GestionnaireGUI {
         textFieldFiliere.setColumns(10);
 
 		/**
-		 * Cr�ation du panel comportant la s�lection du mail pour ajouter un �tudiant
+		 * Creation du panel comportant la selection du mail pour ajouter un etudiant
 		 */
         JPanel panelEmail = new JPanel();
         frame.getContentPane().add(panelEmail);
@@ -448,7 +646,7 @@ public class GestionnaireGUI {
         textFieldEmail.setColumns(10);
         
         /**
-         * Cr�ation du panel comportant la s�lection du mdp pour ajouter un �tudiant
+         * Creation du panel comportant la selection du mdp pour ajouter un etudiant
          */
         JPanel panelMdp = new JPanel();
         frame.getContentPane().add(panelMdp);
@@ -469,7 +667,7 @@ public class GestionnaireGUI {
         frameModifEns.getContentPane().setLayout(new BoxLayout(frameModifEns.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
-         * Cr�ation du panel comportant la s�lection de l'id pour modifier un �tudiant
+         * Creation du panel comportant la selection de l'id pour modifier un etudiant
          */
         JPanel panelModifEns = new JPanel();
         frameModifEns.getContentPane().add(panelModifEns);
@@ -477,7 +675,7 @@ public class GestionnaireGUI {
         JLabel lblModifEns = new JLabel("Id:");
         panelModifEns.add(lblModifEns);
         
-      //On r�cup�re l'id des �tudiants cr�es dans la BDD pour les afficher ds le menu d�roulant 
+      //On recupere l'id des etudiants crees dans la BDD pour les afficher ds le menu deroulant 
         EnseignantDAO enseignantDAO = new EnseignantDAO();
         idBoxEns = new JComboBox();
         for (int i = 0; i < enseignantDAO.getList().size(); i++) {
@@ -575,7 +773,7 @@ public class GestionnaireGUI {
         panelSupprEns.add(idBoxEnsS);
         
         /**
-         * Cr�ation de la fen�tre de modif d'un �tudiant
+         * Creation de la fenetre de modif d'un etudiant
          */
         frameModif = new JFrame();
         frameModif.setBounds(100, 100, 450, 300);
@@ -583,7 +781,7 @@ public class GestionnaireGUI {
         frameModif.getContentPane().setLayout(new BoxLayout(frameModif.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
-         * Cr�ation du panel comportant la s�lection de l'id pour modifier un �tudiant
+         * Creation du panel comportant la selection de l'id pour modifier un etudiant
          */
         JPanel panelModif = new JPanel();
         frameModif.getContentPane().add(panelModif);
@@ -591,7 +789,7 @@ public class GestionnaireGUI {
         JLabel lblModif = new JLabel("Id:");
         panelModif.add(lblModif);
         
-      //On r�cup�re l'id des �tudiants cr�es dans la BDD pour les afficher ds le menu d�roulant 
+      //On recupere l'id des etudiants crees dans la BDD pour les afficher ds le menu deroulant 
         EtudiantDAO etudiantDAO = new EtudiantDAO();
         idBox = new JComboBox();
         for (int i = 0; i < etudiantDAO.getList().size(); i++) {
@@ -600,7 +798,7 @@ public class GestionnaireGUI {
         panelModif.add(idBox);
 
         /**
-         * Cr�ation du panel comportant la s�lection du groupe pour modifier un �tudiant
+         * Creation du panel comportant la selection du groupe pour modifier un etudiant
          */
         JPanel panelGroupeModif = new JPanel();
         frameModif.getContentPane().add(panelGroupeModif);
@@ -616,7 +814,7 @@ public class GestionnaireGUI {
         panelGroupeModif.add(groupeBoxM);
 
 		/**
-		 * Cr�ation du panel comportant la s�lection du nom pour modifier un �tudiant
+		 * Creation du panel comportant la selection du nom pour modifier un etudiant
 		 */
         JPanel panelNomModif = new JPanel();
         frameModif.getContentPane().add(panelNomModif);
@@ -629,7 +827,7 @@ public class GestionnaireGUI {
         textFieldNomModif.setColumns(10);
 
         /**
-         * Cr�ation du panel comportant la s�lection du pr�nom pour modifier un �tudiant
+         * Creation du panel comportant la selection du prenom pour modifier un etudiant
          */
         JPanel panelPrenomModif = new JPanel();
         frameModif.getContentPane().add(panelPrenomModif);
@@ -642,7 +840,7 @@ public class GestionnaireGUI {
         textFieldPrenomModif.setColumns(10);
 
         /**
-         * Cr�ation du panel comportant la s�lection de la fili�re pour modifier un �tudiant
+         * Creation du panel comportant la selection de la filiere pour modifier un etudiant
          */
         JPanel panelFiliereModif = new JPanel();
         frameModif.getContentPane().add(panelFiliereModif);
@@ -655,7 +853,7 @@ public class GestionnaireGUI {
         textFieldFiliereModif.setColumns(10);
 
         /**
-         * Cr�ation du panel comportant la s�lection du mail pour modifier un �tudiant
+         * Creation du panel comportant la selection du mail pour modifier un etudiant
          */
         JPanel panelEmailModif = new JPanel();
         frameModif.getContentPane().add(panelEmailModif);
@@ -668,7 +866,7 @@ public class GestionnaireGUI {
         textFieldEmailModif.setColumns(10);
 
         /**
-         * Cr�ation du panel comportant la s�lection du mdp pour modifier un �tudiant
+         * Creation du panel comportant la selection du mdp pour modifier un etudiant
          */
         JPanel panelMdpModif = new JPanel();
         frameModif.getContentPane().add(panelMdpModif);
@@ -681,7 +879,7 @@ public class GestionnaireGUI {
         textFieldMdpModif.setColumns(10);
 
         /**
-         * Cr�ation de la fen�tre de suppression d'un �tudiant
+         * Creation de la fenetre de suppression d'un etudiant
          */
         frameSuppr = new JFrame();
         frameSuppr.setBounds(100, 100, 450, 300);
@@ -689,7 +887,7 @@ public class GestionnaireGUI {
         frameSuppr.getContentPane().setLayout(new BoxLayout(frameSuppr.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
-         * Cr�ation du panel comportant la s�lection de l'id pour supprimer un �tudiant
+         * Creation du panel comportant la selection de l'id pour supprimer un etudiant
          */
         JPanel panelSuppr = new JPanel();
         frameSuppr.getContentPane().add(panelSuppr);
@@ -705,17 +903,17 @@ public class GestionnaireGUI {
         panelSuppr.add(idBoxS);
         
         /**
-         * Cr�ation du panel qui comportera tous les boutons de la fen�tre UC cr�er/modifier un �tudiant
+         * Creation du panel qui comportera tous les boutons de la fenetre UC creer/modifier un etudiant
          */
         JPanel panelBoutons = new JPanel();
         frame.getContentPane().add(panelBoutons);
         /**
-         * Cr�ation du bouton qui permet d'ajouter un �tudiant dans la BDD
+         * Creation du bouton qui permet d'ajouter un etudiant dans la BDD
          */
         JButton btnAjouter = new JButton("Ajouter");
         btnAjouter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Récupérer les données saisies par l'utilisateur
+                // Recuperer les donnees saisies par l'utilisateur
                 int groupe = (int)groupeBox.getSelectedItem();
                 String nom = textFieldNom.getText();
                 String prenom = textFieldPrenom.getText();
@@ -723,10 +921,10 @@ public class GestionnaireGUI {
                 String email = textFieldEmail.getText();
                 String mdp = textFieldMdp.getText();
                 
-                // Créer un objet Etudiant avec les données récupérées
+                // Creer un objet Etudiant avec les donnees recuperees
                 Etudiant etudiant = new Etudiant(groupe, nom, prenom, filiere, email, mdp);
                 
-                // Appeler la méthode d'ajout d'un étudiant dans la base de données
+                // Appeler la methode d'ajout d'un etudiant dans la base de donnees
                 EtudiantDAO etudiantDAO = new EtudiantDAO();
                 etudiantDAO.add(etudiant);
             }
@@ -734,7 +932,7 @@ public class GestionnaireGUI {
         panelBoutons.add(btnAjouter);
         
         /**
-         * Cr�ation du bouton qui permet d'ouvrir la fen�tre de suppression d'un �tudiant
+         * Creation du bouton qui permet d'ouvrir la fenetre de suppression d'un etudiant
          */
         JPanel panelBoutonSuppr = new JPanel();
         frameSuppr.getContentPane().add(panelBoutonSuppr);
@@ -748,15 +946,15 @@ public class GestionnaireGUI {
         panelBoutons.add(btnSupprimer1);
        
         /**
-         * cr�ation du bouton qui permet de supprimer un �tudiant dans la BDD
+         * creation du bouton qui permet de supprimer un etudiant dans la BDD
          */
         JButton btnSupprimer2 = new JButton("Supprimer");
         btnSupprimer2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Récupérer l'identifiant de l'étudiant à supprimer
+                // Recuperer l'identifiant de l'etudiant à supprimer
             	int id = (int)idBoxS.getSelectedItem();
                 
-                // Appeler la méthode de suppression d'un étudiant de la base de données
+                // Appeler la methode de suppression d'un etudiant de la base de donnees
                 EtudiantDAO etudiantDAO = new EtudiantDAO();
                 etudiantDAO.delete(id);
             }
@@ -764,7 +962,7 @@ public class GestionnaireGUI {
         panelBoutonSuppr.add(btnSupprimer2);
         
         /**
-         * Cr�ation du bouton qui permet d'ouvrir la fen�tre de modification d'un �tudiant
+         * Creation du bouton qui permet d'ouvrir la fenetre de modification d'un etudiant
          */
         JButton btnModifier1 = new JButton("Modifier");
         btnModifier1.addActionListener(new ActionListener() {
@@ -776,14 +974,14 @@ public class GestionnaireGUI {
         panelBoutons.add(btnModifier1);
         
         /**
-         * Cr�ation du bouton qui permet de modifier un �tudiant dans la BDD
+         * Creation du bouton qui permet de modifier un etudiant dans la BDD
          */
         JPanel panelBoutonModif = new JPanel();
         frameModif.getContentPane().add(panelBoutonModif);
         JButton btnModifier2 = new JButton("Modifier");
         btnModifier2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Récupérer les données saisies par l'utilisateur
+                // Recuperer les donnees saisies par l'utilisateur
             	int id = (int)idBox.getSelectedItem();
             	int groupe = (int)groupeBoxM.getSelectedItem();
                 String nom = textFieldNomModif.getText();
@@ -792,10 +990,10 @@ public class GestionnaireGUI {
                 String email = textFieldEmailModif.getText();
                 String mdp = textFieldMdpModif.getText();
                 
-                // Créer un objet Etudiant avec les données récupérées
+                // Creer un objet Etudiant avec les donnees recuperees
                 Etudiant etudiant = new Etudiant(id, groupe, nom, prenom, filiere, email, mdp);
                 
-                // Appeler la méthode d'ajout d'un étudiant dans la base de données
+                // Appeler la methode d'ajout d'un etudiant dans la base de donnees
                 EtudiantDAO etudiantDAO = new EtudiantDAO();
                 etudiantDAO.update(etudiant);
             }
@@ -803,9 +1001,9 @@ public class GestionnaireGUI {
         panelBoutonModif.add(btnModifier2);
         
         /**
-         * Cr�ation du bouton du UC cr�er modifier etudiant
+         * Creation du bouton du UC creer modifier etudiant
          */
-        JButton btnUC1 = new JButton("Créer/Modifier un étudiant");
+        JButton btnUC1 = new JButton("Creer/Modifier un etudiant");
         btnUC1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	frame.setLocationRelativeTo(null);
@@ -815,7 +1013,7 @@ public class GestionnaireGUI {
         panelUC1.add(btnUC1);
         
         /**
-         * Cr�ation du bouton du UC 2
+         * Creation du bouton du UC 2
          */
         JButton btnUC2 = new JButton("Traiter un justificatif");
         btnUC2.addActionListener(new ActionListener() {
@@ -827,9 +1025,9 @@ public class GestionnaireGUI {
         panelUC1.add(btnUC2);
         
         /**
-         * Cr�ation du bouton du UC 3
+         * Creation du bouton du UC 3
          */
-        JButton btnUC3 = new JButton("Déclencher une pénalité");
+        JButton btnUC3 = new JButton("Declencher une penalite");
         btnUC3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC3frame.setLocationRelativeTo(null);
@@ -839,9 +1037,9 @@ public class GestionnaireGUI {
         panelUC1.add(btnUC3);
         
         /**
-         * Cr�ation du bouton du UC 4
+         * Creation du bouton du UC 4
          */
-        JButton btnUC4 = new JButton("Créer/Modifier un type d'absence");
+        JButton btnUC4 = new JButton("Creer/Modifier un type d'absence");
         btnUC4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC4frame.setLocationRelativeTo(null);
@@ -851,9 +1049,9 @@ public class GestionnaireGUI {
         panelUC2.add(btnUC4);
         
         /**
-         * Cr�ation du bouton du UC 5
+         * Creation du bouton du UC 5
          */
-        JButton btnUC5 = new JButton("Créer/Modifier un groupe d'étudiant");
+        JButton btnUC5 = new JButton("Creer/Modifier un groupe d'etudiant");
         btnUC5.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC5frame.setLocationRelativeTo(null);
@@ -863,24 +1061,24 @@ public class GestionnaireGUI {
         panelUC2.add(btnUC5);
         
         /**
-         * Création du panel qui comportera tous les boutons de la fenêtre UC créer/modifier un groupe
+         * Creation du panel qui comportera tous les boutons de la fenêtre UC creer/modifier un groupe
          */
         JPanel panelBoutonsGroupe = new JPanel();
         UC5frame.getContentPane().add(panelBoutonsGroupe);
         /**
-         * Cr�ation du bouton qui permet d'ajouter un groupe dans la BDD
+         * Creation du bouton qui permet d'ajouter un groupe dans la BDD
          */
         JButton btnAjouterGroupe = new JButton("Ajouter");
         btnAjouterGroupe.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Récupérer les données saisies par l'utilisateur
+                // Recuperer les donnees saisies par l'utilisateur
             	int num = Integer.parseInt(textFieldNum.getText());
                 int CM = Integer.parseInt(textFieldCM.getText());
                 
-                // Créer un objet Etudiant avec les données récupérées
+                // Creer un objet Etudiant avec les donnees recuperees
                 Groupe_Etudiant groupe_etudiant = new Groupe_Etudiant(num, CM);
                 
-                // Appeler la méthode d'ajout d'un étudiant dans la base de données
+                // Appeler la methode d'ajout d'un etudiant dans la base de donnees
                 GroupeDAO groupeDAO = new GroupeDAO();
                 groupeDAO.add(groupe_etudiant);
             }
@@ -888,7 +1086,7 @@ public class GestionnaireGUI {
         panelBoutonsGroupe.add(btnAjouterGroupe);
         
         /**
-         * Cr�ation du bouton qui permet d'ouvrir la fenetre de modification d'un groupe
+         * Creation du bouton qui permet d'ouvrir la fenetre de modification d'un groupe
          */
         JButton btnModifierGroupe = new JButton("Modifier");
         btnModifierGroupe.addActionListener(new ActionListener() {
@@ -900,22 +1098,22 @@ public class GestionnaireGUI {
         panelBoutonsGroupe.add(btnModifierGroupe);
         
         /**
-         * Cr�ation du bouton qui permet de modifier un groupe dans la BDD
+         * Creation du bouton qui permet de modifier un groupe dans la BDD
          */
         JPanel panelBoutonModifGroupe = new JPanel();
         frameModifGroupe.getContentPane().add(panelBoutonModifGroupe);
         JButton btnModifierGroupe2 = new JButton("Modifier");
         btnModifierGroupe2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Récupérer les données saisies par l'utilisateur
+                // Recuperer les donnees saisies par l'utilisateur
             	int id = (int)idBoxGroupe.getSelectedItem();
             	int num = Integer.parseInt(textFieldNumM.getText());
                 int CM = Integer.parseInt(textFieldCMM.getText());
                 
-                // Créer un objet Etudiant avec les données récupérées
+                // Creer un objet Etudiant avec les donnees recuperees
                 Groupe_Etudiant groupe_etudiant = new Groupe_Etudiant(id, num, CM);
                 
-                // Appeler la méthode d'ajout d'un étudiant dans la base de données
+                // Appeler la methode d'ajout d'un etudiant dans la base de donnees
                 GroupeDAO groupeDAO = new GroupeDAO();
                 groupeDAO.update(groupe_etudiant);
             }
@@ -942,10 +1140,10 @@ public class GestionnaireGUI {
         JButton btnSupprimerGroupe2 = new JButton("Supprimer");
         btnSupprimerGroupe2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Récupérer l'identifiant du groupe à supprimer
+                // Recuperer l'identifiant du groupe à supprimer
             	int id = (int)idBoxGroupeS.getSelectedItem();
                 
-                // Appeler la méthode de suppression d'un étudiant de la base de données
+                // Appeler la methode de suppression d'un etudiant de la base de donnees
                 GroupeDAO groupeDAO = new GroupeDAO();
                 groupeDAO.delete(id);
             }
@@ -954,9 +1152,9 @@ public class GestionnaireGUI {
         
         
         /**
-         * Cr�ation du bouton du UC 6
+         * Creation du bouton du UC 6
          */
-        JButton btnUC6 = new JButton("Créer/Modifier un cours");
+        JButton btnUC6 = new JButton("Creer/Modifier un cours");
         btnUC6.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC6frame.setLocationRelativeTo(null);
@@ -966,9 +1164,114 @@ public class GestionnaireGUI {
         panelUC2.add(btnUC6);
         
         /**
-         * Cr�ation du bouton du UC 7
+<<<<<<< HEAD
+         * Creation du bouton du UC 7
+=======
+         * Creation du panel qui comportera tous les boutons de la fenêtre UC creer/modifier un cours
          */
-        JButton btnUC7 = new JButton("Créer/Modifier un planning");
+        JPanel panelBoutonsCours = new JPanel();
+        UC6frame.getContentPane().add(panelBoutonsCours);
+        /**
+         * Creation du bouton qui permet d'ajouter un cours dans la BDD
+         */
+        JButton btnAjouterCours = new JButton("Ajouter");
+        btnAjouterCours.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Recuperer les donnees saisies par l'utilisateur
+                String nom = textFieldNomEns.getText();
+                int MH;
+                int MHA = Integer.parseInt(textFieldMHA.getText());
+                int MHTD = Integer.parseInt(textFieldTD.getText());
+                int MHTP = Integer.parseInt(textFieldTP.getText());
+                int MHE = Integer.parseInt(textFieldMHE.getText());
+                MH = MHA + MHTD + MHTP + MHE;
+                
+                // Creer un objet Cours avec les donnees recuperees
+                Cours cours = new Cours(nom, MH, MHA, MHTD, MHTP, MHE);
+                
+                // Appeler la methode d'ajout d'un Cours dans la base de donnees
+                CoursDAO coursDAO = new CoursDAO();
+                coursDAO.add(cours);
+            }
+        });
+        panelBoutonsCours.add(btnAjouterCours);
+        
+        /**
+         * Creation du bouton qui permet d'ouvrir la fenetre de modification d'un cours
+         */
+        JButton btnModifierCours = new JButton("Modifier");
+        btnModifierCours.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	frameModifCours.setLocationRelativeTo(null);
+            	frameModifCours.setVisible(true);
+            }
+        });
+        panelBoutonsCours.add(btnModifierCours);
+        
+        /**
+         * Creation du bouton qui permet de modifier un cours dans la BDD
+         */
+        JPanel panelBoutonModifCours = new JPanel();
+        frameModifCours.getContentPane().add(panelBoutonModifCours);
+        JButton btnModifierCours2 = new JButton("Modifier");
+        btnModifierCours2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Recuperer les donnees saisies par l'utilisateur
+            	String nom = textFieldNomEns.getText();
+                int MH;
+                int MHA = Integer.parseInt(textFieldMHA.getText());
+                int MHTD = Integer.parseInt(textFieldTD.getText());
+                int MHTP = Integer.parseInt(textFieldTP.getText());
+                int MHE = Integer.parseInt(textFieldMHE.getText());
+                MH = MHA + MHTD + MHTP + MHE;
+                
+                // Creer un objet Cours avec les donnees recuperees
+                Cours cours = new Cours(nom, MH, MHA, MHTD, MHTP, MHE);
+                
+                // Appeler la methode de modification d'un Cours dans la base de donnees
+                CoursDAO coursDAO = new CoursDAO();
+                coursDAO.update(cours);
+            }
+        });
+        panelBoutonModifCours.add(btnModifierCours2);
+        
+        /**
+         * Creation du bouton qui permet d'ouvrir la fenetre de suppression d'un cours
+         */
+        JPanel panelBoutonSupprCours = new JPanel();
+        frameSupprCours.getContentPane().add(panelBoutonSupprCours);
+        JButton btnSupprimerCours = new JButton("Supprimer");
+        btnSupprimerCours.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	frameSupprCours.setLocationRelativeTo(null);
+            	frameSupprCours.setVisible(true);
+            }
+        });
+        panelBoutonsCours.add(btnSupprimerCours);
+       
+        /**
+         * creation du bouton qui permet de supprimer un enseignant dans la BDD
+         */
+        JButton btnSupprimerCours2 = new JButton("Supprimer");
+        btnSupprimerCours2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Recuperer l'identifiant de l'enseignant a supprimer
+            	int id = (int)idBoxCoursS.getSelectedItem();
+                
+            	// Appeler la methode de suppression d'un Cours dans la base de donnees
+                CoursDAO coursDAO = new CoursDAO();
+                coursDAO.delete(id);
+            }
+        });
+        panelBoutonSupprCours.add(btnSupprimerCours2);
+        
+        
+        
+        /**
+         * Cr�ation du bouton du UC 7
+>>>>>>> a9e61249cb0c1628468ef7f3030a78d9c6c5ea50
+         */
+        JButton btnUC7 = new JButton("Creer/Modifier un planning");
         btnUC7.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC7frame.setLocationRelativeTo(null);
@@ -978,9 +1281,9 @@ public class GestionnaireGUI {
         panelUC3.add(btnUC7);
         
         /**
-         * Cr�ation du bouton du UC 8
+         * Creation du bouton du UC 8
          */
-        JButton btnUC8 = new JButton("Définir les quotas");
+        JButton btnUC8 = new JButton("Definir les quotas");
         btnUC8.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC8frame.setLocationRelativeTo(null);
@@ -990,9 +1293,9 @@ public class GestionnaireGUI {
         panelUC3.add(btnUC8);
         
         /**
-         * Cr�ation du bouton du UC 9
+         * Creation du bouton du UC 9
          */
-        JButton btnUC9 = new JButton("Créer/Modifier un enseignant");
+        JButton btnUC9 = new JButton("Creer/Modifier un enseignant");
         btnUC9.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	UC9frame.setLocationRelativeTo(null);
@@ -1002,27 +1305,27 @@ public class GestionnaireGUI {
         panelUC3.add(btnUC9);
         
         /**
-         * Création du panel qui comportera tous les boutons de la fenêtre UC créer/modifier un enseignant
+         * Creation du panel qui comportera tous les boutons de la fenêtre UC creer/modifier un enseignant
          */
         JPanel panelBoutonsEns = new JPanel();
         UC9frame.getContentPane().add(panelBoutonsEns);
         /**
-         * Cr�ation du bouton qui permet d'ajouter un enseignant dans la BDD
+         * Creation du bouton qui permet d'ajouter un enseignant dans la BDD
          */
         JButton btnAjouterEns = new JButton("Ajouter");
         btnAjouterEns.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Récupérer les données saisies par l'utilisateur
+                // Recuperer les donnees saisies par l'utilisateur
                 String nom = textFieldNomEns.getText();
                 String prenom = textFieldPrenomEns.getText();
                 String tel = textFieldTel.getText();
                 String email = textFieldEmailEns.getText();
                 String mdp = textFieldMdpEns.getText();
                 
-                // Créer un objet Etudiant avec les données récupérées
+                // Creer un objet Etudiant avec les donnees recuperees
                 Enseignant enseignant = new Enseignant(nom, prenom, tel, email, mdp);
                 
-                // Appeler la méthode d'ajout d'un étudiant dans la base de données
+                // Appeler la methode d'ajout d'un etudiant dans la base de donnees
                 EnseignantDAO enseignantDAO = new EnseignantDAO();
                 enseignantDAO.add(enseignant);
             }
@@ -1030,7 +1333,7 @@ public class GestionnaireGUI {
         panelBoutonsEns.add(btnAjouterEns);
         
         /**
-         * Cr�ation du bouton qui permet d'ouvrir la fen�tre de modification d'un �tudiant
+         * Creation du bouton qui permet d'ouvrir la fenetre de modification d'un etudiant
          */
         JButton btnModifierEns = new JButton("Modifier");
         btnModifierEns.addActionListener(new ActionListener() {
@@ -1042,14 +1345,14 @@ public class GestionnaireGUI {
         panelBoutonsEns.add(btnModifierEns);
         
         /**
-         * Cr�ation du bouton qui permet de modifier un �tudiant dans la BDD
+         * Creation du bouton qui permet de modifier un etudiant dans la BDD
          */
         JPanel panelBoutonModifEns = new JPanel();
         frameModifEns.getContentPane().add(panelBoutonModifEns);
         JButton btnModifierEns2 = new JButton("Modifier");
         btnModifierEns2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Récupérer les données saisies par l'utilisateur
+                // Recuperer les donnees saisies par l'utilisateur
             	int id = (int)idBoxEns.getSelectedItem();
                 String nom = textFieldNomEnsM.getText();
                 String prenom = textFieldPrenomEnsM.getText();
@@ -1057,10 +1360,10 @@ public class GestionnaireGUI {
                 String email = textFieldEmailEnsM.getText();
                 String mdp = textFieldMdpEnsM.getText();
                 
-                // Créer un objet Etudiant avec les données récupérées
+                // Creer un objet Etudiant avec les donnees recuperees
                 Enseignant enseignant = new Enseignant(id, nom, prenom, tel, email, mdp);
                 
-                // Appeler la méthode d'ajout d'un étudiant dans la base de données
+                // Appeler la methode d'ajout d'un etudiant dans la base de donnees
                 EnseignantDAO enseignantDAO = new EnseignantDAO();
                 enseignantDAO.update(enseignant);
             }
@@ -1087,10 +1390,10 @@ public class GestionnaireGUI {
         JButton btnSupprimerEns2 = new JButton("Supprimer");
         btnSupprimerEns2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Récupérer l'identifiant de l'enseignant à supprimer
+                // Recuperer l'identifiant de l'enseignant à supprimer
             	int id = (int)idBoxEnsS.getSelectedItem();
                 
-                // Appeler la méthode de suppression d'un étudiant de la base de données
+                // Appeler la methode de suppression d'un etudiant de la base de donnees
                 EnseignantDAO enseignantDAO = new EnseignantDAO();
                 enseignantDAO.delete(id);
             }

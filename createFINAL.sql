@@ -58,6 +58,7 @@ CREATE TABLE Absenceclassique
  Absenceclassique VARCHAR2(50) CONSTRAINT NN_Absence NOT NULL,
  nbrdheure INTEGER,
  date_abs_cls DATE CONSTRAINT NN_date_abs_cls NOT NULL,
+ statut VARCHAR2(50)CONSTRAINT CK_statut CHECK (statut IN ('Justifie', 'Non justifie','En verification')),
  CONSTRAINT PK_Absenceclassique PRIMARY KEY(idAbscla)
 );
 CREATE TABLE Absencedistanciel
@@ -68,7 +69,7 @@ CREATE TABLE Absencedistanciel
  Absencedistanciel VARCHAR2(50),
  nbrdheure INTEGER,
  Date_abs_dst DATE,
- estjustifier VARCHAR2(50),
+ statut VARCHAR2(50)CONSTRAINT CK_statut CHECK (statut IN ('Justifie', 'Non justifie','En verification')),
  CONSTRAINT PK_Absencedistanciel PRIMARY KEY(idAbsdis)
 );
 

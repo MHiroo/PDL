@@ -58,6 +58,9 @@ public class Cours {
 		this.nom=nom;
 	}
 	
+	public Cours(String nom2, int mH, int mHA, int mHTD, int mHTP, int mHE) {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * getter pour l'attribut reference
 	 * @return valeur de la reference Cours
@@ -83,7 +86,7 @@ public class Cours {
 	 * getter pour l'attribut masseHoraire
 	 * @return valeur du masseHoraire
 	 */
-	public int getMasseHoraire(int masseHoraire) {
+	public int getMasseHoraire() {
 		return masseHoraire;
 	}
 	/**
@@ -98,7 +101,7 @@ public class Cours {
 	 * getter pour l'attribut repNbrHAmphi
 	 * @return valeur du repNbrHAmphi
 	 */
-	public int getRepNbrHAmphi(int repNbrHAmphi) {
+	public int getRepNbrHAmphi() {
 		return repNbrHAmphi;
 	}
 	/**
@@ -112,14 +115,14 @@ public class Cours {
 	 * getter pour l'attribut repNbrHTD
 	 * @return valeur du repNbrHTD
 	 */
-	public int getRepNbrHTD(int repNbrHTD) {
+	public int getRepNbrHTD() {
 		return repNbrHTD;
 	}
 	/**
 	 * getter pour l'attribut repNbrHTP
 	 * @return valeur du repNbrHTP
 	 */
-	public int getRepNbrHTP(int repNbrHTP) {
+	public int getRepNbrHTP() {
 		return repNbrHTP;
 	}
 	/**
@@ -140,7 +143,7 @@ public class Cours {
 	 * getter pour l'attribut repNbrHExam
 	 * @return valeur du repNbrHExam
 	 */
-	public int getRepNbrHExam(int repNbrHExam) {
+	public int getRepNbrHExam() {
 		return repNbrHExam;
 	}
 	/**

@@ -84,22 +84,22 @@ public class SignInAdminGUI {
         JButton btnConnecter = new JButton("Se connecter");
         btnConnecter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Récupérer les données saisies par l'utilisateur
+                // Recuperer les donnees saisies par l'utilisateur
                 
                 String email = textFieldEmail.getText();
                 String mdp = textFieldMdp.getText();
                 
-                // Créer un objet Administratif avec les données récupérées
+                // Creer un objet Administratif avec les donnees recuperees
                 Personne admin = new Personne( 0, "",  "",  "", "", "");
                 
-                // Appeler la méthode d'authentification d'un administratif dans la base de données
+                // Appeler la methode d'authentification d'un administratif dans la base de donnees
                 AdminDAO adminDAO = new AdminDAO();
                 admin = adminDAO.signIn(email,mdp);
                 if (admin==null) {
                 	
                 	JPanel panel = new JPanel();
                     frame.getContentPane().add(panel);
-                    JLabel lbl = new JLabel("Erreur: Email ou Mot de passe erronés");
+                    JLabel lbl = new JLabel("Erreur: Email ou Mot de passe errones");
                     lbl.setForeground(Color.RED);
                     panel.add(lbl);
 	                frame.setVisible(true);

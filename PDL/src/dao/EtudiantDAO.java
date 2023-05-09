@@ -53,7 +53,7 @@ public class EtudiantDAO extends ConnectionDAO {
 
 		} catch (Exception e) {
 			if (e.getMessage().contains("ORA-00001"))
-				System.out.println("Cet identifiant de etudiant existe déjà. Ajout impossible !");
+				System.out.println("Cet identifiant de etudiant existe deja�. Ajout impossible !");
 			else
 				e.printStackTrace();
 		} finally {
@@ -131,7 +131,7 @@ public class EtudiantDAO extends ConnectionDAO {
 	 * Si ce dernier possede des articles, la suppression n'a pas lieu.
 	 * Le mode est auto-commit par defaut : chaque suppression est validee
 	 * 
-	 * @param id l'id du etudiant à supprimer
+	 * @param id l'id du etudiant a� supprimer
 	 * @return retourne le nombre de lignes supprimees dans la table
 	 */
 	public int delete(int id) {
@@ -233,6 +233,58 @@ public class EtudiantDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
+	/**
+	 * Permet de recuperer un in du groupe a partir de la reference de l'etudiant
+	 * 
+	 * @param reference la reference du etudiant a recuperer
+	 * @return le etudiant trouve;
+	 * 			null si aucun etudiant ne correspond a cette reference
+	 */
+	public int getIdGroupe(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int returnValue = 0;
+
+		// connexion a la base de donnees
+		try {
+
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT idGroupe FROM etudiant WHERE idetud = ?");
+			ps.setInt(1, id);
+
+			// on execute la requete
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			if (rs.next()) {
+				returnValue = rs.getInt("idgroupe");
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
 
 	/**
 	 * Permet de recuperer tous les etudiants stockes dans la table etudiant
@@ -290,7 +342,7 @@ public class EtudiantDAO extends ConnectionDAO {
 	 * 
 	 * @param email l'email de l'etudiant 
 	 * @param mdp mot de passe de l'etudiant 
-	 * @return retourne l'étudiant qui se connecte
+	 * @return retourne l'etudiant qui se connecte
 	 */
 	public Etudiant signIn(String email, String mdp) {
 		Connection con = null;
@@ -362,7 +414,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT nomCours FROM COURS WHERE (idCours=(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe))");
+			ps = con.prepareStatement("SELECT nomCours FROM COURS WHERE idCours IN (SELECT idCours FROM Planning WHERE (Planning.idGroupe=(SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))))");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
@@ -407,7 +459,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT masseHoraire FROM Cours WHERE idCours=(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)");
+			ps = con.prepareStatement("SELECT masseHoraire FROM Cours WHERE idCours IN (SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
@@ -452,7 +504,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT masseHoraireAmphi FROM Cours WHERE idCours=(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)");
+			ps = con.prepareStatement("SELECT masseHoraireAmphi FROM Cours WHERE idCours IN(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
@@ -497,7 +549,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT masseHoraireTD FROM Cours WHERE idCours=(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)");
+			ps = con.prepareStatement("SELECT masseHoraireTD FROM Cours WHERE idCours IN(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
@@ -542,7 +594,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT masseHoraireTP FROM Cours WHERE idCours=(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)");
+			ps = con.prepareStatement("SELECT masseHoraireTP FROM Cours WHERE idCours IN(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
@@ -587,7 +639,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT masseHoraireExam FROM Cours WHERE idCours=(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)");
+			ps = con.prepareStatement("SELECT masseHoraireExam FROM Cours WHERE idCours IN(SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
@@ -632,7 +684,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT nomEnseignant FROM Enseignant WHERE idEnseignant=(SELECT idEnseignant FROM Planning WHERE Planning.idCours =(SELECT idCours FROM Cours WHERE((SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)))");
+			ps = con.prepareStatement("SELECT nomEnseignant FROM Enseignant WHERE idEnseignant IN(SELECT idEnseignant FROM Planning WHERE Planning.idCours =(SELECT idCours FROM Cours WHERE((SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)))");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
@@ -663,27 +715,27 @@ public class EtudiantDAO extends ConnectionDAO {
 		return returnValue;
 	}
 	/**
-	 * Permet de recuperer tous les date stockes dans la table AbsenceClassique
+	 * Permet de recuperer tous les date stockes dans la table AbsenceClassique ou AbsenceDistanciel
 	 * 
 	 * @return une ArrayList de date
 	 */
-	public ArrayList<String> getDateAbs(int id) {
+	public ArrayList<Date> getDateAbs(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		ArrayList<String> returnValue = new ArrayList<String>();
+		ArrayList<Date> returnValue = new ArrayList<Date>();
 		
 		
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("");
+			ps = con.prepareStatement("SELECT date_abs_cls FROM AbsenceClassique WHERE (idEtud= ?)");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
 			// on parcourt les lignes du resultat
 			while (rs.next()) {
-				returnValue.add(rs.getString("date_abs_cls"));
+				returnValue.add(rs.getDate("date_abs_cls"));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -708,17 +760,153 @@ public class EtudiantDAO extends ConnectionDAO {
 		return returnValue;
 	}
 	/**
-	 * ATTENTION : Cette méthode n'a pas vocation à être executée lors d'une utilisation normale du programme !
-	 * Elle existe uniquement pour TESTER les méthodes écrites au-dessus !
+	 * Permet de recuperer tous les noms de cours o� l'�l�ve est absent stockes dans la table  Cours
 	 * 
-	 * @param args non utilisés
+	 * @return une ArrayList de noms cours
+	 */
+	public ArrayList<String> getNomCoursAbs(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> returnValue = new ArrayList<String>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT nomCours FROM Cours WHERE (idCours  IN(SELECT idCours FROM AbsenceClassique WHERE (idEtud= ?)))");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getString("nomCours"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	
+	/**
+	 * Permet de recuperer tous les nombre d'heures par s�ance o� l'�l�ve est absent stockes dans la table  absenceClassique ou absenceDistanciel
+	 * 
+	 * @return une ArrayList de noms cours
+	 */
+	public ArrayList<Integer> getHeureAbs(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Integer> returnValue = new ArrayList<Integer>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT nbrdheure FROM AbsenceClassique WHERE (idEtud= ?)");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getInt("nbrdheure"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer tous les Statuts des absences stockes dans la table  estAbs
+	 * 
+	 * @return une ArrayList de Statuts
+	 */
+	public ArrayList<String> getStatutAbs(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> returnValue = new ArrayList<String>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT statut FROM AbsenceClassique WHERE (idEtud= ?)");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getString("statut"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * ATTENTION : Cette methode n'a pas vocation a� a�tre executee lors d'une utilisation normale du programme !
+	 * Elle existe uniquement pour TESTER les methodes ecrites au-dessus !
+	 * 
+	 * @param args non utilises
 	 * @throws SQLException si une erreur se produit lors de la communication avec la BDD
 	 */
 	/**
 	public static void main(String[] args) throws SQLException {
 		int returnValue;
 		EtudiantDAO EtudiantDAO = new EtudiantDAO();
-		// Ce test va utiliser directement votre BDD, on essaie d'éviter les collisions avec vos données en prenant de grands ID
+		// Ce test va utiliser directement votre BDD, on essaie d'eviter les collisions avec vos donnees en prenant de grands ID
 		int[] ids = {424242, 424243, 424244};
 		// test du constructeur
 		Etudiant s1 = new Etudiant(ids[0],  1,  "nom",  "prenom",  "filiere",  "mail", "mdp");
@@ -747,7 +935,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		}
 		System.out.println();
 		// test de la methode delete
-		// On supprime les 3 articles qu'on a créé
+		// On supprime les 3 articles qu'on a cree
 		returnValue = 0;
 		for (int id : ids) {
 //			returnValue = EtudiantDAO.delete(id);
