@@ -12,6 +12,7 @@ public class ConnectionDAO {
 	 * URL, LOGIN et PASS sont des constantes
 	 */
 	// � utiliser si vous �tes sur une machine personnelle :"jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl"  
+	//final static String URL   = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl" ;
 
 
 	//final static String URL   = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl" ;

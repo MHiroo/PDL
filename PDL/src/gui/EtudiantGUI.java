@@ -247,7 +247,7 @@ public class EtudiantGUI extends JFrame{
 
 		// Création d'un bouton pour récupérer la date sélectionnée
 
-		JButton button = new JButton("Sélectionner");
+		JButton button = new JButton("Selectionner");
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -426,7 +426,7 @@ public class EtudiantGUI extends JFrame{
 
 
 		/**
-		 * Creation du bouton pour acceder à liste des cours de l'etudiant
+		 * Creation du bouton pour acceder a la liste des cours de l'etudiant
 		 */
 		JPanel ListeCours = new JPanel();
 		this.getContentPane().add(ListeCours);
@@ -459,7 +459,7 @@ public class EtudiantGUI extends JFrame{
 		 */
 		JPanel ListeAbsences = new JPanel();
 		this.getContentPane().add(ListeAbsences);
-		JButton LISTEABSENCES = new JButton("Acceder à la liste d'absences");
+		JButton LISTEABSENCES = new JButton("Acceder a� la liste d'absences");
 		LISTEABSENCES.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameListeAbsences.setLocationRelativeTo(null);

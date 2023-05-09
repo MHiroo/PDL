@@ -21,11 +21,11 @@ public class PremiereGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 400);
 
-        // Création du calendrier
+        // Creation du calendrier
         calendar = new JCalendar();
 
-        // Création d'un bouton pour récupérer la date sélectionnée
-        JButton button = new JButton("Sélectionner");
+        // Creation d'un bouton pour recuperer la date selectionnee
+        JButton button = new JButton("Selectionner");
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -33,13 +33,13 @@ public class PremiereGUI extends JFrame {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date);
                 int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
-                int month = cal.get(Calendar.MONTH) + 1; // les mois sont indexés à partir de 0
+                int month = cal.get(Calendar.MONTH) + 1; // les mois sont indexes à partir de 0
                 int year = cal.get(Calendar.YEAR);
                 dateLabel.setText(dayOfMonth + "/" + month + "/" + year);
             }
         });
 
-        // Création d'un label pour afficher la date sélectionnée
+        // Creation d'un label pour afficher la date selectionnee
         dateLabel = new JLabel("", SwingConstants.CENTER);
 
         // Ajout des composants à la fenêtre
