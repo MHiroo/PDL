@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import model.*;
 
 /**
- * Classe d'acces aux donnees contenues dans la table etudiant
+ * Classe d'acces aux donnees contenues dans la table planning
  * 
  * @author G9 Jaune canaris
  * @version 1.0
@@ -19,13 +19,13 @@ public class PlanningDAO extends ConnectionDAO {
 	}
 
 	/**
-	 * Permet d'ajouter un etudiant dans la table etudiant.
+	 * Permet d'ajouter un planning dans la table planning.
 	 * Le mode est auto-commit par defaut : chaque insertion est validee
 	 * 
-	 * @param etudiant l'etudiant a ajouter
+	 * @param planning le planning a ajouter
 	 * @return retourne le nombre de lignes ajoutees dans la table
 	 */
-	public int add(Etudiant etudiant) {
+	public int add(Planning planning) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -38,21 +38,22 @@ public class PlanningDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO etudiant(idetud,idgroupe, nomEtudiant, prenomEtudiant, filiere, email, motdepasse) VALUES( ?, ?, ?, ?, ?, ?, ?)");
-			ps.setInt(1, getList().get(getList().size()-1).getId()+1);
-			ps.setInt(2, etudiant.getGroupe());
-			ps.setString(3, etudiant.getName());
-			ps.setString(4, etudiant.getFirstName());
-			ps.setString(5, etudiant.getFiliere());
-			ps.setString(6, etudiant.getEmail());
-			ps.setString(7, etudiant.getMdp());
+			ps = con.prepareStatement("INSERT INTO planning(idplanning,idgroupe, idenseignant, idcours, date_pln, salle, duree, heure) VALUES( ?, ?, ?, ?, ?, ?, ?,?)");
+			ps.setInt(1, getListPlanning().get(getListPlanning().size()-1).getId()+1);
+			ps.setInt(2, planning.getIdGroupe());
+			ps.setInt(3, planning.getIdEnseignant());
+			ps.setInt(4, planning.getIdCours());
+			ps.setDate(5, (Date) planning.getDate());
+			ps.setString(6, planning.getSalle());
+			ps.setDouble(7, planning.getDuree());
+			ps.setTime(8, planning.getHeure());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
 
 		} catch (Exception e) {
 			if (e.getMessage().contains("ORA-00001"))
-				System.out.println("Cet identifiant de etudiant existe déjà. Ajout impossible !");
+				System.out.println("Cet identifiant de planning existe déjà. Ajout impossible !");
 			else
 				e.printStackTrace();
 		} finally {
@@ -74,13 +75,13 @@ public class PlanningDAO extends ConnectionDAO {
 	}
 
 	/**
-	 * Permet de modifier un etudiant dans la table etudiant.
+	 * Permet de modifier un planning dans la table planning.
 	 * Le mode est auto-commit par defaut : chaque modification est validee
 	 * 
-	 * @param etudiant le etudiant a modifier
+	 * @param planning le planning a modifier
 	 * @return retourne le nombre de lignes modifiees dans la table
 	 */
-	public int update(Etudiant etudiant) {
+	public int update(Planning planning) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -93,14 +94,15 @@ public class PlanningDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans la modification.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("UPDATE etudiant SET idgroupe = ?, nomEtudiant = ?, prenomEtudiant = ?, filiere = ?, email = ?, motdepasse = ? WHERE idetud = ?");
-			ps.setInt(1, etudiant.getGroupe());
-			ps.setString(2, etudiant.getName());
-			ps.setString(3, etudiant.getFirstName());
-			ps.setString(4, etudiant.getFiliere());
-			ps.setString(5, etudiant.getEmail());
-			ps.setString(6, etudiant.getMdp());
-			ps.setInt(7, etudiant.getId());	
+			ps = con.prepareStatement("UPDATE planning SET idgroupe = ?, idenseignant = ?, idcours = ?, date_pln = ?, salle = ?, duree = ?, heure = ? WHERE idplanning = ?");
+			ps.setInt(1, planning.getIdGroupe());
+			ps.setInt(2, planning.getIdEnseignant());
+			ps.setInt(3, planning.getIdCours());
+			ps.setDate(4,(Date) planning.getDate());
+			ps.setString(5, planning.getSalle());
+			ps.setDouble(6, planning.getDuree());
+			ps.setTime(7, planning.getHeure());
+			ps.setInt(8, planning.getId());	
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -126,11 +128,11 @@ public class PlanningDAO extends ConnectionDAO {
 	}
 
 	/**
-	 * Permet de supprimer un etudiant par id dans la table etudiant.
+	 * Permet de supprimer un planning par id dans la table planning.
 	 * Si ce dernier possede des articles, la suppression n'a pas lieu.
 	 * Le mode est auto-commit par defaut : chaque suppression est validee
 	 * 
-	 * @param id l'id du etudiant à supprimer
+	 * @param id l'id du planning à supprimer
 	 * @return retourne le nombre de lignes supprimees dans la table
 	 */
 	public int delete(int id) {
@@ -146,7 +148,7 @@ public class PlanningDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, le ? represente la valeur de l'ID
 			// a communiquer dans la suppression.
 			// le getter permet de recuperer la valeur de l'ID du fournisseur
-			ps = con.prepareStatement("DELETE FROM etudiant WHERE idetud = ?");
+			ps = con.prepareStatement("DELETE FROM planning WHERE idplanning = ?");
 			ps.setInt(1, id);
 
 			// Execution de la requete
@@ -176,23 +178,23 @@ public class PlanningDAO extends ConnectionDAO {
 
 
 	/**
-	 * Permet de recuperer un etudiant a partir de sa reference
+	 * Permet de recuperer un planning a partir de sa reference
 	 * 
-	 * @param reference la reference du etudiant a recuperer
-	 * @return le etudiant trouve;
-	 * 			null si aucun etudiant ne correspond a cette reference
+	 * @param reference la reference du planning a recuperer
+	 * @return le planning trouve;
+	 * 			null si aucun planning ne correspond a cette reference
 	 */
-	public Etudiant get(int id) {
+	public Planning getPlanning(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Etudiant returnValue = null;
+		Planning returnValue = null;
 
 		// connexion a la base de donnees
 		try {
 
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM etudiant WHERE idetud = ?");
+			ps = con.prepareStatement("SELECT * FROM planning WHERE idplanning = ?");
 			ps.setInt(1, id);
 
 			// on execute la requete
@@ -200,13 +202,14 @@ public class PlanningDAO extends ConnectionDAO {
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
-				returnValue = new Etudiant(rs.getInt("idetud"),
+				returnValue = new Planning(rs.getInt("idplanning"),
 										   rs.getInt("idgroupe"),
-									       rs.getString("nomEtudiant"),
-									       rs.getString("prenomEtudiant"),
-									       rs.getString("filiere"),
-									       rs.getString("email"),
-										   rs.getString("motdepasse"));
+									       rs.getInt("idEnseignant"),
+									       rs.getInt("idCours"),
+									       rs.getDate("date_pln"),
+									       rs.getString("salle"),
+										   rs.getDouble("duree"),
+										   rs.getTime("heure"));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -235,32 +238,33 @@ public class PlanningDAO extends ConnectionDAO {
 	}
 
 	/**
-	 * Permet de recuperer tous les etudiants stockes dans la table etudiant
+	 * Permet de recuperer tous les plannings stockes dans la table planning
 	 * 
-	 * @return une ArrayList de etudiant
+	 * @return une ArrayList de planning
 	 */
-	public ArrayList<Etudiant> getList() {
+	public ArrayList<Planning> getListPlanning() {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		ArrayList<Etudiant> returnValue = new ArrayList<Etudiant>();
+		ArrayList<Planning> returnValue = new ArrayList<Planning>();
 
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM etudiant ORDER BY idetud");
+			ps = con.prepareStatement("SELECT * FROM planning ORDER BY idplanning");
 
 			// on execute la requete
 			rs = ps.executeQuery();
 			// on parcourt les lignes du resultat
 			while (rs.next()) {
-				returnValue.add(new Etudiant(rs.getInt("idetud"),
-						                     rs.getInt("idgroupe"),
-											       rs.getString("nomEtudiant"),
-											       rs.getString("prenomEtudiant"),
-											       rs.getString("filiere"),
-											       rs.getString("email"),
-												   rs.getString("motdepasse")));
+				returnValue.add(new Planning(rs.getInt("idplanning"),
+						   rs.getInt("idgroupe"),
+					       rs.getInt("idEnseignant"),
+					       rs.getInt("idCours"),
+					       rs.getDate("date_pln"),
+					       rs.getString("salle"),
+						   rs.getDouble("duree"),
+						   rs.getTime("heure")));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -284,40 +288,41 @@ public class PlanningDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
+	
 	/**
-	 * Permet d'authentifier un etudiant par son email et son mot de passe dans la table etudiant.
-	 * Le mode est auto-commit par defaut : chaque suppression est validee
+	 * Permet de recuperer une liste de planning du jour a partir du groupe et de la date
 	 * 
-	 * @param email l'email de l'etudiant 
-	 * @param mdp mot de passe de l'etudiant 
-	 * @return retourne l'étudiant qui se connecte
+	 * @param reference la reference du planning a recuperer
+	 * @return le planning trouve;
+	 * 			null si aucun planning ne correspond a cette reference
 	 */
-	public Etudiant signIn(String email, String mdp) {
+	public ArrayList<Planning> getPlanningJour(int idGroupe, String date) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Etudiant returnValue = null;
+		ArrayList<Planning> returnValue = new ArrayList<Planning>();
 
 		// connexion a la base de donnees
 		try {
 
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM etudiant WHERE email like ? and motdepasse like ?");
-			ps.setString(1, email);
-			ps.setString(2, mdp);
+			ps = con.prepareStatement("SELECT * FROM planning WHERE (idGroupe = ? AND date_pln = (TO_DATE(?,'DD-MM-YYYY'))) ORDER BY heure");
+			ps.setInt(1, idGroupe);
+			ps.setString(2, date);
 
 			// on execute la requete
 			// rs contient un pointeur situe juste avant la premiere ligne retournee
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
-			if (rs.next()) {
-				returnValue = new Etudiant(rs.getInt("idetud"),
-										   rs.getInt("idgroupe"),
-									       rs.getString("nomEtudiant"),
-									       rs.getString("prenomEtudiant"),
-									       rs.getString("filiere"),
-									       rs.getString("email"),
-										   rs.getString("motdepasse"));
+			while (rs.next()) {
+				returnValue.add(new Planning(rs.getInt("idplanning"),
+						   rs.getInt("idgroupe"),
+					       rs.getInt("idEnseignant"),
+					       rs.getInt("idCours"),
+					       rs.getDate("date_pln"),
+					       rs.getString("salle"),
+						   rs.getDouble("duree"),
+						   rs.getTime("heure")));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -344,54 +349,4 @@ public class PlanningDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
-	
-	/**
-	 * ATTENTION : Cette méthode n'a pas vocation à être executée lors d'une utilisation normale du programme !
-	 * Elle existe uniquement pour TESTER les méthodes écrites au-dessus !
-	 * 
-	 * @param args non utilisés
-	 * @throws SQLException si une erreur se produit lors de la communication avec la BDD
-	 */
-	public static void main(String[] args) throws SQLException {
-		int returnValue;
-		PlanningDAO EtudiantDAO = new PlanningDAO();
-		// Ce test va utiliser directement votre BDD, on essaie d'éviter les collisions avec vos données en prenant de grands ID
-		int[] ids = {424242, 424243, 424244};
-		// test du constructeur
-		Etudiant s1 = new Etudiant(ids[0],  1,  "nom",  "prenom",  "filiere",  "mail", "mdp");
-		Etudiant s2 = new Etudiant(ids[1],  1,  "nom",  "prenom",  "filiere",  "mail", "mdp");
-		Etudiant s3 = new Etudiant(ids[2],  1,  "nom",  "prenom",  "filiere",  "mail", "mdp");
-		// test de la methode add
-		returnValue = EtudiantDAO.add(s1);
-		System.out.println(returnValue + " etudiant ajoute");
-		returnValue = EtudiantDAO.add(s2);
-		System.out.println(returnValue + " etudiant ajoute");
-		returnValue = EtudiantDAO.add(s3);
-		System.out.println(returnValue + " etudiant ajoute");
-		System.out.println();
-		
-		// test de la methode get
-		Etudiant sg = EtudiantDAO.get(1);
-		// appel implicite de la methode toString de la classe Object (a eviter)
-		System.out.println(sg);
-		System.out.println();
-		
-		// test de la methode getList
-		ArrayList<Etudiant> list = EtudiantDAO.getList();
-		for (Etudiant s : list) {
-			// appel explicite de la methode toString de la classe Object (a privilegier)
-			System.out.println(s.toString());
-		}
-		System.out.println();
-		// test de la methode delete
-		// On supprime les 3 articles qu'on a créé
-		returnValue = 0;
-		for (int id : ids) {
-//			returnValue = EtudiantDAO.delete(id);
-			System.out.println(returnValue + " etudiant supprime");
-		}
-		
-		System.out.println();
-	}
-	
 }
