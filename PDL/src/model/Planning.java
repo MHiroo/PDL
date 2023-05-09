@@ -1,4 +1,5 @@
 package model;
+import java.sql.Time;
 import java.util.Date;
 /**
  * Classe Planning
@@ -13,15 +14,15 @@ public class Planning {
 	/**
 	 * groupe d'étudiant
 	 */
-	public Groupe_Etudiant groupe;
+	public int idGroupe;
 	/**
 	 * enseignant
 	 */
-	private Enseignant enseignant;
+	private int idEnseignant;
 	/**
 	 * Cours
 	 */
-	private Cours cours;
+	private int idCours;
 	/**
 	 * Date 
 	 */
@@ -34,6 +35,10 @@ public class Planning {
 	 * Répartition
 	 */
 	private String salle;
+	/**
+	 * Répartition
+	 */
+	private Time heure;
 	
 	/**
 	 * Constructor
@@ -43,15 +48,18 @@ public class Planning {
 	 * @param date du planning
 	 * @param nbreHeure du planning
 	 * @param salle du planning
+	 * @param duree de la séance
+	 * @param heure de la séance
 	 */
-	public Planning(int id,Groupe_Etudiant groupe, Enseignant enseignant,Cours cours, Date date, String salle, double duree) {
+	public Planning(int id,int idGroupe, int idEnseignant,int idCours, Date date, String salle, double duree, Time heure) {
 		this.id=id;
-		this.groupe= groupe;
-		this.enseignant=enseignant;
-		this.cours=cours;
+		this.idGroupe= idGroupe;
+		this.idEnseignant=idEnseignant;
+		this.idCours=idCours;
 		this.date=date;
 		this.salle=salle;
 		this.duree= duree;
+		this.heure= heure;
 	}
 	
 	/**
@@ -65,42 +73,28 @@ public class Planning {
 	 * getter pour l'attribut groupe
 	 * @return valeur du groupe
 	 */
-	public Groupe_Etudiant getGroupe() {
-		return groupe;
+	public int getIdGroupe() {
+		return idGroupe;
 	}
 	/**
 	 * getter pour l'attribut enseignant
 	 * @return valeur du enseignant
 	 */
-	public Enseignant getEnseignant() {
-		return enseignant;
-	}
-	/**
-	 * setter pour l'attribut enseignant
-	 * @param nom : nouvelle valeur du enseignant
-	 */
-	public void setEnseignant(Enseignant enseignant) {
-		this.enseignant = enseignant;
+	public int getIdEnseignant() {
+		return idEnseignant;
 	}
 	/**
 	 * getter pour l'attribut cours
 	 * @return valeur du cours
 	 */
-	public Cours getCours(Cours cours) {
-		return cours;
-	}
-	/**
-	 * setter pour l'attribut cours
-	 * @param cours : nouvelle valeur du cours
-	 */
-	public void setCours(Cours cours) {
-		this.cours = cours;
+	public int getIdCours() {
+		return idCours;
 	}
 	/**
 	 * getter pour l'attribut date
 	 * @return valeur de la date
 	 */
-	public Date getDate(Date date) {
+	public Date getDate() {
 		return date;
 	}
 	/**
@@ -114,21 +108,21 @@ public class Planning {
 	 * getter pour l'attribut salle
 	 * @return valeur de la salle
 	 */
-	public String getsalle(String salle) {
+	public String getSalle() {
 		return salle;
 	}
 	/**
 	 * setter pour l'attribut salle
 	 * @param salle : nouvelle valeur du salle
 	 */
-	public void setsalle(String salle) {
+	public void setSalle(String salle) {
 		this.salle = salle;
 	}
 	/**
 	 * getter pour l'attribut duree
 	 * @return valeur de la duree
 	 */
-	public double getDuree(double duree) {
+	public double getDuree() {
 		return duree;
 	}
 	/**
@@ -138,17 +132,33 @@ public class Planning {
 	public void setDuree(double duree) {
 		this.duree = duree;
 	}
+	/**
+	 * getter pour l'attribut heure
+	 * @return valeur de la heure
+	 */
+	public Time getHeure() {
+		return heure;
+	}
+	/**
+	 * setter pour l'attribut duree
+	 * @param duree : nouvelle valeur de la duree
+	 */
+	public void setDuree(Time heure) {
+		this.heure = heure;
+	}
 	
 	/**
 	 * display de toutes les donnees du planning
 	 */
 	public void display() {
 		System.out.println(id);
-		System.out.println( enseignant);
-		System.out.println(cours);
+		System.out.println( idGroupe);
+		System.out.println( idEnseignant);
+		System.out.println(idCours);
 		System.out.println(date);
 		System.out.println(salle);
 		System.out.println(duree);
+		System.out.println(heure);
 	}
 
 }
