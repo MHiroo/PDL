@@ -84,15 +84,15 @@ public class SignInGestionnaireGUI {
         JButton btnConnecter = new JButton("Se connecter");
         btnConnecter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Récupérer les données saisies par l'utilisateur
+                // Recuperer les donnees saisies par l'utilisateur
                 
                 String email = textFieldEmail.getText();
                 String mdp = textFieldMdp.getText();
                 
-                // Créer un objet gestionnaire avec les données récupérées
+                // Creer un objet gestionnaire avec les donnees recuperees
                 Personne gestionnaire = new Personne( 0,  "",  "",  "", "", "");
                 
-                // Appeler la méthode d'authentification d'un gestionnaire dans la base de données
+                // Appeler la methode d'authentification d'un gestionnaire dans la base de donnees
                 GestionnaireDAO gestionnaireDAO = new GestionnaireDAO();
                 gestionnaire = gestionnaireDAO.signIn(email,mdp);
                 if (gestionnaire==null) {
