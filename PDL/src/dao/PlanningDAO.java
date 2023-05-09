@@ -38,6 +38,7 @@ public class PlanningDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
+<<<<<<< HEAD
 			ps = con.prepareStatement("INSERT INTO planning(idplanning,idgroupe, idenseignant, idcours, date_pln, salle, duree, heure) VALUES( ?, ?, ?, ?, ?, ?, ?,?)");
 			ps.setInt(1, getListPlanning().get(getListPlanning().size()-1).getId()+1);
 			ps.setInt(2, planning.getIdGroupe());
@@ -47,6 +48,14 @@ public class PlanningDAO extends ConnectionDAO {
 			ps.setString(6, planning.getSalle());
 			ps.setDouble(7, planning.getDuree());
 			ps.setTime(8, planning.getHeure());
+=======
+			ps = con.prepareStatement("INSERT INTO planning(idplanning,idenseignant, idcours, date_pln, salle) VALUES( ?, ?, ?, ?, ?)");
+			ps.setInt(1, getList().get(getList().size()-1).getId()+1);
+			ps.setEnseignant(2, planning.getEnseignant());
+			ps.setCours(3, planning.getCours());
+			ps.setDate(4, planning.getDate());
+			ps.setString(5, planning.getSalle());
+>>>>>>> 1c7bfcc651dbb6e4994e55cf74bcafc9a6bbd885
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -94,6 +103,7 @@ public class PlanningDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans la modification.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
+<<<<<<< HEAD
 			ps = con.prepareStatement("UPDATE planning SET idgroupe = ?, idenseignant = ?, idcours = ?, date_pln = ?, salle = ?, duree = ?, heure = ? WHERE idplanning = ?");
 			ps.setInt(1, planning.getIdGroupe());
 			ps.setInt(2, planning.getIdEnseignant());
@@ -103,6 +113,14 @@ public class PlanningDAO extends ConnectionDAO {
 			ps.setDouble(6, planning.getDuree());
 			ps.setTime(7, planning.getHeure());
 			ps.setInt(8, planning.getId());	
+=======
+			ps = con.prepareStatement("UPDATE planning SET idplanning = ?, idenseignant = ?, idcours = ?, date_pln = ?, salle = ? WHERE idplanning = ?");
+			ps.setString(1, planning.getSalle());
+			ps.setDate(2, planning.getDate());
+			ps.setCours(3, cours.getCours());
+			ps.setEnseignant(4, enseignant.getEnseignant());
+			ps.setInt(5, planning.getId());	
+>>>>>>> 1c7bfcc651dbb6e4994e55cf74bcafc9a6bbd885
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -147,7 +165,11 @@ public class PlanningDAO extends ConnectionDAO {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			// preparation de l'instruction SQL, le ? represente la valeur de l'ID
 			// a communiquer dans la suppression.
+<<<<<<< HEAD
 			// le getter permet de recuperer la valeur de l'ID du fournisseur
+=======
+			// le getter permet de recuperer la valeur de l'ID du planning
+>>>>>>> 1c7bfcc651dbb6e4994e55cf74bcafc9a6bbd885
 			ps = con.prepareStatement("DELETE FROM planning WHERE idplanning = ?");
 			ps.setInt(1, id);
 
@@ -178,6 +200,7 @@ public class PlanningDAO extends ConnectionDAO {
 
 
 	/**
+<<<<<<< HEAD
 	 * Permet de recuperer un planning a partir de sa reference
 	 * 
 	 * @param reference la reference du planning a recuperer
@@ -185,6 +208,15 @@ public class PlanningDAO extends ConnectionDAO {
 	 * 			null si aucun planning ne correspond a cette reference
 	 */
 	public Planning getPlanning(int id) {
+=======
+	 * Permet de recuperer un planning a partir de son id
+	 * 
+	 * @param id l'id du planning a recuperer
+	 * @return le planning trouve;
+	 * 			null si aucun planning ne correspond a cette reference
+	 */
+	public Planning get(int id) {
+>>>>>>> 1c7bfcc651dbb6e4994e55cf74bcafc9a6bbd885
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -203,6 +235,7 @@ public class PlanningDAO extends ConnectionDAO {
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
 				returnValue = new Planning(rs.getInt("idplanning"),
+<<<<<<< HEAD
 										   rs.getInt("idgroupe"),
 									       rs.getInt("idEnseignant"),
 									       rs.getInt("idCours"),
@@ -210,6 +243,12 @@ public class PlanningDAO extends ConnectionDAO {
 									       rs.getString("salle"),
 										   rs.getDouble("duree"),
 										   rs.getTime("heure"));
+=======
+										   rs.getInt("idenseignant"),
+									       rs.getString("idcours"),
+									       rs.getString("date_pln"),
+									       rs.getString("salle"));
+>>>>>>> 1c7bfcc651dbb6e4994e55cf74bcafc9a6bbd885
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -238,11 +277,19 @@ public class PlanningDAO extends ConnectionDAO {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Permet de recuperer tous les plannings stockes dans la table planning
 	 * 
 	 * @return une ArrayList de planning
 	 */
 	public ArrayList<Planning> getListPlanning() {
+=======
+	 * Permet de recuperer tous les planning stockes dans la table planning
+	 * 
+	 * @return une ArrayList de planning
+	 */
+	public ArrayList<Planning> getList() {
+>>>>>>> 1c7bfcc651dbb6e4994e55cf74bcafc9a6bbd885
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -258,6 +305,7 @@ public class PlanningDAO extends ConnectionDAO {
 			// on parcourt les lignes du resultat
 			while (rs.next()) {
 				returnValue.add(new Planning(rs.getInt("idplanning"),
+<<<<<<< HEAD
 						   rs.getInt("idgroupe"),
 					       rs.getInt("idEnseignant"),
 					       rs.getInt("idCours"),
@@ -265,6 +313,12 @@ public class PlanningDAO extends ConnectionDAO {
 					       rs.getString("salle"),
 						   rs.getDouble("duree"),
 						   rs.getTime("heure")));
+=======
+						                     rs.getInt("idenseignant"),
+											       rs.getString("idcours"),
+											       rs.getString("date_pln"),
+											       rs.getString("salle")));
+>>>>>>> 1c7bfcc651dbb6e4994e55cf74bcafc9a6bbd885
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -290,6 +344,7 @@ public class PlanningDAO extends ConnectionDAO {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Permet de recuperer une liste de planning du jour a partir du groupe et de la date
 	 * 
 	 * @param reference la reference du planning a recuperer
@@ -349,4 +404,54 @@ public class PlanningDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
+=======
+	 * ATTENTION : Cette méthode n'a pas vocation à être executée lors d'une utilisation normale du programme !
+	 * Elle existe uniquement pour TESTER les méthodes écrites au-dessus !
+	 * 
+	 * @param args non utilisés
+	 * @throws SQLException si une erreur se produit lors de la communication avec la BDD
+	 */
+	public static void main(String[] args) throws SQLException {
+		int returnValue;
+		PlanningDAO planningdao = new PlanningDAO();
+		// Ce test va utiliser directement votre BDD, on essaie d'éviter les collisions avec vos données en prenant de grands ID
+		int[] ids = {424242, 424243, 424244};
+		// test du constructeur
+		Planning s1 = new Planning(ids[0],  1,  1,  01/01/2023,  "D1275");
+		Planning s2 = new Planning(ids[1],  1,  1,  01/01/2023,  "D1275");
+		Planning s3 = new Planning(ids[2],  1,  1,  01/01/2023,  "D1275");
+		// test de la methode add
+		returnValue = PlanningDAO.add(s1);
+		System.out.println(returnValue + " planning ajoute");
+		returnValue = PlanningDAO.add(s2);
+		System.out.println(returnValue + " planning ajoute");
+		returnValue = PlanningDAO.add(s3);
+		System.out.println(returnValue + " planning ajoute");
+		System.out.println();
+		
+		// test de la methode get
+		Planning sg = PlanningDAO.get(1);
+		// appel implicite de la methode toString de la classe Object (a eviter)
+		System.out.println(sg);
+		System.out.println();
+		
+		// test de la methode getList
+		ArrayList<Planning> list = PlanningDAO.getList();
+		for (Planning s : list) {
+			// appel explicite de la methode toString de la classe Object (a privilegier)
+			System.out.println(s.toString());
+		}
+		System.out.println();
+		// test de la methode delete
+		// On supprime les 3 articles qu'on a créé
+		returnValue = 0;
+		for (int id : ids) {
+//			returnValue = PlanningDAO.delete(id);
+			System.out.println(returnValue + " planning supprime");
+		}
+		
+		System.out.println();
+	}
+	
+>>>>>>> 1c7bfcc651dbb6e4994e55cf74bcafc9a6bbd885
 }
