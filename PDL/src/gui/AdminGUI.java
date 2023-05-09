@@ -80,7 +80,7 @@ public class AdminGUI {
      */
     private void initialize() {
     	/**
-    	 * Cr�ation de la fen�tre principale
+    	 * Creation de la fenetre principale
     	 */
     	pframe = new JFrame();
     	pframe.setBounds(100, 100, 450, 300);
@@ -88,25 +88,25 @@ public class AdminGUI {
         pframe.getContentPane().setLayout(new BoxLayout(pframe.getContentPane(), BoxLayout.Y_AXIS));
     	
         /**
-         * Cr�ation du panel comportant les UC part 1
+         * Creation du panel comportant les UC part 1
          */
     	JPanel panelUC1 = new JPanel();
     	pframe.getContentPane().add(panelUC1);
     	
     	/**
-         * Cr�ation du panel comportant les UC part 2
+         * Creation du panel comportant les UC part 2
          */
     	JPanel panelUC2 = new JPanel();
     	pframe.getContentPane().add(panelUC2);
     	
     	/**
-         * Cr�ation du panel comportant les UC part 3
+         * Creation du panel comportant les UC part 3
          */
     	JPanel panelUC3 = new JPanel();
     	pframe.getContentPane().add(panelUC3);   	
     	
     	/**
-    	 * Cr�ation de la fen�tre UC2
+    	 * Creation de la fenetre UC2
     	 */
     	UC2frame = new JFrame();
     	UC2frame.setBounds(100, 100, 450, 300);
@@ -114,7 +114,7 @@ public class AdminGUI {
         UC2frame.getContentPane().setLayout(new BoxLayout(UC2frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
-    	 * Cr�ation de la fen�tre UC3
+    	 * Creation de la fenetre UC3
     	 */
     	UC3frame = new JFrame();
     	UC3frame.setBounds(100, 100, 450, 300);
@@ -122,7 +122,7 @@ public class AdminGUI {
         UC3frame.getContentPane().setLayout(new BoxLayout(UC3frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
-    	 * Cr�ation de la fen�tre UC4
+    	 * Creation de la fenetre UC4
     	 */
     	UC4frame = new JFrame();
     	UC4frame.setBounds(100, 100, 450, 300);
@@ -130,7 +130,7 @@ public class AdminGUI {
         UC4frame.getContentPane().setLayout(new BoxLayout(UC4frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
-    	 * Cr�ation de la fen�tre UC5
+    	 * Creation de la fenetre UC5
     	 */
     	UC5frame = new JFrame();
     	UC5frame.setBounds(100, 100, 450, 300);
@@ -138,7 +138,7 @@ public class AdminGUI {
         UC5frame.getContentPane().setLayout(new BoxLayout(UC5frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
-    	 * Cr�ation de la fen�tre UC6
+    	 * Creation de la fenetre UC6
     	 */
     	UC6frame = new JFrame();
     	UC6frame.setBounds(100, 100, 450, 300);
@@ -146,7 +146,7 @@ public class AdminGUI {
         UC6frame.getContentPane().setLayout(new BoxLayout(UC6frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
-    	 * Cr�ation de la fen�tre UC7
+    	 * Creation de la fenetre UC7
     	 */
     	UC7frame = new JFrame();
     	UC7frame.setBounds(100, 100, 450, 300);
@@ -154,7 +154,7 @@ public class AdminGUI {
         UC7frame.getContentPane().setLayout(new BoxLayout(UC7frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
-    	 * Cr�ation de la fen�tre UC8
+    	 * Creation de la fenetre UC8
     	 */
     	UC8frame = new JFrame();
     	UC8frame.setBounds(100, 100, 450, 300);
@@ -162,7 +162,7 @@ public class AdminGUI {
         UC8frame.getContentPane().setLayout(new BoxLayout(UC8frame.getContentPane(), BoxLayout.Y_AXIS));
         
     	/**
-    	 * Cr�ation de la fen�tre UC9
+    	 * Creation de la fenetre UC9
     	 */
     	UC9frame = new JFrame();
     	UC9frame.setBounds(100, 100, 450, 300);
@@ -170,7 +170,7 @@ public class AdminGUI {
         UC9frame.getContentPane().setLayout(new BoxLayout(UC9frame.getContentPane(), BoxLayout.Y_AXIS));
     	
     	/**
-    	 * Cr�ation de la fenetre pour le UC Cr�er/modifier un �tudiant
+    	 * Creation de la fenetre pour le UC Creer/modifier un etudiant
     	 */
         frame = new JFrame();
         frame.setBounds(100, 100, 450, 300);
@@ -178,7 +178,7 @@ public class AdminGUI {
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
-         * Cr�ation du panel comportant la s�lection du groupe pour ajouter un �tudiant
+         * Creation du panel comportant la selection du groupe pour ajouter un etudiant
          */
         JPanel panelGroupe = new JPanel();
         frame.getContentPane().add(panelGroupe);
@@ -186,7 +186,7 @@ public class AdminGUI {
         JLabel lblGroupe = new JLabel("Groupe:");
         panelGroupe.add(lblGroupe);
         
-        //On r�cup�re l'id des groupes cr�er das la BDD pour les afficher ds le menu d�roulant
+        //On recupere l'id des groupes creer das la BDD pour les afficher ds le menu deroulant
         GroupeDAO groupeDAO = new GroupeDAO();  
         groupeBox = new JComboBox();
         for (int i = 0; i < groupeDAO.getList().size(); i++) {
@@ -195,7 +195,7 @@ public class AdminGUI {
         panelGroupe.add(groupeBox);
 
         /**
-         * Cr�ation du panel comportant la s�lection du nom pour ajouter un �tudiant
+         * Creation du panel comportant la selection du nom pour ajouter un etudiant
          */
         JPanel panelNom = new JPanel();
         frame.getContentPane().add(panelNom);
@@ -208,7 +208,7 @@ public class AdminGUI {
         textFieldNom.setColumns(10);
 
         /**
-         * Cr�ation du panel comportant la s�lection du pr�nom pour ajouter un �tudiant
+         * Creation du panel comportant la selection du prenom pour ajouter un etudiant
          */
         JPanel panelPrenom = new JPanel();
         frame.getContentPane().add(panelPrenom);
@@ -221,7 +221,7 @@ public class AdminGUI {
         textFieldPrenom.setColumns(10);
 
         /**
-         * Cr�ation du panel comportant la s�lection de la fili�re pour ajouter un �tudiant
+         * Creation du panel comportant la selection de la filiere pour ajouter un etudiant
          */
         JPanel panelFiliere = new JPanel();
         frame.getContentPane().add(panelFiliere);
@@ -234,7 +234,7 @@ public class AdminGUI {
         textFieldFiliere.setColumns(10);
 
 		/**
-		 * Cr�ation du panel comportant la s�lection du mail pour ajouter un �tudiant
+		 * Creation du panel comportant la selection du mail pour ajouter un etudiant
 		 */
         JPanel panelEmail = new JPanel();
         frame.getContentPane().add(panelEmail);
@@ -247,7 +247,7 @@ public class AdminGUI {
         textFieldEmail.setColumns(10);
         
         /**
-         * Cr�ation du panel comportant la s�lection du mdp pour ajouter un �tudiant
+         * Creation du panel comportant la selection du mdp pour ajouter un etudiant
          */
         JPanel panelMdp = new JPanel();
         frame.getContentPane().add(panelMdp);
@@ -260,7 +260,7 @@ public class AdminGUI {
         textFieldMdp.setColumns(10);
         
         /**
-         * Cr�ation de la fen�tre de modif d'un �tudiant
+         * Creation de la fenetre de modif d'un etudiant
          */
         frameModif = new JFrame();
         frameModif.setBounds(100, 100, 450, 300);
@@ -268,7 +268,7 @@ public class AdminGUI {
         frameModif.getContentPane().setLayout(new BoxLayout(frameModif.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
-         * Cr�ation du panel comportant la s�lection de l'id pour modifier un �tudiant
+         * Creation du panel comportant la selection de l'id pour modifier un etudiant
          */
         JPanel panelModif = new JPanel();
         frameModif.getContentPane().add(panelModif);
@@ -276,7 +276,7 @@ public class AdminGUI {
         JLabel lblModif = new JLabel("Id:");
         panelModif.add(lblModif);
         
-      //On r�cup�re l'id des �tudiants cr�es dans la BDD pour les afficher ds le menu d�roulant 
+      //On recupere l'id des etudiants crees dans la BDD pour les afficher ds le menu deroulant 
         EtudiantDAO etudiantDAO = new EtudiantDAO();
         idBox = new JComboBox();
         for (int i = 0; i < etudiantDAO.getList().size(); i++) {
@@ -285,7 +285,7 @@ public class AdminGUI {
         panelModif.add(idBox);
 
         /**
-         * Cr�ation du panel comportant la s�lection du groupe pour modifier un �tudiant
+         * Creation du panel comportant la selection du groupe pour modifier un etudiant
          */
         JPanel panelGroupeModif = new JPanel();
         frameModif.getContentPane().add(panelGroupeModif);
@@ -298,7 +298,7 @@ public class AdminGUI {
         textFieldGroupeModif.setColumns(10);
 
 		/**
-		 * Cr�ation du panel comportant la s�lection du nom pour modifier un �tudiant
+		 * Creation du panel comportant la selection du nom pour modifier un etudiant
 		 */
         JPanel panelNomModif = new JPanel();
         frameModif.getContentPane().add(panelNomModif);
@@ -311,7 +311,7 @@ public class AdminGUI {
         textFieldNomModif.setColumns(10);
 
         /**
-         * Cr�ation du panel comportant la s�lection du pr�nom pour modifier un �tudiant
+         * Creation du panel comportant la selection du prenom pour modifier un etudiant
          */
         JPanel panelPrenomModif = new JPanel();
         frameModif.getContentPane().add(panelPrenomModif);
@@ -324,7 +324,7 @@ public class AdminGUI {
         textFieldPrenomModif.setColumns(10);
 
         /**
-         * Cr�ation du panel comportant la s�lection de la fili�re pour modifier un �tudiant
+         * Creation du panel comportant la selection de la filiere pour modifier un etudiant
          */
         JPanel panelFiliereModif = new JPanel();
         frameModif.getContentPane().add(panelFiliereModif);
@@ -337,7 +337,7 @@ public class AdminGUI {
         textFieldFiliereModif.setColumns(10);
 
         /**
-         * Cr�ation du panel comportant la s�lection du mail pour modifier un �tudiant
+         * Creation du panel comportant la selection du mail pour modifier un etudiant
          */
         JPanel panelEmailModif = new JPanel();
         frameModif.getContentPane().add(panelEmailModif);
@@ -350,7 +350,7 @@ public class AdminGUI {
         textFieldEmailModif.setColumns(10);
 
         /**
-         * Cr�ation du panel comportant la s�lection du mdp pour modifier un �tudiant
+         * Creation du panel comportant la selection du mdp pour modifier un etudiant
          */
         JPanel panelMdpModif = new JPanel();
         frameModif.getContentPane().add(panelMdpModif);
@@ -363,7 +363,7 @@ public class AdminGUI {
         textFieldMdpModif.setColumns(10);
 
         /**
-         * Cr�ation de la fen�tre de suppression d'un �tudiant
+         * Creation de la fenetre de suppression d'un etudiant
          */
         frameSuppr = new JFrame();
         frameSuppr.setBounds(100, 100, 450, 300);
@@ -371,7 +371,7 @@ public class AdminGUI {
         frameSuppr.getContentPane().setLayout(new BoxLayout(frameSuppr.getContentPane(), BoxLayout.Y_AXIS));
         
         /**
-         * Cr�ation du panel comportant la s�lection de l'id pour supprimer un �tudiant
+         * Creation du panel comportant la selection de l'id pour supprimer un etudiant
          */
         JPanel panelSuppr = new JPanel();
         frameSuppr.getContentPane().add(panelSuppr);
@@ -384,12 +384,12 @@ public class AdminGUI {
         textFieldId2.setColumns(10);
         
         /**
-         * Cr�ation du panel qui comportera tous les boutons de la fen�tre UC cr�er/modifier un �tudiant
+         * Creation du panel qui comportera tous les boutons de la fenetre UC creer/modifier un etudiant
          */
         JPanel panelBoutons = new JPanel();
         frame.getContentPane().add(panelBoutons);
         /**
-         * Cr�ation du bouton qui permet d'ajouter un �tudiant dans la BDD
+         * Creation du bouton qui permet d'ajouter un etudiant dans la BDD
          */
         JButton btnAjouter = new JButton("Ajouter");
         btnAjouter.addActionListener(new ActionListener() {
@@ -413,7 +413,7 @@ public class AdminGUI {
         panelBoutons.add(btnAjouter);
         
         /**
-         * Cr�ation du bouton qui permet d'ouvrir la fen�tre de suppression d'un �tudiant
+         * Creation du bouton qui permet d'ouvrir la fenetre de suppression d'un etudiant
          */
         JPanel panelBoutonSuppr = new JPanel();
         frameSuppr.getContentPane().add(panelBoutonSuppr);
@@ -426,7 +426,7 @@ public class AdminGUI {
         panelBoutons.add(btnSupprimer1);
        
         /**
-         * cr�ation du bouton qui permet de supprimer un �tudiant dans la BDD
+         * creation du bouton qui permet de supprimer un etudiant dans la BDD
          */
         JButton btnSupprimer2 = new JButton("Supprimer");
         btnSupprimer2.addActionListener(new ActionListener() {
@@ -442,7 +442,7 @@ public class AdminGUI {
         panelBoutonSuppr.add(btnSupprimer2);
         
         /**
-         * Cr�ation du bouton qui permet d'ouvrir la fen�tre de modification d'un �tudiant
+         * Creation du bouton qui permet d'ouvrir la fenetre de modification d'un etudiant
          */
         JButton btnModifier1 = new JButton("Modifier");
         btnModifier1.addActionListener(new ActionListener() {
@@ -453,7 +453,7 @@ public class AdminGUI {
         panelBoutons.add(btnModifier1);
         
         /**
-         * Cr�ation du bouton qui permet de modifier un �tudiant dans la BDD
+         * Creation du bouton qui permet de modifier un etudiant dans la BDD
          */
         JPanel panelBoutonModif = new JPanel();
         frameModif.getContentPane().add(panelBoutonModif);
@@ -480,9 +480,9 @@ public class AdminGUI {
         panelBoutonModif.add(btnModifier2);
         
         /**
-         * Cr�ation du bouton du UC cr�er modifier etudiant
+         * Creation du bouton du UC creer modifier etudiant
          */
-        JButton btnUC1 = new JButton("Cr�er/Modifier un �tudiant");
+        JButton btnUC1 = new JButton("Creer/Modifier un etudiant");
         btnUC1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	frame.setVisible(true);
@@ -491,7 +491,7 @@ public class AdminGUI {
         panelUC1.add(btnUC1);
         
         /**
-         * Cr�ation du bouton du UC 2
+         * Creation du bouton du UC 2
          */
         JButton btnUC2 = new JButton("UC2");
         btnUC2.addActionListener(new ActionListener() {
@@ -502,7 +502,7 @@ public class AdminGUI {
         panelUC1.add(btnUC2);
         
         /**
-         * Cr�ation du bouton du UC 3
+         * Creation du bouton du UC 3
          */
         JButton btnUC3 = new JButton("UC3");
         btnUC3.addActionListener(new ActionListener() {
@@ -513,7 +513,7 @@ public class AdminGUI {
         panelUC1.add(btnUC3);
         
         /**
-         * Cr�ation du bouton du UC 4
+         * Creation du bouton du UC 4
          */
         JButton btnUC4 = new JButton("UC4");
         btnUC4.addActionListener(new ActionListener() {
@@ -524,7 +524,7 @@ public class AdminGUI {
         panelUC2.add(btnUC4);
         
         /**
-         * Cr�ation du bouton du UC 5
+         * Creation du bouton du UC 5
          */
         JButton btnUC5 = new JButton("UC5");
         btnUC5.addActionListener(new ActionListener() {
@@ -535,7 +535,7 @@ public class AdminGUI {
         panelUC2.add(btnUC5);
         
         /**
-         * Cr�ation du bouton du UC 6
+         * Creation du bouton du UC 6
          */
         JButton btnUC6 = new JButton("UC6");
         btnUC6.addActionListener(new ActionListener() {
@@ -546,7 +546,7 @@ public class AdminGUI {
         panelUC2.add(btnUC6);
         
         /**
-         * Cr�ation du bouton du UC 7
+         * Creation du bouton du UC 7
          */
         JButton btnUC7 = new JButton("UC7");
         btnUC7.addActionListener(new ActionListener() {
@@ -557,7 +557,7 @@ public class AdminGUI {
         panelUC3.add(btnUC7);
         
         /**
-         * Cr�ation du bouton du UC 8
+         * Creation du bouton du UC 8
          */
         JButton btnUC8 = new JButton("UC8");
         btnUC8.addActionListener(new ActionListener() {
@@ -568,7 +568,7 @@ public class AdminGUI {
         panelUC3.add(btnUC8);
         
         /**
-         * Cr�ation du bouton du UC 9
+         * Creation du bouton du UC 9
          */
         JButton btnUC9 = new JButton("UC9");
         btnUC9.addActionListener(new ActionListener() {

@@ -136,6 +136,7 @@ CREATE TABLE Planning
  date_pln DATE,
  salle VARCHAR2(50),
  duree FLOAT,
+ heure DATE
  CONSTRAINT PK_Planning PRIMARY KEY(idplanning),
  CONSTRAINT FK_idGroupe_Pln FOREIGN KEY(idGroupe) REFERENCES GroupeEtudiant(idGroupe) ON DELETE CASCADE,
  CONSTRAINT FK_idCours FOREIGN KEY(idCours) REFERENCES Cours(idCours) ON DELETE CASCADE,

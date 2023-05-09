@@ -14,7 +14,7 @@ DROP TABLE type_absence;
 DROP TABLE intervenant;
 DROP TABLE estabs;
 
-
+DELETE * from Cours Where idCours = 2;
 SELECT Cours.nomCours FROM Cours INNER JOIN Planning ON Cours.idCours = Planning.idCours ;
 SELECT nomCours FROM Cours;
 
