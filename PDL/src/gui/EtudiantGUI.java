@@ -175,7 +175,7 @@ public class EtudiantGUI extends JFrame{
 
 		//each panel gets its own layout
 		upContainer2.setLayout(new GridLayout(1, 1));
-		downContainer2.setLayout(new GridLayout(2, 2));
+		downContainer2.setLayout(new GridLayout(1, 1));
 		base2.setLayout(new GridLayout(2,1));
 		
 		//Ajout bouton retour
@@ -213,7 +213,7 @@ public class EtudiantGUI extends JFrame{
 
 		List<String> heures = new ArrayList<>();
 		int nbLigne = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).size();
-		String[][] data2 = new String[nbLigne][5];
+		String[][] data2 = new String[3][5];
 
 		for (int i = 8; i <= nbLigne; i++) {
 			String heureDebut = String.format("%02d:00", i);
@@ -247,20 +247,14 @@ public class EtudiantGUI extends JFrame{
 
 		// Création d'un bouton pour récupérer la date sélectionnée
 
-		JButton button = new JButton("Sélectionner");
+		JButton button = new JButton("Selectionner");
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				framePlanning.dispose();
-				framePlanning = new JFrame();
-				framePlanning.setBounds(1500, 1500, 1500, 1000);
-				framePlanning.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				framePlanning.getContentPane().setLayout(new BoxLayout(framePlanning.getContentPane(), BoxLayout.Y_AXIS));
-				JPanel downContainer2 = new JPanel();
-				downContainer2.setLayout(new GridLayout(2, 2));
-				base2.setLayout(new GridLayout(2,1));
+
 				
 				
+				downContainer2.remove(tableau2);
 				java.util.Date date = calendar.getDate();
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(date);
@@ -275,14 +269,14 @@ public class EtudiantGUI extends JFrame{
 
 				List<String> heures = new ArrayList<>();
 				int nbLigne = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).size();
-				String[][] data2 = new String[nbLigne][5];
+				String[][] data2 = new String[3][5];
 				for (int i = 8; i <= nbLigne; i++) {
 					String heureDebut = String.format("%02d:00", i);
 					heures.add(heureDebut );
 				}
 
 
-				try {
+				
 					for (int i = 0; i < nbLigne; i++) {
 						for (int j = 0; j < 5; j++) {
 							if (j == 0) {
@@ -298,19 +292,14 @@ public class EtudiantGUI extends JFrame{
 							}
 						}
 					}
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				
 				
-				String[] columnNames2 = {"H:", "Cours:", "Salle:", "Enseignant:", "Duree"};
+				
 				JTable tableau2 = new JTable(data2, columnNames2);
 				
 				downContainer2.add(tableau2);
 				downContainer2.add(panelBouton);
 				
-				base2.add(upContainer2);
 				base2.add(downContainer2);
 
 				//to finish, we add the main container to the window
@@ -370,6 +359,8 @@ public class EtudiantGUI extends JFrame{
 
 
 		String[][] data3 = new String[etudiantDAO.getStatutAbs(SignInEtudiantGUI.id).size()][5];
+		
+		
 		try {
 			for (int i = 0; i < etudiantDAO.getStatutAbs(SignInEtudiantGUI.id).size(); i++) {
 				for (int j = 0; j < 5; j++) {
@@ -426,7 +417,7 @@ public class EtudiantGUI extends JFrame{
 
 
 		/**
-		 * Creation du bouton pour acceder à liste des cours de l'etudiant
+		 * Creation du bouton pour acceder a la liste des cours de l'etudiant
 		 */
 		JPanel ListeCours = new JPanel();
 		this.getContentPane().add(ListeCours);
@@ -459,7 +450,7 @@ public class EtudiantGUI extends JFrame{
 		 */
 		JPanel ListeAbsences = new JPanel();
 		this.getContentPane().add(ListeAbsences);
-		JButton LISTEABSENCES = new JButton("Acceder à la liste d'absences");
+		JButton LISTEABSENCES = new JButton("Acceder a� la liste d'absences");
 		LISTEABSENCES.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameListeAbsences.setLocationRelativeTo(null);

@@ -69,7 +69,7 @@ public class UserGUI {
         frame.getContentPane().add(panelUser);
         
 
-        //Création des boutons :
+        //Creation des boutons :
         JPanel panelBoutons = new JPanel();
         frame.getContentPane().add(panelBoutons);
         
@@ -107,7 +107,7 @@ public class UserGUI {
         });
         panelBoutons.add(btnEnseignant);
         
-      //Bouton étudiant:
+      //Bouton etudiant:
         
         JButton btnEtudiant = new JButton("Etudiant");
         btnEtudiant.addActionListener(new ActionListener() {
