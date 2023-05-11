@@ -684,7 +684,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT nomEnseignant FROM Enseignant WHERE idEnseignant IN(SELECT idEnseignant FROM Planning WHERE Planning.idCours =(SELECT idCours FROM Cours WHERE((SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)))");
+			ps = con.prepareStatement("SELECT nomEnseignant FROM Enseignant WHERE idEnseignant IN(SELECT idEnseignant FROM Planning WHERE Planning.idCours IN(SELECT idCours FROM Cours WHERE((SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)))");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
@@ -715,7 +715,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		return returnValue;
 	}
 	/**
-	 * Permet de recuperer tous les date stockes dans la table AbsenceClassique ou AbsenceDistanciel
+	 * Permet de recuperer tous les date stockes dans la table Absence ou AbsenceDistanciel
 	 * 
 	 * @return une ArrayList de date
 	 */
@@ -729,13 +729,13 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT date_abs_cls FROM AbsenceClassique WHERE (idEtud= ?)");
+			ps = con.prepareStatement("SELECT date_abs FROM Absence WHERE (idEtud= ?)");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
 			// on parcourt les lignes du resultat
 			while (rs.next()) {
-				returnValue.add(rs.getDate("date_abs_cls"));
+				returnValue.add(rs.getDate("date_abs"));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -774,7 +774,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT nomCours FROM Cours WHERE (idCours  IN(SELECT idCours FROM AbsenceClassique WHERE (idEtud= ?)))");
+			ps = con.prepareStatement("SELECT nomCours FROM Cours WHERE (idCours  IN(SELECT idCours FROM Absence WHERE (idEtud= ?)))");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
@@ -804,9 +804,53 @@ public class EtudiantDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
-	
 	/**
-	 * Permet de recuperer tous les nombre d'heures par s�ance o� l'�l�ve est absent stockes dans la table  absenceClassique ou absenceDistanciel
+	 * Permet de recuperer tous les heure de debut de cours o� l'�l�ve est absent stockes dans la table  absence
+	 * 
+	 * @return une ArrayList de heure cours
+	 */
+	public ArrayList<Time> getHeureDebut(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Time> returnValue = new ArrayList<Time>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT heureDebut FROM Absence WHERE (idEtud= ?)");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getTime("heureDebut"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer tous les nombre d'heures par s�ance o� l'�l�ve est absent stockes dans la table  absence
 	 * 
 	 * @return une ArrayList de noms cours
 	 */
@@ -820,7 +864,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT nbrdheure FROM AbsenceClassique WHERE (idEtud= ?)");
+			ps = con.prepareStatement("SELECT nbrdheure FROM Absence WHERE (idEtud= ?)");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
@@ -865,7 +909,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT statut FROM AbsenceClassique WHERE (idEtud= ?)");
+			ps = con.prepareStatement("SELECT statut FROM Absence WHERE (idEtud= ?)");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();
