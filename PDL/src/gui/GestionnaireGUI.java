@@ -1476,20 +1476,6 @@ public class GestionnaireGUI {
         });
         panelUC3.add(btnUC7);
         
-
-        /**
-         * Creation du bouton du UC 8
-         */
-        JButton btnUC8 = new JButton("Definir les quotas");
-        btnUC8.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	UC8frame.setLocationRelativeTo(null);
-            	UC8frame.setVisible(true);
-            }
-        });
-        panelUC3.add(btnUC8);
-
-        
         /**
          * Creation du bouton du UC 9
          */

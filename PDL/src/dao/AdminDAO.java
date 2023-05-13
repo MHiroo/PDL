@@ -312,9 +312,10 @@ public class AdminDAO extends ConnectionDAO {
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
-				returnValue = new Personne(rs.getInt("idgst"),
-									       rs.getString("nomGst"),
-									       rs.getString("prenomGst"),
+				returnValue = new Personne(rs.getInt("idadmin"),
+									       rs.getString("nomadmin"),
+									       rs.getString("prenomadmin"),
+									       rs.getString("tel"),
 									       rs.getString("email"),
 										   rs.getString("motdepasse"));
 			}
