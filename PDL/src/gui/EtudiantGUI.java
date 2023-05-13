@@ -1,20 +1,41 @@
 package gui;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.sql.Date;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import com.toedter.calendar.JCalendar;
 
+import dao.AbsenceDAO;
+import dao.CoursDAO;
+import dao.EnseignantDAO;
 import dao.EtudiantDAO;
+import dao.PlanningDAO;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import java.awt.Font;
 
 public class EtudiantGUI extends JFrame{
 
@@ -22,7 +43,7 @@ public class EtudiantGUI extends JFrame{
 	private JFrame frameListeCours;
 	private JFrame framePlanning;
 	private JFrame frameListeAbsences;
-
+	private Integer selectedNumber;
 
 
 	public static void main(String[] args) {
@@ -42,11 +63,12 @@ public class EtudiantGUI extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	 public EtudiantGUI() {
+	public EtudiantGUI() {
 		initialize();
 	}
 
 	private void initialize() {
+
 		/**
 		 * Creation de la fenetre d'accueil de l'etudiant
 		 */
@@ -56,10 +78,10 @@ public class EtudiantGUI extends JFrame{
 		this.setBounds(100, 100, 450, 300);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		
-		
-		
-		
+
+
+
+
 		/**
 		 * Creation de la fenetre de la liste des cours de l'etudiant
 		 */
@@ -153,6 +175,8 @@ public class EtudiantGUI extends JFrame{
 		/**
 		 * Creation de la fenetre Planning de l'etudiant
 		 */
+
+
 		framePlanning = new JFrame();
 		framePlanning.setBounds(1500, 1500, 1500, 1000);
 		framePlanning.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -163,51 +187,195 @@ public class EtudiantGUI extends JFrame{
 
 		JPanel base2 = new JPanel();
 		JPanel upContainer2 = new JPanel();
+		upContainer2.setBounds(0, 0, 1484, 480);
 		JPanel downContainer2 = new JPanel();
+		downContainer2.setBounds(0, 480, 1484, 480);
+		JPanel panelBouton = new JPanel();
+		panelBouton.setBounds(1174, 106, 239, 218);
 
-		//each panel gets its own layout
-		upContainer2.setLayout(new GridLayout(1, 1));
-		downContainer2.setLayout(new GridLayout(1, 1));
-		base2.setLayout(new GridLayout(2,1));
-		
 		//Ajout bouton retour
 
-		JPanel panelBoutonRetour2 = new JPanel();
+
 		JButton retourBtn2 = new JButton("Retour");
+		retourBtn2.setBounds(64, 109, 111, 40);
 		retourBtn2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				framePlanning.dispose(); // ferme la fenetre actuelle
 				frame.setVisible(true);
 			}
 		});
-		panelBoutonRetour2.add(retourBtn2);
 
-		//Creation du calendrier
+
+
+
+		//Creation du calendrier et reccuperation de la date selectionnee
+
 		JCalendar calendar = new JCalendar();
+		calendar.setBounds(0, 0, 1484, 480);
 		java.util.Date utilDate = new java.util.Date();
 		utilDate=calendar.getDate();
 		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-		
-		
-		//Creation de la liste de cours du jour selectionne
-		
+
+		// Formater la date
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		String formattedDate = sdf.format(sqlDate);
+
+
+
+		//Creation du tableau de cours du jour selectionne
+
+		PlanningDAO planningDAO = new PlanningDAO();
+		EnseignantDAO enseignantDAO = new EnseignantDAO();
+		CoursDAO coursDAO = new CoursDAO();
+
+
+		List<String> heures = new ArrayList<>();
+		int nbLigne = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).size();
+		String[][] data2 = new String[nbLigne][5];
+
+		for (int i = 8; i <= 8+nbLigne; i++) {
+			String heureDebut = String.format("%02d:00", i);
+			heures.add(heureDebut );
+		}
+
+
+		try {
+			for (int i = 0; i < nbLigne; i++) {
+				data2[i][0] = heures.get(i);
+				data2[i][1] = coursDAO.getNomCours(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getIdCours());
+				data2[i][2] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getSalle();
+				data2[i][3] = enseignantDAO.getNomEnseignant(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getIdEnseignant());
+				data2[i][4] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getDuree()+ "h";									
+			}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		String[] columnNames2 = {"H:", "Cours:", "Salle:", "Enseignant:", "Duree:"};
+
+		DefaultTableModel model = new DefaultTableModel(data2, columnNames2);
+		JTable tableau2 = new JTable(model);
+
+
+
+		// Création d'un bouton pour récupérer la date sélectionnée
+
+		JButton button = new JButton("Selectionner");
+		button.setBounds(64, 44, 111, 40);
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+
+				framePlanning.dispose();
+				framePlanning = new JFrame();
+				framePlanning.setBounds(1500, 1500, 1500, 1000);
+				framePlanning.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				framePlanning.getContentPane().setLayout(new BoxLayout(framePlanning.getContentPane(), BoxLayout.Y_AXIS));
+				JPanel base2 = new JPanel();
+				JPanel downContainer2 = new JPanel();
+				downContainer2.setBounds(0, 480, 1484, 480);
+				downContainer2.setLayout(new GridLayout(1, 2));
+				base2.setLayout(new GridLayout(2,1));
+
+
+				java.util.Date date = calendar.getDate();
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+				int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+				int month = cal.get(Calendar.MONTH) + 1; // les mois sont indexés à partir de 0
+				int year = cal.get(Calendar.YEAR);
+				String formattedDate = (dayOfMonth + "-" + month + "-" + year);
+
+
+				//Creation du tableau de cours du jour selectionne
+
+
+				List<String> heures = new ArrayList<>();
+				int nbLigne = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).size();
+				String[][] data2 = new String[nbLigne][5];
+				for (int i = 8; i <= 8+nbLigne; i++) {
+					String heureDebut = String.format("%02d:00", i);
+					heures.add(heureDebut );
+				}
+
+
+				try {
+					for (int i = 0; i < nbLigne; i++) {
+						data2[i][0] = heures.get(i);
+						data2[i][1] = coursDAO.getNomCours(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getIdCours());
+						data2[i][2] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getSalle();
+						data2[i][3] = enseignantDAO.getNomEnseignant(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getIdEnseignant());
+						data2[i][4] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getDuree()+ "h";									
+					}
+				}
+				catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+
+				JTable tableau2 = new JTable(data2, columnNames2);
+
+				downContainer2.setLayout(null);
+				JScrollPane scrollPane = new JScrollPane(tableau2);
+				scrollPane.setBounds(355, 0, 742, 447);
+				downContainer2.add(scrollPane);
+				downContainer2.add(panelBouton);
+				base2.setLayout(null);
+
+				base2.add(upContainer2);
+				base2.add(downContainer2);
+
+				JLabel lblNewLabel = new JLabel("Planning du jour:");
+				lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+				lblNewLabel.setBounds(161, 11, 144, 78);
+				downContainer2.add(lblNewLabel);
+
+				//to finish, we add the main container to the window
+				framePlanning.setContentPane(base2);
+				framePlanning.setLocationRelativeTo(null);
+				framePlanning.setVisible(true);
+			}
+		});
+		panelBouton.setLayout(null);
+
+
+		panelBouton.add(button);
+		panelBouton.add(retourBtn2);
+		upContainer2.setLayout(null);
+
+
+
 		//distribution of the components in the 2 containers
 		upContainer2.add(calendar);
-		downContainer2.add(panelBoutonRetour2);
+		downContainer2.setLayout(null);
+		JScrollPane scrollPane = new JScrollPane(tableau2);
+		scrollPane.setBounds(355, 0, 742, 447);
+		downContainer2.add(scrollPane);
+		downContainer2.add(panelBouton);
+		base2.setLayout(null);
 
 		//Ajout des containers au container principal
 		base2.add(upContainer2);
 		base2.add(downContainer2);
 
+		JLabel lblNewLabel = new JLabel("Planning du jour:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel.setBounds(161, 11, 144, 78);
+		downContainer2.add(lblNewLabel);
+
 		//to finish, we add the main container to the window
+
 		framePlanning.setContentPane(base2);
-		
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
+
 		/**
 		 * Creation de la fenetre Liste d'absence de l'etudiant
 		 */
@@ -216,83 +384,121 @@ public class EtudiantGUI extends JFrame{
 		frameListeAbsences.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameListeAbsences.getContentPane().setLayout(new BoxLayout(frameListeAbsences.getContentPane(), BoxLayout.Y_AXIS));
 
-		
-		
+
+
 		//Initialisation des composants
 
 
-				JPanel base3 = new JPanel();
-				JPanel upContainer3 = new JPanel();
-				JPanel downContainer3 = new JPanel();
+		JPanel base3 = new JPanel();
+		JPanel upContainer3 = new JPanel();
+		JPanel downContainer3 = new JPanel();
 
-				//each panel gets its own layout
-				upContainer3.setLayout(new GridLayout(1, 1));
-				downContainer3.setLayout(new GridLayout(1, 1));
-				base3.setLayout(new GridLayout(2,1));
+		//each panel gets its own layout
+		upContainer3.setLayout(new GridLayout(1, 2));
+		downContainer3.setLayout(new GridLayout(1, 1));
+		base3.setLayout(new GridLayout(2,1));
+
+		//System.out.println(etudiantDAO.getStatutAbs(1).get(0));
+		int nbLigne3 = etudiantDAO.getStatutAbs(SignInEtudiantGUI.id).size();
+		// Creation du tableau
+		String[][] data3 = new String[nbLigne3][4];
+		String[] columnNames3 = {"Date:", "Cours:", "Heures d'absence:", "Statut:"};
 
 
+		try {
+			for (int i = 0; i < nbLigne3; i++) {
 
-				// Creation du tableau
+				Date d= etudiantDAO.getDateAbs(SignInEtudiantGUI.id).get(i);
+				data3[i][0] = d+"";
+				data3[i][1] = etudiantDAO.getNomCoursAbs(SignInEtudiantGUI.id).get(i);
+				Integer x = etudiantDAO.getHeureAbs(SignInEtudiantGUI.id).get(i);
+				data3[i][2] = x+ "";
+				data3[i][3] = etudiantDAO.getStatutAbs(SignInEtudiantGUI.id).get(i);
 
-				
-				String[][] data3 = new String[etudiantDAO.getStatutAbs(SignInEtudiantGUI.id).size()][5];
-				try {
-					for (int i = 0; i < etudiantDAO.getStatutAbs(SignInEtudiantGUI.id).size(); i++) {
-						for (int j = 0; j < 5; j++) {
-							   if (j == 0) {
-								Date d= etudiantDAO.getDateAbs(SignInEtudiantGUI.id).get(i);
-								data3[i][j] = d+"";
-							}  if (j == 1) {
-								data3[i][j] = etudiantDAO.getNomCoursAbs(SignInEtudiantGUI.id).get(i);
-							}  if (j == 2) {
-								Integer x = etudiantDAO.getHeureAbs(SignInEtudiantGUI.id).get(i);
-								data3[i][j] = x+ "";
-							}  if (j == 3) {
-								data3[i][j] = etudiantDAO.getStatutAbs(SignInEtudiantGUI.id).get(i);
-							} 
-						}
-					}
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+			}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+
+		JTable tableau3 = new JTable(data3, columnNames3);
+
+		//Menu deroulant 
+		
+		JPanel panelBoutonJst = new JPanel();
+		Integer[] listeAbs = new Integer[nbLigne3];
+		for (int i = 0; i < nbLigne3; i++) {
+			listeAbs[i] = i ;
+		}
+		
+		JComboBox<Integer> comboBox = new JComboBox<>(listeAbs);
+
+		comboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				selectedNumber = (Integer) comboBox.getSelectedItem();
+			}
+		});
+		panelBoutonJst.add(comboBox);
+
+		//Ajout bouton Deposer Justificatif
+
+
+		JButton boutonJst = new JButton("Deposer Justificatif");
+		boutonJst.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+
+
+				JFileChooser fileChooser = new JFileChooser();
+				int result = fileChooser.showOpenDialog(frameListeAbsences);
+				if (result == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = fileChooser.getSelectedFile();
+
+					String nomCours=(etudiantDAO.getNomCoursAbs(SignInEtudiantGUI.id).get(selectedNumber));
+					int idCours= coursDAO.getIdCours(nomCours);
+					Time heureDebut=etudiantDAO.getHeureDebut(SignInEtudiantGUI.id).get(selectedNumber);
+					AbsenceDAO absenceDAO =new AbsenceDAO();
+					absenceDAO.setStatut(idCours,heureDebut);
 				}
-
-				String[] columnNames3 = {"Date:", "Cours:", "Heures d'absence:", "Statut:", "Deposer un justificatif:"};
-				JTable tableau3 = new JTable(data3, columnNames3);
-
-
+			}
+		});
+		panelBoutonJst.add(boutonJst);
 
 
 
-				//Ajout bouton retour
-
-				JPanel panelBoutonRetour3 = new JPanel();
-				JButton retourBtn3 = new JButton("Retour");
-				retourBtn3.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent event) {
-						frameListeAbsences.dispose(); // ferme la fenetre actuelle
-						frame.setVisible(true);
-					}
-				});
-				panelBoutonRetour3.add(retourBtn3);
 
 
+		//Ajout bouton retour
 
-				//distribution of the components in the 2 containers
-				upContainer3.add(new JScrollPane(tableau3));
-				downContainer3.add(panelBoutonRetour3);
+		JPanel panelBoutonRetour3 = new JPanel();
+		JButton retourBtn3 = new JButton("Retour");
+		retourBtn3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				frameListeAbsences.dispose(); // ferme la fenetre actuelle
+				frame.setVisible(true);
+			}
+		});
+		panelBoutonRetour3.add(retourBtn3);
 
-				//Ajout des containers au container principal
-				base3.add(upContainer3);
-				base3.add(downContainer3);
 
-				//to finish, we add the main container to the window
-				frameListeAbsences.setContentPane(base3);
+
+		//distribution of the components in the 2 containers
+		upContainer3.add(new JScrollPane(tableau3));
+		upContainer3.add(panelBoutonJst);
+		downContainer3.add(panelBoutonRetour3);
+
+		//Ajout des containers au container principal
+		base3.add(upContainer3);
+		base3.add(downContainer3);
+
+		//to finish, we add the main container to the window
+		frameListeAbsences.setContentPane(base3);
 
 
 
 		/**
-		 * Creation du bouton pour acceder à liste des cours de l'etudiant
+		 * Creation du bouton pour acceder a la liste des cours de l'etudiant
 		 */
 		JPanel ListeCours = new JPanel();
 		this.getContentPane().add(ListeCours);
@@ -325,7 +531,7 @@ public class EtudiantGUI extends JFrame{
 		 */
 		JPanel ListeAbsences = new JPanel();
 		this.getContentPane().add(ListeAbsences);
-		JButton LISTEABSENCES = new JButton("Acceder à la liste d'absences");
+		JButton LISTEABSENCES = new JButton("Acceder liste d'absences");
 		LISTEABSENCES.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameListeAbsences.setLocationRelativeTo(null);
@@ -335,9 +541,5 @@ public class EtudiantGUI extends JFrame{
 		ListeAbsences.add(LISTEABSENCES);
 
 	}
-
-
-
-
 }
 

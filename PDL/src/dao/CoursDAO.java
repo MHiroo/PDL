@@ -202,11 +202,115 @@ public class CoursDAO extends ConnectionDAO {
 			if (rs.next()) {
 				returnValue = new Cours(rs.getInt("idcours"),
 										   rs.getString("nomcours"),
-									       rs.getInt("massehorraire"),
-									       rs.getInt("massehorraireAmphi"),
-									       rs.getInt("massehorraireTD"),
-									       rs.getInt("massehorraireTP"),
-										   rs.getInt("massehorraireExam"));
+									       rs.getInt("massehoraire"),
+									       rs.getInt("massehoraireAmphi"),
+									       rs.getInt("massehoraireTD"),
+									       rs.getInt("massehoraireTP"),
+										   rs.getInt("massehoraireExam"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer le nom d'un cours a partir de sa reference
+	 * 
+	 * @param reference la reference du cours a recuperer
+	 * @return le cours trouve;
+	 * 			null si aucun cours ne correspond a cette reference
+	 */
+	public String getNomCours(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String returnValue = null;
+
+		// connexion a la base de donnees
+		try {
+
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT nomcours FROM cours WHERE idcours IN (?)");
+			ps.setInt(1, id);
+
+			// on execute la requete
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			if (rs.next()) {
+				returnValue = rs.getString("nomcours");
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer l'id d'un cours a partir de son nom
+	 * 
+	 * @param reference la reference du cours a recuperer
+	 * @return le cours trouve;
+	 * 			null si aucun cours ne correspond a cette reference
+	 */
+	public int getIdCours(String nomCours) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int returnValue = 0;
+
+		// connexion a la base de donnees
+		try {
+
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT idCours FROM cours WHERE nomcours IN (?)");
+			ps.setString(1, nomCours);
+
+			// on execute la requete
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			if (rs.next()) {
+				returnValue = rs.getInt("idCours");
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -235,7 +339,7 @@ public class CoursDAO extends ConnectionDAO {
 	}
 
 	/**
-	 * Permet de recuperer tous les coursiants stockes dans la table cours
+	 * Permet de recuperer tous les cours stockes dans la table cours
 	 * 
 	 * @return une ArrayList de cours
 	 */
@@ -256,11 +360,11 @@ public class CoursDAO extends ConnectionDAO {
 			while (rs.next()) {
 				returnValue.add(new Cours(rs.getInt("idcours"),
 						                     rs.getString("nomcours"),
-											       rs.getInt("massehorraire"),
-											       rs.getInt("massehorraireAmphi"),
-											       rs.getInt("massehorraireTD"),
-											       rs.getInt("massehorraireTP"),
-												   rs.getInt("massehorraireExam")));
+											       rs.getInt("massehoraire"),
+											       rs.getInt("massehoraireAmphi"),
+											       rs.getInt("massehoraireTD"),
+											       rs.getInt("massehoraireTP"),
+												   rs.getInt("massehoraireExam")));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -291,7 +395,7 @@ public class CoursDAO extends ConnectionDAO {
 	 * 
 	 * @return une ArrayList de noms de cours
 	 */
-	public ArrayList<String> getNomCours(int id) {
+	public ArrayList<String> getListeNomCours(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

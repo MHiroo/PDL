@@ -50,28 +50,18 @@ CREATE TABLE Type_absence
  designation VARCHAR2(50),
  CONSTRAINT PK_type_absence PRIMARY KEY(idtypeabsence)
 );
-CREATE TABLE Absenceclassique
+CREATE TABLE Absence
 (
- idAbscla INTEGER,
+ idAbs INTEGER,
  idEtud INTEGER,
  idcours INTEGER,
- Absenceclassique VARCHAR2(50) CONSTRAINT NN_Absence NOT NULL,
+ heureDebut DATE,
  nbrdheure INTEGER,
- date_abs_cls DATE CONSTRAINT NN_date_abs_cls NOT NULL,
+ date_abs DATE CONSTRAINT NN_date_abs NOT NULL,
  statut VARCHAR2(50)CONSTRAINT CK_statut CHECK (statut IN ('Justifie', 'Non justifie','En verification')),
- CONSTRAINT PK_Absenceclassique PRIMARY KEY(idAbscla)
+ CONSTRAINT PK_Absence PRIMARY KEY(idAbs)
 );
-CREATE TABLE Absencedistanciel
-(
- idAbsdis INTEGER,
- idEtud INTEGER,
- idCours INTEGER,
- Absencedistanciel VARCHAR2(50),
- nbrdheure INTEGER,
- Date_abs_dst DATE,
- statut VARCHAR2(50)CONSTRAINT CK_statut CHECK (statut IN ('Justifie', 'Non justifie','En verification')),
- CONSTRAINT PK_Absencedistanciel PRIMARY KEY(idAbsdis)
-);
+
 
 CREATE TABLE GroupeEtudiant
 (
@@ -136,6 +126,7 @@ CREATE TABLE Planning
  date_pln DATE,
  salle VARCHAR2(50),
  duree FLOAT,
+ heure DATE,
  CONSTRAINT PK_Planning PRIMARY KEY(idplanning),
  CONSTRAINT FK_idGroupe_Pln FOREIGN KEY(idGroupe) REFERENCES GroupeEtudiant(idGroupe) ON DELETE CASCADE,
  CONSTRAINT FK_idCours FOREIGN KEY(idCours) REFERENCES Cours(idCours) ON DELETE CASCADE,
@@ -143,46 +134,20 @@ CREATE TABLE Planning
 ON DELETE CASCADE
  
 );
-CREATE TABLE justificatifclassique
+CREATE TABLE justificatif
 (
- idjustificatifcla INTEGER,
- idAbscla INTEGER,
- date_abs_cls DATE,
+ idjustificatif INTEGER,
+ idAbs INTEGER,
+ date_abs DATE,
  etat VARCHAR2(50),
  motif VARCHAR2(50) CONSTRAINT CK_motif CHECK (motif IN ('certificatdeces', 'Covid','arrét 
 maladie')),
- CONSTRAINT PK_justificatifclassique PRIMARY KEY(idjustificatifcla),
- CONSTRAINT FK_idAbscla FOREIGN KEY(idAbscla) REFERENCES 
- Absenceclassique(idAbscla) ON DELETE 
+ CONSTRAINT PK_justificatif PRIMARY KEY(idjustificatif),
+ CONSTRAINT FK_idAbs FOREIGN KEY(idAbs) REFERENCES 
+ Absence(idAbs) ON DELETE 
 CASCADE
 );
-CREATE TABLE justificatifdistanciel
-(
- idjustificatifdis INTEGER,
- idAbsdis INTEGER,
- date_abs_dst DATE,
- etat VARCHAR2(50),
- motif VARCHAR2(50) CONSTRAINT CK_motif_dis CHECK (motif IN ('certificatdeces', 'Covid','arrét 
-maladie')),
- CONSTRAINT PK_justificatifdistanciel PRIMARY KEY(idjustificatifdis),
- CONSTRAINT FK_idAbsdis FOREIGN KEY(idAbsdis) 
- REFERENCES Absencedistanciel(idAbsdis) ON DELETE 
-CASCADE
-);
-CREATE SEQUENCE justificatifdistanciel_seq
- START WITH 1
- INCREMENT BY 1
- NOCACHE
- NOCYCLE;
- 
-  CREATE TABLE EstAbs
-(
- idEtud INTEGER,
- idAbsCla INTEGER,
- statut VARCHAR2(50)CONSTRAINT CK_statut CHECK (statut IN ('Justifie', 'Non justifie','En verification')),
- CONSTRAINT PK_Etudiant_eabs PRIMARY KEY(idEtud, idAbsCla),
- CONSTRAINT FK_idEtud_eabs FOREIGN KEY(idEtud) REFERENCES Etudiant(idEtud) ON DELETE CASCADE,
- CONSTRAINT FK_idAbsCla_eabs FOREIGN KEY(idAbsCla) REFERENCES AbsenceClassique(idAbsCla) ON DELETE CASCADE
-);
+
+
 
 

@@ -31,6 +31,11 @@ public class TYPE_ABSENCE {
 		this.designation=designation;
 	}
 	
+	public TYPE_ABSENCE(String quota, String designation) {
+		this.quota=quota;
+		this.designation=designation;
+	}
+
 	/**
 	 * getter pour l'attribut reference
 	 * @return valeur de la reference type_absence
