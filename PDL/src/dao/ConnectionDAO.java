@@ -12,7 +12,6 @@ public class ConnectionDAO {
 	 * URL, LOGIN et PASS sont des constantes
 	 */
 	// � utiliser si vous �tes sur une machine personnelle :"jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl"  
-<<<<<<< HEAD
 
 	final static String URL   = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl" ;
 	//sinon :"jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";m dhote: srvoracledb.intranet.int; nom de service : orcl.intranet.int
@@ -20,11 +19,9 @@ public class ConnectionDAO {
 	//final static String URL   = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int" ;
 	//sinon :"jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int"; nom dhote: srvoracledb.intranet.int; nom de service : orcl.intranet.int
 
-=======
 	
 	//final static String URL   = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl" ;
 	//sinon :"jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";m dhote: srvoracledb.intranet.int; nom de service : orcl.intranet.int
->>>>>>> 5ec18320ffd3aabf6def4dfab578a81531afbf08
 	
 	// � utiliser si vous �tes sur une machine de l'�cole :
 	//final static String URL   =  "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl";
