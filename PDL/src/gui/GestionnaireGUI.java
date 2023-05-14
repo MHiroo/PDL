@@ -35,10 +35,10 @@ public class GestionnaireGUI {
 	private JFrame UC6frame;
 	private JFrame UC7frame;
 	private JFrame UC9frame;
-	private JFrame pframe;
+	 JFrame pframe;
 	private JFrame frameModifType;
 	private JFrame frameSupprType;
-     JFrame frame;
+    private JFrame frame;
     private JFrame frameModif;
     private JFrame frameModifEns;
     private JFrame frameModifGroupe;

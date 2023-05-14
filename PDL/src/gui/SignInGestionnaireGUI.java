@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 
 public class SignInGestionnaireGUI {
 
-     JFrame frame;
+     JFrame pframe;
     private JTextField textFieldId;
     private JTextField textFieldEmail;
     private JTextField textFieldMdp;
@@ -33,8 +33,8 @@ public class SignInGestionnaireGUI {
             public void run() {
                 try {
                 	SignInGestionnaireGUI window = new SignInGestionnaireGUI();
-                    window.frame.setLocationRelativeTo(null);
-                    window.frame.setVisible(true);
+                    window.pframe.setLocationRelativeTo(null);
+                    window.pframe.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -53,14 +53,14 @@ public class SignInGestionnaireGUI {
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        frame = new JFrame();
-        frame.setBounds(100, 100, 300, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        pframe = new JFrame();
+        pframe.setBounds(100, 100, 300, 300);
+        pframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pframe.getContentPane().setLayout(new BoxLayout(pframe.getContentPane(), BoxLayout.Y_AXIS));
 
 
         JPanel panelEmail = new JPanel();
-        frame.getContentPane().add(panelEmail);
+        pframe.getContentPane().add(panelEmail);
 
         JLabel lblEmail = new JLabel("Email:");
         panelEmail.add(lblEmail);
@@ -70,7 +70,7 @@ public class SignInGestionnaireGUI {
         textFieldEmail.setColumns(20);
 
         JPanel panelMdp = new JPanel();
-        frame.getContentPane().add(panelMdp);
+        pframe.getContentPane().add(panelMdp);
 
         JLabel lblMdp = new JLabel("Mot de passe:");
         panelMdp.add(lblMdp);
@@ -80,7 +80,7 @@ public class SignInGestionnaireGUI {
         textFieldMdp.setColumns(10);
 
         JPanel panelBoutons = new JPanel();
-        frame.getContentPane().add(panelBoutons);
+        pframe.getContentPane().add(panelBoutons);
         JButton btnConnecter = new JButton("Se connecter");
         btnConnecter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -98,17 +98,17 @@ public class SignInGestionnaireGUI {
                 if (gestionnaire==null) {
                 	
                 	JPanel panel = new JPanel();
-                    frame.getContentPane().add(panel);
+                    pframe.getContentPane().add(panel);
                     JLabel lbl = new JLabel("Erreur: Email ou Mot de passe errones");
                     lbl.setForeground(Color.RED);
                     panel.add(lbl);
-	                frame.setVisible(true);
+	                pframe.setVisible(true);
                 }
                 else {
-                frame.setVisible(false);
+                pframe.setVisible(false);
                 GestionnaireGUI window = new GestionnaireGUI();
-                frame = new JFrame();
-                window.frame.setVisible(true);
+                pframe = new JFrame();
+                window.pframe.setVisible(true);
                 }
             }
             
@@ -123,15 +123,15 @@ public class SignInGestionnaireGUI {
         JButton retourBtn = new JButton("Retour");
         retourBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                frame.dispose(); // ferme la fenêtre actuelle
+                pframe.dispose(); // ferme la fenêtre actuelle
                 UserGUI window = new UserGUI();
-                frame = new JFrame();
+                pframe = new JFrame();
                 window.frame.setLocationRelativeTo(null);
                 window.frame.setVisible(true);
             }
         });
         panelBoutonRetour.add(retourBtn);
-        frame.getContentPane().add(panelBoutonRetour);
+        pframe.getContentPane().add(panelBoutonRetour);
 
     }
    
