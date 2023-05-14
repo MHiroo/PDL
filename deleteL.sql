@@ -47,11 +47,11 @@ SELECT statut FROM AbsenceClassique WHERE (idEtud= 1);
 SELECT nomCours FROM Cours WHERE (idCours =(SELECT idCours FROM AbsenceClassique WHERE (idEtud= 1)));
 
 SELECT masseHoraire FROM Cours WHERE idCours IN (SELECT idCours FROM Planning WHERE (SELECT idGroupe FROM Etudiant WHERE (idEtud= 1 ))=Planning.idGroupe);
-
+SELECT nbrdheure FROM Absence WHERE (idEtud= 1);
 
 SELECT * FROM planning WHERE (idGroupe = 1 AND date_pln = (TO_DATE('08-05-2023','DD-MM-YYYY'))) ORDER BY heure;
 08-05-2023
 SELECT * FROM planning WHERE (idGroupe = 1 AND date_pln = (TO_DATE('08-05-2023','DD-MM-YYYY'))) ORDER BY heure;
 SELECT * FROM planning WHERE (idGroupe = 1 AND date_pln = (TO_DATE('08-05-2023','DD-MM-YYYY'))) ORDER BY heure;
-
-SELECT nomcours FROM cours WHERE idcours IN (1,2);
+SELECT statut FROM Absence WHERE (idEtud= 1);
+UPDATE absence SET statut = 'En verification' WHERE (idCours=1 AND heureDebut=TO_DATE('15:30:00', 'HH24:MI:SS'));
