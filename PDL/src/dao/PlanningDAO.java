@@ -349,4 +349,5 @@ public class PlanningDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
+	
 }

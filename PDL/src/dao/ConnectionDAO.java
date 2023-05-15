@@ -11,30 +11,14 @@ public class ConnectionDAO {
 	 * Parametres de connexion a la base de donnees oracle
 	 * URL, LOGIN et PASS sont des constantes
 	 */
-<<<<<<< HEAD
-	// � utiliser si vous �tes sur une machine personnelle :
-=======
 	// � utiliser si vous �tes sur une machine personnelle :"jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl"  
-	//final static String URL   = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl" ;
-
 
 	//final static String URL   = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl" ;
-	//sinon :"jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";m dhote: srvoracledb.intranet.int; nom de service : orcl.intranet.int
-
-	final static String URL   = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int" ;
-	//sinon :"jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int"; nom dhote: srvoracledb.intranet.int; nom de service : orcl.intranet.int
-
-
-	//final static String URL   = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl" ;
-	//sinon :"jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";m dhote: srvoracledb.intranet.int; nom de service : orcl.intranet.int
-
->>>>>>> 53892d147fe70afa16d4e7f51403571ff4ed0aed
 	
-		//final static String URL   = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl" ;
+	//sinon :
+	final static String URL   ="jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
 	
-	//sinon :nom dhote: srvoracledb.intranet.int; nom de service : orcl.intranet.int
-
-		final static String URL   = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int" ;
+	//nom dhote: srvoracledb.intranet.int; nom de service : orcl.intranet.int
 
 
 	final static String LOGIN = "C##BDD9_18";   // remplacer les ********. Exemple C##BDD1_1

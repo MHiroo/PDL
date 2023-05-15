@@ -40,7 +40,7 @@ public class AbsenceDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO absenceclassique(idabscla, idetud, idcours, nbrdheure, date_abs_cls, statut) VALUES( ?, ?, ?, ?, ?,?)");
+			ps = con.prepareStatement("INSERT INTO absence(idabs, idetud, idcours, nbrdheure, date_abs, statut) VALUES( ?, ?, ?, ?, ?,?)");
 			ps.setInt(1, getList().get(getList().size()-1).getId()+1);
 			ps.setInt(2, absence.getIdEtud());
 			ps.setInt(3, absence.getIdCours());
@@ -76,7 +76,7 @@ public class AbsenceDAO extends ConnectionDAO {
 	}
 
 	/**
-	 * Permet de modifier uneabsence dans la table absenceclassique.
+	 * Permet de modifier uneabsence dans la table absence.
 	 * Le mode est auto-commit par defaut : chaque modification est validee
 	 * 
 	 * @param absence labsence a modifier
@@ -95,13 +95,14 @@ public class AbsenceDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans la modification.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("UPDATE absenceclassique SET idetud = ?, idcours = ?, nbrdheure = ?, date_abs_cls = ?, statut = ? WHERE idabscla = ?");
+			ps = con.prepareStatement("UPDATE absence SET idetud = ?, idcours = ?, heureDebut = ?, nbrdheure = ?, date_abs = ?, statut = ? WHERE idabs = ?");
 			ps.setInt(1, absence.getIdEtud());
 			ps.setInt(2, absence.getIdCours());
-			ps.setInt(3, absence.getNbHeure());	
-			ps.setDate(4, absence.getDate());
-			ps.setString(5, absence.getStatut());
-			ps.setInt(6, absence.getId());
+			ps.setTime(3, absence.getHeureDebut());	
+			ps.setInt(4, absence.getNbHeure());	
+			ps.setDate(5, absence.getDate());
+			ps.setString(6, absence.getStatut());
+			ps.setInt(7, absence.getId());
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
 
@@ -126,7 +127,7 @@ public class AbsenceDAO extends ConnectionDAO {
 	}
 
 	/**
-	 * Permet de supprimer une absence par id dans la table absenceclassique.
+	 * Permet de supprimer une absence par id dans la table absence.
 	 * Si ce dernier possede des articles, la suppression n'a pas lieu.
 	 * Le mode est auto-commit par defaut : chaque suppression est validee
 	 * 
@@ -145,7 +146,7 @@ public class AbsenceDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, le ? represente la valeur de l'ID
 			// a communiquer dans la suppression.
 			// le getter permet de recuperer la valeur de l'ID de l'absence
-			ps = con.prepareStatement("DELETE FROM absenceclassique WHERE idabscla = ?");
+			ps = con.prepareStatement("DELETE FROM absence WHERE idabs = ?");
 			ps.setInt(1, id);
 
 			// Execution de la requete
@@ -191,7 +192,7 @@ public class AbsenceDAO extends ConnectionDAO {
 		try {
 
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM absenceclassique WHERE idabscla = ?");
+			ps = con.prepareStatement("SELECT * FROM absence WHERE idabs = ?");
 			ps.setInt(1, id);
 
 			// on execute la requete
@@ -199,9 +200,10 @@ public class AbsenceDAO extends ConnectionDAO {
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
-				returnValue = new Absence(rs.getInt("idabscla"),
+				returnValue = new Absence(rs.getInt("idabs"),
 										   rs.getInt("idetud"),
 									       rs.getInt("idcours"),
+									       rs.getTime("heureDebut"),
 									       rs.getInt("nbHeure"),
 									       rs.getDate("date"),
 									       rs.getString("statut"));
@@ -233,7 +235,7 @@ public class AbsenceDAO extends ConnectionDAO {
 	}
 	
 	/**
-	 * Permet de recuperer toutes les absences stockes dans la table absenceclassique
+	 * Permet de recuperer toutes les absences stockes dans la table absence
 	 * 
 	 * @return une ArrayList d'absence
 	 */
@@ -246,15 +248,16 @@ public class AbsenceDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT * FROM absenceclassique ORDER BY idabscla");
+			ps = con.prepareStatement("SELECT * FROM absence ORDER BY idabs");
 
 			// on execute la requete
 			rs = ps.executeQuery();
 			// on parcourt les lignes du resultat
 			while (rs.next()) {
-				returnValue.add(new Absence(rs.getInt("idabscla"),
+				returnValue.add(new Absence(rs.getInt("idabs"),
 						   rs.getInt("idetud"),
 					       rs.getInt("idcours"),
+					       rs.getTime("heureDebut"),
 					       rs.getInt("nbHeure"),
 					       rs.getDate("date"),
 					       rs.getString("statut")));
@@ -281,7 +284,52 @@ public class AbsenceDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
+	/**
+	 * Permet de modifier uneabsence dans la table absence.
+	 * Le mode est auto-commit par defaut : chaque modification est validee
+	 * 
+	 * @param absence labsence a modifier
+	 * @return retourne le nombre de lignes modifiees dans la table
+	 */
+	public int setStatut(int idCours,Time heureDebut) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int returnValue = 0;
 
+		// connexion a la base de donnees
+		try {
+
+			// tentative de connexion
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			// preparation de l'instruction SQL, chaque ? represente une valeur
+			// a communiquer dans la modification.
+			// les getters permettent de recuperer les valeurs des attributs souhaites
+			ps = con.prepareStatement("UPDATE absence SET statut = 'En verification' WHERE (idCours=? AND heureDebut=TO_DATE(?, 'HH24:MI:SS'))");
+			
+			ps.setInt(1,idCours);
+			ps.setTime(2, heureDebut);
+			// Execution de la requete
+			returnValue = ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// fermeture du preparedStatement et de la connexion
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
 	
 	/**
 	 * ATTENTION : Cette methode n'a pas vocation a� a�tre executee lors d'une utilisation normale du programme !
@@ -290,7 +338,7 @@ public class AbsenceDAO extends ConnectionDAO {
 	 * @param args non utilises
 	 * @throws SQLException si une erreur se produit lors de la communication avec la BDD
 	 */
-	
+	/**
 	public static void main(String[] args) throws SQLException {
 		int returnValue;
 		AbsenceDAO absenceDAO = new AbsenceDAO();
@@ -332,5 +380,5 @@ public class AbsenceDAO extends ConnectionDAO {
 		}
 		
 		System.out.println();
-	}
+	}*/
 }
