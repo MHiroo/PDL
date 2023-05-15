@@ -55,23 +55,12 @@ CREATE TABLE Absenceclassique
  idAbscla INTEGER,
  idEtud INTEGER,
  idcours INTEGER,
- Absenceclassique VARCHAR2(50) CONSTRAINT NN_Absence NOT NULL,
  nbrdheure INTEGER,
  date_abs_cls DATE CONSTRAINT NN_date_abs_cls NOT NULL,
  statut VARCHAR2(50)CONSTRAINT CK_statut CHECK (statut IN ('Justifie', 'Non justifie','En verification')),
  CONSTRAINT PK_Absenceclassique PRIMARY KEY(idAbscla)
 );
-CREATE TABLE Absencedistanciel
-(
- idAbsdis INTEGER,
- idEtud INTEGER,
- idCours INTEGER,
- Absencedistanciel VARCHAR2(50),
- nbrdheure INTEGER,
- Date_abs_dst DATE,
- statut VARCHAR2(50)CONSTRAINT CK_statut CHECK (statut IN ('Justifie', 'Non justifie','En verification')),
- CONSTRAINT PK_Absencedistanciel PRIMARY KEY(idAbsdis)
-);
+
 
 CREATE TABLE GroupeEtudiant
 (
