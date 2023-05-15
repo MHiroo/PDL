@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-/gui/
-=======
-/build.xml
 /com/
-/model/
 /dao/
 /gui/
 /jcalendar.manifest
->>>>>>> 53892d147fe70afa16d4e7f51403571ff4ed0aed
+/model/
