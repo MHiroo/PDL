@@ -68,6 +68,14 @@ public class Personne {
 		this.mail=mail;
 		this.mdp=mdp;
 	}
+	public Personne(String nom, String prenom) {
+		// TODO Auto-generated constructor stub
+	}
+	public Personne(int id, String nom, String prenom) {
+		this.id=id;
+		this.nom=nom;
+		this.prenom=prenom;
+	}
 	/**
 	 * getter pour l'attribut reference
 	 * @return valeur de la reference Personne

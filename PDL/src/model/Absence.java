@@ -1,4 +1,5 @@
 package model;
+import java.sql.Time;
 import java.util.Date;
 /**
  * Classe Absence
@@ -18,6 +19,10 @@ public class Absence {
 	 * id du cours
 	 */
 	private int idCours;
+	/**
+	 * heure de debut
+	 */
+	private java.sql.Date heureDebut;
 	/**
 	 * nombre d'heure 
 	 */
@@ -42,15 +47,25 @@ public class Absence {
 	 * @param date date de l'absence
 	 * @param statut statut de l'absence justifie ou non
 	 */
-	public Absence(int id, int idEtud, int idCours, int nbHeure, java.sql.Date date, String statut) {
+	public Absence(int id, int idEtud, int idCours,java.sql.Date heureDebut, int nbHeure, java.sql.Date date, String statut) {
 		this.id=id;
 		this.idEtud=idEtud;
 		this.idCours=idCours;
+		this.heureDebut=heureDebut;
 		this.nbHeure=nbHeure;
 		this.date=date;
 		this.statut=statut;
 	}
 	
+	public Absence(int id) {
+		this.id=id;
+	}
+
+	public Absence(int id, int idEtud) {
+		this.id=id;
+		this.idEtud=idEtud;
+	}
+
 	/**
 	 * getter pour l'attribut reference
 	 * @return valeur de la reference Absence
@@ -87,7 +102,21 @@ public class Absence {
 		this.idCours = idCours;
 	}
 	/**
-	 * setter pour l'attribut idCours
+	 * getter pour l'attribut idCours
+	 * @param idCours l'identifiant du cours de l'absence
+	 */
+	public java.sql.Date getHeureDebut() {
+		return heureDebut;
+	}
+	/**
+	 * setter pour l'attribut nbHeure
+	 * @param nbHeure : nouvelle valeur du nombre d'heure d'absence
+	 */
+	public void setHeureDebut(java.sql.Date heureDebut) {
+		this.heureDebut = heureDebut;
+	}
+	/**
+	 * getter pour l'attribut idCours
 	 * @param idCours l'identifiant du cours de l'absence
 	 */
 	public int getNbHeure() {
@@ -135,6 +164,7 @@ public class Absence {
 		System.out.println(id);
 		System.out.println(idEtud);
 		System.out.println(idCours);
+		System.out.println(heureDebut);
 		System.out.println(nbHeure);
 		System.out.println(date);
 		System.out.println(statut);

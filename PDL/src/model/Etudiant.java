@@ -36,6 +36,12 @@ public class Etudiant extends Personne {
 		this.groupe=groupe;
 	}
 
+	public Etudiant(String nom, String prenom) {
+		super(nom, prenom);
+	}
+	public Etudiant(int id, String nom, String prenom) {
+		super(id, nom, prenom);
+	}
 	/**
 	* getter pour l'attribut filiere
 	* @return valeur de la filiere

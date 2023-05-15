@@ -267,6 +267,50 @@ public class GroupeDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
+	/**
+	 * Permet de recuperer tous les etudiants stockes dans la table etudiant
+	 * 
+	 * @return une ArrayList de etudiant
+	 */
+	public ArrayList<Integer> getListIdGroupe() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Integer> returnValue = new ArrayList<Integer>();
+
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT idGroupe FROM groupeetudiant");
+
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getInt("idgroupe"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
 
 	/**
 	 * ATTENTION : Cette méthode n'a pas vocation à être executée lors d'une utilisation normale du programme !
@@ -274,7 +318,7 @@ public class GroupeDAO extends ConnectionDAO {
 	 * 
 	 * @param args non utilisés
 	 * @throws SQLException si une erreur se produit lors de la communication avec la BDD
-	 */
+	 *
 	public static void main(String[] args) throws SQLException {
 		int returnValue;
 		GroupeDAO groupeDAO = new GroupeDAO();
@@ -316,5 +360,5 @@ public class GroupeDAO extends ConnectionDAO {
 		
 		System.out.println();
 	}
-	
+	*/
 }
