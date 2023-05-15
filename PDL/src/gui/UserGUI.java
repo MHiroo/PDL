@@ -82,8 +82,8 @@ public class UserGUI {
                 
             	SignInGestionnaireGUI window = new SignInGestionnaireGUI();
                 frame = new JFrame();
-                window.frame.setLocationRelativeTo(null);
-                window.frame.setVisible(true);
+                window.pframe.setLocationRelativeTo(null);
+                window.pframe.setVisible(true);
      
             }
             

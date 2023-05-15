@@ -212,6 +212,7 @@ public class EtudiantGUI extends JFrame{
 
 		JCalendar calendar = new JCalendar();
 		calendar.setBounds(0, 0, 1484, 480);
+		
 		java.util.Date utilDate = new java.util.Date();
 		utilDate=calendar.getDate();
 		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());

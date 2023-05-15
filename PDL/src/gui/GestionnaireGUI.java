@@ -33,9 +33,8 @@ public class GestionnaireGUI {
 	private JFrame UC4frame;
 	private JFrame UC5frame;
 	private JFrame UC6frame;
-	private JFrame UC7frame;
 	private JFrame UC9frame;
-	private JFrame pframe;
+	JFrame pframe;
 	private JFrame frameModifType;
 	private JFrame frameSupprType;
      JFrame frame;
@@ -591,14 +590,7 @@ public class GestionnaireGUI {
         }
         panelSupprCours.add(idBoxCoursS);
         
-    	/**
-    	 * Creation de la fenetre UC7
-    	 */
-    	UC7frame = new JFrame();
-    	UC7frame.setBounds(100, 100, 450, 300);
-        UC7frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        UC7frame.getContentPane().setLayout(new BoxLayout(UC7frame.getContentPane(), BoxLayout.Y_AXIS));
-        
+    
     	/**
     	 * Creation de la fenetre UC9
     	 */
@@ -1464,14 +1456,17 @@ public class GestionnaireGUI {
         
         
         /**
-         * Cr�ation du bouton du UC 7
+         * Cr�ation du bouton du UC 7 s
 >>>>>>> a9e61249cb0c1628468ef7f3030a78d9c6c5ea50
          */
         JButton btnUC7 = new JButton("Creer/Modifier un planning");
         btnUC7.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	UC7frame.setLocationRelativeTo(null);
-            	UC7frame.setVisible(true);
+            	pframe.setVisible(false);
+                PlanningGstGUI window = new PlanningGstGUI();
+                frame = new JFrame();
+                window.frame.setLocationRelativeTo(null);
+                window.frame.setVisible(true);
             }
         });
         panelUC3.add(btnUC7);

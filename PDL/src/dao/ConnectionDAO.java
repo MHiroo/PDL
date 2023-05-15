@@ -17,7 +17,7 @@ public class ConnectionDAO {
 	
 	//sinon :"jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
 	
-	//m dhote: srvoracledb.intranet.int; nom de service : orcl.intranet.int
+	//nom dhote: srvoracledb.intranet.int; nom de service : orcl.intranet.int
 
 
 	final static String LOGIN = "C##BDD9_18";   // remplacer les ********. Exemple C##BDD1_1

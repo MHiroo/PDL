@@ -670,7 +670,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		return returnValue;
 	}
 	/**
-	 * Permet de recuperer tous les noms d'enseignants stockes dans la table enseignant
+	 * Permet de recuperer tous les noms d'enseignants du planning de l'eleve stockes dans la table enseignant a partir de l'id de l'eleve
 	 * 
 	 * @return une ArrayList de noms d'enseignants
 	 */
@@ -684,7 +684,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT nomEnseignant FROM Enseignant WHERE idEnseignant IN(SELECT idEnseignant FROM Planning WHERE Planning.idCours IN(SELECT idCours FROM Cours WHERE((SELECT idGroupe FROM Etudiant WHERE (idEtud= ? ))=Planning.idGroupe)))");
+			ps = con.prepareStatement("SELECT Enseignant.nomEnseignant FROM Enseignant INNER JOIN Planning ON Enseignant.idEnseignant = Planning.idEnseignant INNER JOIN Etudiant ON Planning.idGroupe = Etudiant.idGroupe WHERE Etudiant.idEtud = ?;)");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();

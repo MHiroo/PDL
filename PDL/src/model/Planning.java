@@ -61,6 +61,16 @@ public class Planning {
 		this.duree= duree;
 		this.heure= heure;
 	}
+	public Planning(int idGroupe, int idEnseignant,int idCours, Date date, String salle, double duree, Time heure) {
+	
+		this.idGroupe= idGroupe;
+		this.idEnseignant=idEnseignant;
+		this.idCours=idCours;
+		this.date=date;
+		this.salle=salle;
+		this.duree= duree;
+		this.heure= heure;
+	}
 	
 	/**
 	 * getter pour l'attribut reference
