@@ -138,10 +138,6 @@ public class UserGUI {
             
         });
         panelBoutons.add(btnAdmin);
-        
-        
-        
-        
 
 
     }
