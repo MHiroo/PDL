@@ -16,13 +16,12 @@ public class ConnectionDAO {
 	final static String URL   = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl" ;
 	
 	//sinon :
-<<<<<<< HEAD
+
 
 	//final static String URL   = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
 
-=======
+
 	//final static String URL   = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
->>>>>>> 9000f3e0d09ba625f18a1cfa15a87a71bee7ad12
 	
 	//nom dhote: srvoracledb.intranet.int; nom de service : orcl.intranet.int
 

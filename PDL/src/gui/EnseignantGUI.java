@@ -3,13 +3,6 @@ package gui;
 import java.awt.EventQueue;
 import javax.swing.*;
 
-import javax.swing.JFrame;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
 import dao.AbsenceDAO;
 import dao.CoursDAO;
 import dao.EnseignantDAO;
@@ -23,9 +16,13 @@ import model.Etudiant;
 import model.Groupe_Etudiant;
 import model.TYPE_ABSENCE;
 
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 import javax.swing.table.DefaultTableModel;
@@ -122,7 +119,49 @@ public class EnseignantGUI {
          
          idBoxAbsent = new JComboBox();
          panelAbsent.add(idBoxAbsent);
+        
+         JLabel lblHeure = new JLabel("Heure de debut");
+         panelAbsent.add(lblHeure);
          
+         // Création du combobox des heures a selectionner
+
+		String heureDebut2 = "08:00:00";
+		String heureFin = "18:00:00";			
+		int intervalleMinutes = 30;
+
+		List<Time> listeHeures = new ArrayList<>();
+		
+		try {
+			SimpleDateFormat formatHeure = new SimpleDateFormat("HH:mm:ss");				
+			Date dateDebut = formatHeure.parse(heureDebut2);
+			Date dateFin = formatHeure.parse(heureFin);
+
+			long intervalleMillis = intervalleMinutes * 60 * 1000;
+			long heureActuelle = dateDebut.getTime();
+
+			while (heureActuelle <= dateFin.getTime()) {
+				Calendar calendar2 = Calendar.getInstance();
+			    calendar2.setTimeInMillis(heureActuelle);
+			    int heures = calendar2.get(Calendar.HOUR_OF_DAY);				   
+			    int minutes = calendar2.get(Calendar.MINUTE);
+
+			    // Réinitialiser les secondes à zéro
+			    calendar2.set(Calendar.SECOND, 0);
+
+			    Time heure = new Time(calendar2.getTimeInMillis());
+			    listeHeures.add(heure);
+
+			    heureActuelle += intervalleMillis;				}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		JComboBox<Time> comboBoxHeure = new JComboBox<Time>();
+		for (int i = 0; i < listeHeures.size(); i++) {
+			comboBoxHeure.addItem(listeHeures.get(i));
+		}
+			
+		panelAbsent.add(comboBoxHeure);
+		
          //Ajout d'un bouton pour enregistrer le choix du groupe
          
          JButton btnGroupe = new JButton("Selectionner");
@@ -163,8 +202,9 @@ public class EnseignantGUI {
              public void actionPerformed(ActionEvent e) {
                  //Ajouter l'abence a l'etudiant correspondant � l'id selectionne
             	 int id = (int) idBoxAbsent.getSelectedItem();
+            	 Time temps = (Time) comboBoxHeure.getSelectedItem();
             	 
-            	 Absence absence = new Absence(id);
+            	 Absence absence = new Absence(id, temps);
             	 AbsenceDAO absenceDAO = new AbsenceDAO();
             	 absenceDAO.add(absence);         	  
              }

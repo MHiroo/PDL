@@ -36,12 +36,7 @@ public class AbsenceDAO extends ConnectionDAO {
 		PreparedStatement ps = null;
 		int returnValue = 0;
         LocalDate date = LocalDate.now();
-        LocalTime currentTime = LocalTime.now();
-        int hour = currentTime.getHour();
-        int minute = currentTime.getMinute();
-        int second = currentTime.getSecond();
-        String timeString = String.format("%02d:%02d:%02d", hour, minute, second);
-
+        LocalTime time = LocalTime.now();
 
 
 		// connexion a la base de donnees
@@ -58,7 +53,7 @@ public class AbsenceDAO extends ConnectionDAO {
 			//ps.setInt(3, absence.getIdCours());
 			ps.setInt(3, 1);
 			//ps.setInt(4, absence.getNbHeure());
-			ps.setString(4, timeString);
+			ps.setTime(4, absence.getHeureDebut());
 			ps.setInt(5, 2);
 			ps.setDate(6, Date.valueOf(date)); 
 			//ps.setString(6, absence.getStatut());
@@ -166,7 +161,7 @@ public class AbsenceDAO extends ConnectionDAO {
 			ps = con.prepareStatement("UPDATE absence SET idetud = ?, idcours = ?, heureDebut = ?, nbrdheure = ?, date_abs = ?, statut = ? WHERE idabs = ?");
 			ps.setInt(1, absence.getIdEtud());
 			ps.setInt(2, absence.getIdCours());
-			ps.setDate(3, absence.getHeureDebut());	
+			ps.setTime(3, absence.getHeureDebut());	
 			ps.setInt(4, absence.getNbHeure());	
 			ps.setDate(5, absence.getDate());
 			ps.setString(6, absence.getStatut());
@@ -271,7 +266,7 @@ public class AbsenceDAO extends ConnectionDAO {
 				returnValue = new Absence(rs.getInt("idabs"),
 										   rs.getInt("idetud"),
 									       rs.getInt("idcours"),
-									       rs.getDate("heureDebut"),
+									       rs.getTime("heureDebut"),
 									       rs.getInt("nbHeure"),
 									       rs.getDate("date"),
 									       rs.getString("statut"));
@@ -325,7 +320,7 @@ public class AbsenceDAO extends ConnectionDAO {
 				returnValue.add(new Absence(rs.getInt("idabs"),
 						   rs.getInt("idetud"),
 					       rs.getInt("idcours"),
-					       rs.getDate("heureDebut"),
+					       rs.getTime("heureDebut"),
 					       rs.getInt("nbrdHeure"),
 					       rs.getDate("date_abs"),
 					       rs.getString("statut")));
