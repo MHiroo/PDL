@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 public class SignInGestionnaireGUI {
 
      JFrame pframe;
+     JFrame frame;
     private JTextField textFieldEmail;
     private JTextField textFieldMdp;
     
@@ -126,9 +127,9 @@ public class SignInGestionnaireGUI {
             public void actionPerformed(ActionEvent event) {
                 pframe.dispose(); // ferme la fenêtre actuelle
                 UserGUI window = new UserGUI();
-                pframe = new JFrame();
-                pframe.setLocationRelativeTo(null);
-                pframe.setVisible(true);
+                frame = new JFrame();
+                window.frame.setLocationRelativeTo(null);
+                window.frame.setVisible(true);
             }
         });
         panelBoutonRetour.add(retourBtn);

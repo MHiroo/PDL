@@ -240,7 +240,7 @@ public class CoursDAO extends ConnectionDAO {
 	 * @return le enseignant trouve;
 	 * 			null si aucun enseignant ne correspond a cette reference
 	 */
-	public int getId(String cours) {
+	public int getId(int id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -250,8 +250,8 @@ public class CoursDAO extends ConnectionDAO {
 		try {
 
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT idCours FROM cours WHERE nomCours = ?");
-			ps.setString(1, cours);
+			ps = con.prepareStatement("SELECT idCours FROM cours WHERE id = ?");
+			ps.setInt(1, id);
 
 			// on execute la requete
 			// rs contient un pointeur situe juste avant la premiere ligne retournee
@@ -712,4 +712,48 @@ public class CoursDAO extends ConnectionDAO {
 			}
 		}
 		return returnValue;
-	}}
+	}
+	
+	public static void main(String[] args) throws SQLException {
+		int returnValue;
+		CoursDAO coursDAO = new CoursDAO();
+		// Ce test va utiliser directement votre BDD, on essaie d'eviter les collisions avec vos donnees en prenant de grands ID
+		int[] ids = {424242, 424243, 424244};
+		// test du constructeur
+		Cours s1 = new Cours(ids[0],  "nom",  1,  1,  1,  1, 4);
+		Cours s2 = new Cours(ids[1],  "nom",  1,  1,  1,  1, 4);
+		Cours s3 = new Cours(ids[2],  "nom",  1,  1,  1,  1, 4);
+		// test de la methode add
+		returnValue = coursDAO.add(s1);
+		System.out.println(returnValue + " cours ajoute");
+		returnValue = coursDAO.add(s2);
+		System.out.println(returnValue + " cours ajoute");
+		returnValue = coursDAO.add(s3);
+		System.out.println(returnValue + " cours ajoute");
+		System.out.println();
+		
+		// test de la methode get
+		Cours sg = coursDAO.get(1);
+		// appel implicite de la methode toString de la classe Object (a eviter)
+		System.out.println(sg);
+		System.out.println();
+		
+		// test de la methode getList
+		ArrayList<Cours> list = coursDAO.getList();
+		for (Cours s : list) {
+			// appel explicite de la methode toString de la classe Object (a privilegier)
+			System.out.println(s.toString());
+		}
+		System.out.println();
+		// test de la methode delete
+		// On supprime les 3 articles qu'on a cree
+		returnValue = 0;
+		for (int id : ids) {
+		//returnValue = EtudiantDAO.delete(id);
+			System.out.println(returnValue + " cours supprime");
+		}
+		
+		System.out.println();
+	}	
+
+}

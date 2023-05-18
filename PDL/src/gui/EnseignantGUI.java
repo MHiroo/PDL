@@ -95,7 +95,7 @@ public class EnseignantGUI {
          
          
          /**
-          * Creation du panel comportant la selection de l'id pour sélectionner un groupe
+          * Creation du panel comportant la selection de l'id pour sï¿½lectionner un groupe
           */
          JPanel panelGroupe = new JPanel();
          frameAppel.getContentPane().add(panelGroupe);
@@ -112,7 +112,7 @@ public class EnseignantGUI {
          panelGroupe.add(idBoxGroupe);
          
          /**
-          * Creation du panel comportant la selection de l'id pour sélectionner un etudiant
+          * Creation du panel comportant la selection de l'id pour sï¿½lectionner un etudiant
           */
          JPanel panelAbsent = new JPanel();
          frameAppel.getContentPane().add(panelAbsent);
@@ -136,7 +136,7 @@ public class EnseignantGUI {
                  // Appeler la methode d'ajout d'un etudiant dans la base de donnees
                  EtudiantDAO etudiantDAO = new EtudiantDAO();
 
-                 tableModel.setRowCount(0); // Effacer les anciennes données de la table
+                 tableModel.setRowCount(0); // Effacer les anciennes donnï¿½es de la table
 
                  for (int i = 0; i < etudiantDAO.getEtudiantGroupe(id).size(); i++) {
                      Etudiant etudiant = etudiantDAO.getEtudiantGroupe(id).get(i);
@@ -144,7 +144,7 @@ public class EnseignantGUI {
                      String lastName = etudiant.getName();
                      int identifiant = etudiant.getId();
 
-                     // Ajouter les données à la table
+                     // Ajouter les donnï¿½es ï¿½ la table
                      tableModel.addRow(new Object[]{firstName, lastName, identifiant});
                  }
                      
@@ -161,12 +161,12 @@ public class EnseignantGUI {
          JButton btnAbsent = new JButton("Valider");
          btnAbsent.addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
-                 //Ajouter l'abence a l'etudiant correspondant à l'id selectionne
+                 //Ajouter l'abence a l'etudiant correspondant ï¿½ l'id selectionne
             	 int id = (int) idBoxAbsent.getSelectedItem();
             	 
             	 Absence absence = new Absence(id);
             	 AbsenceDAO absenceDAO = new AbsenceDAO();
-            	 absenceDAO.addAbsence(absence);         	  
+            	 absenceDAO.add(absence);         	  
              }
          });
          panelAbsent.add(btnAbsent);
@@ -176,7 +176,7 @@ public class EnseignantGUI {
          tableModel.setColumnIdentifiers(new Object[]{"Prenom", "Nom", "identifiant"});
          table = new JTable(tableModel);
 
-         // Ajouter la JTable à un JScrollPane
+         // Ajouter la JTable ï¿½ un JScrollPane
          JScrollPane scrollPane = new JScrollPane(table);
          panelGroupe.add(scrollPane);
        
