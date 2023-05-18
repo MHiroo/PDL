@@ -246,38 +246,19 @@ public class PlanningGstGUI {
 
 				// Création du combobox des heures a selectionner
 
-				String heureDebut2 = "08:00:00";
-				String heureFin = "18:00:00";
-				int intervalleMinutes = 30;
+				List<Double> listeHeures = new ArrayList<>();
 
-				List<Time> listeHeures = new ArrayList<>();
+				double heureDebut = 8.0;
+				double heureFin = 18.0;
+				double intervalle = 0.5;
 
-				try {
-					SimpleDateFormat formatHeure = new SimpleDateFormat("HH:mm:ss");
-					Date dateDebut = formatHeure.parse(heureDebut2);
-					Date dateFin = formatHeure.parse(heureFin);
-
-					long intervalleMillis = intervalleMinutes * 60 * 1000;
-					long heureActuelle = dateDebut.getTime();
-
-					while (heureActuelle <= dateFin.getTime()) {
-						Calendar calendar2 = Calendar.getInstance();
-					    calendar2.setTimeInMillis(heureActuelle);
-					    int heures = calendar2.get(Calendar.HOUR_OF_DAY);
-					    int minutes = calendar2.get(Calendar.MINUTE);
-
-					    // Réinitialiser les secondes à zéro
-					    calendar2.set(Calendar.SECOND, 0);
-
-					    Time heure = new Time(calendar2.getTimeInMillis());
-					    listeHeures.add(heure);
-
-					    heureActuelle += intervalleMillis;
-					}
-				} catch (Exception e1) {
-					e1.printStackTrace();
+				double heureActuelle = heureDebut;
+				while (heureActuelle <= heureFin) {
+				    listeHeures.add(heureActuelle);
+				    heureActuelle += intervalle;
 				}
-				JComboBox<Time> comboBoxHeure = new JComboBox<Time>();
+				
+				JComboBox<Double> comboBoxHeure = new JComboBox<Double>();
 				for (int i = 0; i < listeHeures.size(); i++) {
 					comboBoxHeure.addItem(listeHeures.get(i));
 				}
@@ -299,7 +280,7 @@ public class PlanningGstGUI {
 						String enseignant = comboBoxEnseignant.getSelectedItem().toString();
 						Double dureeDouble = (Double) comboBoxDuree.getSelectedItem();
 						String cours = comboBoxCours.getSelectedItem().toString();
-						Time temps = (Time) comboBoxHeure.getSelectedItem();
+						Double temps = (Double) comboBoxHeure.getSelectedItem();
 						java.sql.Date sqlDate2 = new java.sql.Date(calendar.getDate().getTime());
 						Planning planning = new Planning( groupe, enseignantDAO.getId(enseignant),coursDAO.getId(cours),sqlDate2 , salle, dureeDouble, temps);
 						planningDAO.add(planning);
@@ -320,7 +301,7 @@ public class PlanningGstGUI {
 						String enseignant = comboBoxEnseignant.getSelectedItem().toString();
 						Double dureeDouble = (Double) comboBoxDuree.getSelectedItem();
 						String cours = comboBoxCours.getSelectedItem().toString();
-						Time temps = (Time) comboBoxHeure.getSelectedItem();
+						Double temps = (Double) comboBoxHeure.getSelectedItem();
 						java.sql.Date sqlDate2 = new java.sql.Date(calendar.getDate().getTime());
 						Planning planning = new Planning( NumeroSeance,groupe, enseignantDAO.getId(enseignant),coursDAO.getId(cours),sqlDate2, salle, dureeDouble, temps);
 						planningDAO.update(planning );

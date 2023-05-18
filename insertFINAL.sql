@@ -15,7 +15,7 @@ VALUES (2,1,'Matias','Alexandre','classique','alexandre.matias@groupe-esigelec.o
 INSERT INTO etudiant (idetud, idgroupe, nomEtudiant, prenomEtudiant, filiere, email, motdepasse)
 VALUES (3,1,'Martineau','Aurelien','classique','aurelien.martineau@groupe-esigelec.org','azerty');
 INSERT INTO cours (idCours, nomCours, masseHoraire, masseHoraireAmphi, masseHoraireTd, masseHoraireTp, masseHoraireExam)
-VALUES (1,'PDL',10,4,3,2,1);
+VALUES (2,'Mathgs',10,4,3,2,1);
 INSERT INTO type_absence (idtypeabsence, quota, designation)
 VALUES (1,50,'Congé de deuil');
 INSERT INTO type_absence (idtypeabsence, quota, designation)
@@ -26,8 +26,8 @@ VALUES (3,10,'grève');
 INSERT INTO justificatif (idjustificatif , idAbs, date_abs, etat, motif) 
 VALUES (1,1,TO_DATE('21-03-2023','DD-MM-YYYY'),'N','Covid');
 
-INSERT INTO Planning (idplanning,idGroupe, idEnseignant, idcours, date_pln, salle,duree,heure)
-VALUES (3,1,1,2,TO_DATE('11-05-2023','DD-MM-YYYY'),'N',12,TO_DATE('15:30:00', 'HH24:MI:SS'));
+INSERT INTO Planning (idplanning,idGroupe, idEnseignant, idcours, date_pln, salle,duree,heure) 
+VALUES (1,1,1,1,TO_DATE('18-05-2023','DD-MM-YYYY'),'N',1.0,8.3);
 
 INSERT INTO lien (idlien, lien)
 VALUES (1,'https://ent.esigelec.fr/course/view.php?id=6070');
