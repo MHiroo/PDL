@@ -5,6 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import model.*;
 import java.util.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 /**
  * Classe d'acces aux donnees contenues dans la table etudiant
  * 
@@ -32,6 +35,9 @@ public class AbsenceDAO extends ConnectionDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+
 
 		// connexion a la base de donnees
 		try {
@@ -41,13 +47,17 @@ public class AbsenceDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO absence(idabs, idetud, idcours, nbrdheure, date_abs, statut) VALUES( ?, ?, ?, ?, ?,?)");
+			ps = con.prepareStatement("INSERT INTO absence(idabs, idetud, idcours, heuredebut, nbrdheure, date_abs, statut) VALUES( ?, ?, ?, ?, ?, ?,?)");
 			ps.setInt(1, getList().get(getList().size()-1).getId()+1);
 			ps.setInt(2, absence.getIdEtud());
-			ps.setInt(3, absence.getIdCours());
-			ps.setInt(4, absence.getNbHeure());
-			ps.setDate(5, absence.getDate());
-			ps.setString(6, absence.getStatut());
+			//ps.setInt(3, absence.getIdCours());
+			ps.setInt(3, 1);
+			//ps.setInt(4, absence.getNbHeure());
+			ps.setTime(4, absence.getHeureDebut());
+			ps.setInt(5, 2);
+			ps.setDate(6, Date.valueOf(date)); 
+			//ps.setString(6, absence.getStatut());
+			ps.setString(7, "En verification");
 			
 
 			// Execution de la requete
@@ -99,7 +109,7 @@ public class AbsenceDAO extends ConnectionDAO {
 			ps.setDate(4, sqlDate);
 			ps.setInt(5, 99);
 			ps.setDate(6, sqlDate);
-			ps.setString(7, "Absence incomplete");
+			ps.setString(7, "Date à définir");
 			ps.setInt(8, absence.getIdEtud());
 
 			// Execution de la requete
@@ -151,7 +161,7 @@ public class AbsenceDAO extends ConnectionDAO {
 			ps = con.prepareStatement("UPDATE absence SET idetud = ?, idcours = ?, heureDebut = ?, nbrdheure = ?, date_abs = ?, statut = ? WHERE idabs = ?");
 			ps.setInt(1, absence.getIdEtud());
 			ps.setInt(2, absence.getIdCours());
-			ps.setDate(3, absence.getHeureDebut());	
+			ps.setTime(3, absence.getHeureDebut());	
 			ps.setInt(4, absence.getNbHeure());	
 			ps.setDate(5, absence.getDate());
 			ps.setString(6, absence.getStatut());
@@ -256,7 +266,7 @@ public class AbsenceDAO extends ConnectionDAO {
 				returnValue = new Absence(rs.getInt("idabs"),
 										   rs.getInt("idetud"),
 									       rs.getInt("idcours"),
-									       rs.getDate("heureDebut"),
+									       rs.getTime("heureDebut"),
 									       rs.getInt("nbHeure"),
 									       rs.getDate("date"),
 									       rs.getString("statut"));
@@ -310,9 +320,9 @@ public class AbsenceDAO extends ConnectionDAO {
 				returnValue.add(new Absence(rs.getInt("idabs"),
 						   rs.getInt("idetud"),
 					       rs.getInt("idcours"),
-					       rs.getDate("heureDebut"),
-					       rs.getInt("nbHeure"),
-					       rs.getDate("date"),
+					       rs.getTime("heureDebut"),
+					       rs.getInt("nbrdHeure"),
+					       rs.getDate("date_abs"),
 					       rs.getString("statut")));
 			}
 		} catch (Exception ee) {

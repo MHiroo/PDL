@@ -100,7 +100,6 @@ public class GestionnaireGUI {
     private JComboBox idBoxGroupe;
     private JComboBox idBoxGroupeS;
     private JComboBox idBoxCours;
-    private JComboBox idBoxCoursM;
     private JComboBox idBoxCoursS;
     private JComboBox idBoxType;
     private JComboBox idBoxTypeS;
@@ -1405,16 +1404,17 @@ public class GestionnaireGUI {
         btnModifierCours2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Recuperer les donnees saisies par l'utilisateur
-            	String nom = textFieldNomCours.getText();
+            	int id = (int)idBoxCours.getSelectedItem();
+            	String nom = textFieldNomCoursM.getText();
                 int MH;
-                int MHA = Integer.parseInt(textFieldMHA.getText());
-                int MHTD = Integer.parseInt(textFieldTD.getText());
-                int MHTP = Integer.parseInt(textFieldTP.getText());
-                int MHE = Integer.parseInt(textFieldMHE.getText());
+                int MHA = Integer.parseInt(textFieldMHAM.getText());
+                int MHTD = Integer.parseInt(textFieldTDM.getText());
+                int MHTP = Integer.parseInt(textFieldTPM.getText());
+                int MHE = Integer.parseInt(textFieldMHEM.getText());
                 MH = MHA + MHTD + MHTP + MHE;
                 
                 // Creer un objet Cours avec les donnees recuperees
-                Cours cours = new Cours(nom, MH, MHA, MHTD, MHTP, MHE);
+                Cours cours = new Cours(id, nom, MH, MHA, MHTD, MHTP, MHE);
                 
                 // Appeler la methode de modification d'un Cours dans la base de donnees
                 CoursDAO coursDAO = new CoursDAO();

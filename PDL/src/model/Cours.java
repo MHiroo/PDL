@@ -51,15 +51,20 @@ public class Cours {
 		this.masseHoraire=masseHoraire;
 		this.repNbrHAmphi=repNbrHAmphi;
 		this.repNbrHTD=repNbrHTD;
-		this.repNbrHTD=repNbrHTP;
+		this.repNbrHTP=repNbrHTP;
 		this.repNbrHExam=repNbrHExam;
 	}
 	public Cours(String nom) {
 		this.nom=nom;
 	}
 	
-	public Cours(String nom2, int mH, int mHA, int mHTD, int mHTP, int mHE) {
-		// TODO Auto-generated constructor stub
+	public Cours(String nom, int masseHoraire, int repNbrHAmphi, int repNbrHTD, int repNbrHTP, int repNbrHExam) {
+		this.nom=nom;
+		this.masseHoraire=masseHoraire;
+		this.repNbrHAmphi=repNbrHAmphi;
+		this.repNbrHTD=repNbrHTD;
+		this.repNbrHTP=repNbrHTP;
+		this.repNbrHExam=repNbrHExam;
 	}
 	/**
 	 * getter pour l'attribut reference

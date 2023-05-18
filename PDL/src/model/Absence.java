@@ -22,7 +22,7 @@ public class Absence {
 	/**
 	 * heure de debut
 	 */
-	private java.sql.Date heureDebut;
+	private Time heureDebut;
 	/**
 	 * nombre d'heure 
 	 */
@@ -47,7 +47,7 @@ public class Absence {
 	 * @param date date de l'absence
 	 * @param statut statut de l'absence justifie ou non
 	 */
-	public Absence(int id, int idEtud, int idCours,java.sql.Date heureDebut, int nbHeure, java.sql.Date date, String statut) {
+	public Absence(int id, int idEtud, int idCours,Time heureDebut, int nbHeure, java.sql.Date date, String statut) {
 		this.id=id;
 		this.idEtud=idEtud;
 		this.idCours=idCours;
@@ -64,6 +64,13 @@ public class Absence {
 	public Absence(int id, int idEtud) {
 		this.id=id;
 		this.idEtud=idEtud;
+	}
+
+
+
+	public Absence(int id, Time heureDebut) {
+		this.id=id;
+		this.heureDebut=heureDebut;
 	}
 
 	/**
@@ -105,14 +112,14 @@ public class Absence {
 	 * getter pour l'attribut idCours
 	 * @param idCours l'identifiant du cours de l'absence
 	 */
-	public java.sql.Date getHeureDebut() {
+	public Time getHeureDebut() {
 		return heureDebut;
 	}
 	/**
 	 * setter pour l'attribut nbHeure
 	 * @param nbHeure : nouvelle valeur du nombre d'heure d'absence
 	 */
-	public void setHeureDebut(java.sql.Date heureDebut) {
+	public void setHeureDebut(Time heureDebut) {
 		this.heureDebut = heureDebut;
 	}
 	/**
