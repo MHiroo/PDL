@@ -725,7 +725,7 @@ public class EtudiantDAO extends ConnectionDAO {
 		// connexion a la base de donnees
 		try {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
-			ps = con.prepareStatement("SELECT Enseignant.nomEnseignant FROM Enseignant INNER JOIN Planning ON Enseignant.idEnseignant = Planning.idEnseignant INNER JOIN Etudiant ON Planning.idGroupe = Etudiant.idGroupe WHERE Etudiant.idEtud = ?;)");
+			ps = con.prepareStatement("SELECT Enseignant.nomEnseignant FROM Enseignant INNER JOIN Planning ON Enseignant.idEnseignant = Planning.idEnseignant INNER JOIN Etudiant ON Planning.idGroupe = Etudiant.idGroupe WHERE Etudiant.idEtud = ?");
 			ps.setInt(1, id);
 			// on execute la requete
 			rs = ps.executeQuery();

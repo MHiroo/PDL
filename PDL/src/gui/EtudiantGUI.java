@@ -230,19 +230,14 @@ public class EtudiantGUI extends JFrame{
 		CoursDAO coursDAO = new CoursDAO();
 
 
-		List<String> heures = new ArrayList<>();
+		
 		int nbLigne = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).size();
 		String[][] data2 = new String[nbLigne][5];
-
-		for (int i = 8; i <= 8+nbLigne; i++) {
-			String heureDebut = String.format("%02d:00", i);
-			heures.add(heureDebut );
-		}
-
+		
 
 		try {
 			for (int i = 0; i < nbLigne; i++) {
-				data2[i][0] = heures.get(i);
+				data2[i][0] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getHeure()+ "";
 				data2[i][1] = coursDAO.getNomCours(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getIdCours());
 				data2[i][2] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getSalle();
 				data2[i][3] = enseignantDAO.getNomEnseignant(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getIdEnseignant());
@@ -293,18 +288,13 @@ public class EtudiantGUI extends JFrame{
 				//Creation du tableau de cours du jour selectionne
 
 
-				List<String> heures = new ArrayList<>();
+				
 				int nbLigne = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).size();
 				String[][] data2 = new String[nbLigne][5];
-				for (int i = 8; i <= 8+nbLigne; i++) {
-					String heureDebut = String.format("%02d:00", i);
-					heures.add(heureDebut );
-				}
-
 
 				try {
 					for (int i = 0; i < nbLigne; i++) {
-						data2[i][0] = heures.get(i);
+						data2[i][0] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getHeure()+ "";
 						data2[i][1] = coursDAO.getNomCours(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getIdCours());
 						data2[i][2] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getSalle();
 						data2[i][3] = enseignantDAO.getNomEnseignant(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getIdEnseignant());

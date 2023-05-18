@@ -38,7 +38,7 @@ public class PlanningDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO planning(idplanning,idgroupe, idenseignant, idcours, date_pln, salle, duree, heure) VALUES( ?, ?, ?, ?, ?, ?, ?,?)");
+			ps = con.prepareStatement("INSERT INTO planning(idplanning,idgroupe, idenseignant, idcours, date_pln, salle, duree, heure) VALUES( ?, ?, ?, ?, TO_DATE(?,'DD-MM-YYYY'), ?, ?, TO_DATE('15:30:00', 'HH24:MI:SS'))");
 			ps.setInt(1, getListPlanning().get(getListPlanning().size()-1).getId()+1);
 			ps.setInt(2, planning.getIdGroupe());
 			ps.setInt(3, planning.getIdEnseignant());
@@ -46,7 +46,7 @@ public class PlanningDAO extends ConnectionDAO {
 			ps.setDate(5, (Date) planning.getDate());
 			ps.setString(6, planning.getSalle());
 			ps.setDouble(7, planning.getDuree());
-			ps.setTime(8, planning.getHeure());
+			//ps.setTime(8, planning.getHeure());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
