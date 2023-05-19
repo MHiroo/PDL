@@ -448,14 +448,283 @@ public class EnseignantDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
-
+	/**
+	 * Permet de recuperer tous les noms de cours de l'enseignant stockes dans la table cours a partir de l'id enseignant
+	 * 
+	 * @return une ArrayList de noms de cours
+	 */
+	public ArrayList<String> getNomCours(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> returnValue = new ArrayList<String>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT nomCours FROM COURS WHERE idCours IN (SELECT idCours FROM Planning WHERE idEnseignant= ? )");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getString("nomCours"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer tous les masses horaires stockes dans la table cours
+	 * 
+	 * @return une ArrayList de masse Horaire
+	 */
+	public ArrayList<String> getMasseHoraire(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> returnValue = new ArrayList<String>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT masseHoraire FROM Cours WHERE idCours IN (SELECT idCours FROM Planning WHERE idEnseignant= ? )");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getString("masseHoraire"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer tous les Repartition horaires en amphi stockes dans la table cours
+	 * 
+	 * @return une ArrayList de Repartition de masse Horaire amphi
+	 */
+	public ArrayList<String> getRepartitionAmphi(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> returnValue = new ArrayList<String>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT masseHoraireAmphi FROM Cours WHERE idCours IN (SELECT idCours FROM Planning WHERE idEnseignant= ? )");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getString("masseHoraireAmphi"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer tous les Repartition horaires en TD stockes dans la table cours
+	 * 
+	 * @return une ArrayList de Repartition de masse Horaire TD
+	 */
+	public ArrayList<String> getRepartitionTD(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> returnValue = new ArrayList<String>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT masseHoraireTD FROM Cours WHERE idCours IN (SELECT idCours FROM Planning WHERE idEnseignant= ? )");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getString("masseHoraireTD"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer tous les Repartition horaires en TP stockes dans la table cours
+	 * 
+	 * @return une ArrayList de Repartition de masse Horaire TP
+	 */
+	public ArrayList<String> getRepartitionTP(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> returnValue = new ArrayList<String>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT masseHoraireTP FROM Cours WHERE idCours IN(SELECT idCours FROM Planning WHERE idEnseignant= ? )");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getString("masseHoraireTP"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer tous les Repartition horaires en DS stockes dans la table cours
+	 * 
+	 * @return une ArrayList de Repartition de masse Horaire DS
+	 */
+	public ArrayList<String> getRepartitionExam(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<String> returnValue = new ArrayList<String>();
+		
+		
+		// connexion a la base de donnees
+		try {
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT masseHoraireExam FROM Cours WHERE idCours IN(SELECT idCours FROM Planning WHERE idEnseignant= ? )");
+			ps.setInt(1, id);
+			// on execute la requete
+			rs = ps.executeQuery();
+			// on parcourt les lignes du resultat
+			while (rs.next()) {
+				returnValue.add(rs.getString("masseHoraireExam"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du rs, du preparedStatement et de la connexion
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
 	/**
 	 * ATTENTION : Cette méthode n'a pas vocation à être executée lors d'une utilisation normale du programme !
 	 * Elle existe uniquement pour TESTER les méthodes écrites au-dessus !
 	 * 
 	 * @param args non utilisés
 	 * @throws SQLException si une erreur se produit lors de la communication avec la BDD
-	 */
+	 *
 	public static void main(String[] args) throws SQLException {
 		int returnValue;
 		EnseignantDAO EnseignantDAO = new EnseignantDAO();
@@ -497,5 +766,6 @@ public class EnseignantDAO extends ConnectionDAO {
 		
 		System.out.println();
 	}
+	*/
 	
 }

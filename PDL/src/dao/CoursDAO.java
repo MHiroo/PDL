@@ -495,7 +495,7 @@ public class CoursDAO extends ConnectionDAO {
 
 
 /**
-	 * Permet de recuperer tous les noms de cours stockes dans la table cours
+	 * Permet de recuperer tous les noms de cours stockes dans la table cours à partir de l'id du cours
 	 * 
 	 * @return une ArrayList de noms de cours
 	 */

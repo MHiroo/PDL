@@ -357,5 +357,68 @@ public class PlanningDAO extends ConnectionDAO {
 		}
 		return returnValue;
 	}
+	/**
+	 * Permet de recuperer une liste de planning du jour a partir de l'id enseignant et de la date
+	 * 
+	 * @param reference la reference du planning a recuperer
+	 * @return le planning trouve;
+	 * 			null si aucun planning ne correspond a cette reference
+	 */
+	public ArrayList<Planning> getPlanningJourEnseignant(int idEnseignant, LocalDate date) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Planning> returnValue = new ArrayList<Planning>();
+
+		// connexion a la base de donnees
+		try {
+
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT * FROM planning WHERE (idEnseignant = ? AND date_pln = (TO_DATE(?,'DD-MM-YYYY'))) ORDER BY heure");
+			ps.setInt(1, idEnseignant);
+			java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+			ps.setDate(2, (Date) sqlDate);
+			//ps.setDate(2, date);
+
+			// on execute la requete
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			while (rs.next()) {
+				LocalDate localDate = rs.getDate("date_pln").toLocalDate();
+				returnValue.add(new Planning(rs.getInt("idplanning"),
+						   rs.getInt("idgroupe"),
+					       rs.getInt("idEnseignant"),
+					       rs.getInt("idCours"),
+					       localDate,
+					       rs.getString("salle"),
+						   rs.getDouble("duree"),
+						   rs.getDouble("heure")));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
 	
 }

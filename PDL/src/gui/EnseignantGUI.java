@@ -32,8 +32,8 @@ import java.awt.*;
 public class EnseignantGUI {
 
      JFrame frame;
-    private JFrame frameListeCours;
-    private JFrame framePlanning;
+    JFrame frameListeCours;
+    JFrame framePlanning;
     private JFrame frameAppel;
     private JComboBox idBoxGroupe;
     private JComboBox idBoxAbsent;
@@ -68,27 +68,18 @@ public class EnseignantGUI {
         frame.setBounds(100, 100, 450, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-       /**
-        * Creation de la fenetre de la liste des cours de l'enseignant
-        */
-        frameListeCours = new JFrame();
-        frameListeCours.setBounds(100, 100, 450, 300);
-        frameListeCours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameListeCours.getContentPane().setLayout(new BoxLayout(frameListeCours.getContentPane(), BoxLayout.Y_AXIS));
+       
         /**
-         * Creation de la fenetre Planning de l'enseignant
-         */
-         framePlanning = new JFrame();
-         framePlanning.setBounds(100, 100, 450, 300);
-         framePlanning.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         framePlanning.getContentPane().setLayout(new BoxLayout(framePlanning.getContentPane(), BoxLayout.Y_AXIS));
-         /**
           * Creation de la fenetre Faire l'appel de l'enseignant
           */
          frameAppel = new JFrame();
          frameAppel.setBounds(100, 100, 470, 300);
-         frameAppel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         frameAppel.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
          frameAppel.getContentPane().setLayout(new BoxLayout(frameAppel.getContentPane(), BoxLayout.Y_AXIS));
+         
+         
+         
+         
          
          
          /**
@@ -225,13 +216,17 @@ public class EnseignantGUI {
         /**
          * Creation du bouton pour acceder e liste des cours de l'enseignant
          */
+         
         JPanel ListeCours = new JPanel();
         frame.getContentPane().add(ListeCours);
         JButton ListeCour = new JButton("Acceder Liste Cours");
         ListeCour.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		frameListeCours.setLocationRelativeTo(null);
-            	frameListeCours.setVisible(true);
+        		frame.setVisible(false);
+        		EnseignantListeCoursGUI window = new EnseignantListeCoursGUI();
+        		frameListeCours = new JFrame();
+        		window.frameListeCours.setLocationRelativeTo(null);
+        		window.frameListeCours.setVisible(true);
             }
         });
         ListeCours.add(ListeCour);
@@ -245,8 +240,11 @@ public class EnseignantGUI {
 	    JButton PLANNING = new JButton("Acceder au Planning");
 	    PLANNING.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		framePlanning.setLocationRelativeTo(null);
-	        	framePlanning.setVisible(true);
+	    		frame.setVisible(false);
+        		EnseignantPlanningGUI window = new EnseignantPlanningGUI();
+        		framePlanning = new JFrame();
+        		window.framePlanning.setLocationRelativeTo(null);
+        		window.framePlanning.setVisible(true);
 	        }
 	    });
 	    Planning.add(PLANNING);
