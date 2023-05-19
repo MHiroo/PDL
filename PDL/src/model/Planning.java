@@ -1,4 +1,5 @@
 package model;
+import java.time.LocalDate;
 import java.util.Date;
 /**
  * Classe Planning
@@ -23,9 +24,9 @@ public class Planning {
 	 */
 	private int idCours;
 	/**
-	 * Date 
+	 * LocalDate 
 	 */
-	private Date date;
+	private LocalDate date;
 	/**
 	 * nbreHeure
 	 */
@@ -50,7 +51,7 @@ public class Planning {
 	 * @param duree de la séance
 	 * @param heure de la séance
 	 */
-	public Planning(int id,int idGroupe, int idEnseignant,int idCours, Date date, String salle, double duree, double heure) {
+	public Planning(int id,int idGroupe, int idEnseignant,int idCours, LocalDate date, String salle, double duree, double heure) {
 		this.id=id;
 		this.idGroupe= idGroupe;
 		this.idEnseignant=idEnseignant;
@@ -60,7 +61,7 @@ public class Planning {
 		this.duree= duree;
 		this.heure= heure;
 	}
-	public Planning(int idGroupe, int idEnseignant,int idCours, Date date, String salle, double duree, double heure) {
+	public Planning(int idGroupe, int idEnseignant,int idCours, LocalDate date, String salle, double duree, double heure) {
 	
 		this.idGroupe= idGroupe;
 		this.idEnseignant=idEnseignant;
@@ -103,14 +104,14 @@ public class Planning {
 	 * getter pour l'attribut date
 	 * @return valeur de la date
 	 */
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 	/**
 	 * setter pour l'attribut date
 	 * @param date : nouvelle valeur de la date
 	 */
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	/**

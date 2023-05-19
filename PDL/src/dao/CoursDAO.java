@@ -234,7 +234,7 @@ public class CoursDAO extends ConnectionDAO {
 		return returnValue;
 	}
 	/**
-	 * Permet de recuperer un idCours a partir de son nom
+	 * Permet de recuperer un idCours a partir de son id
 	 * 
 	 * @param reference la reference du enseignant a recuperer
 	 * @return le enseignant trouve;
@@ -252,6 +252,58 @@ public class CoursDAO extends ConnectionDAO {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT idCours FROM cours WHERE id = ?");
 			ps.setInt(1, id);
+
+			// on execute la requete
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			if (rs.next()) {
+				returnValue =rs.getInt("idCours");
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer un idCours a partir de son nom
+	 * 
+	 * @param reference la reference du enseignant a recuperer
+	 * @return le enseignant trouve;
+	 * 			null si aucun enseignant ne correspond a cette reference
+	 */
+	public int getIdFromNom(String nomCours) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int returnValue = 0;
+
+		// connexion a la base de donnees
+		try {
+
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT idCours FROM cours WHERE nomCours = ?");
+			ps.setString(1, nomCours);
 
 			// on execute la requete
 			// rs contient un pointeur situe juste avant la premiere ligne retournee

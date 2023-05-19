@@ -8,6 +8,8 @@ import java.io.File;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -213,13 +215,15 @@ public class EtudiantGUI extends JFrame{
 		JCalendar calendar = new JCalendar();
 		calendar.setBounds(0, 0, 1484, 480);
 		
-		java.util.Date utilDate = new java.util.Date();
-		utilDate=calendar.getDate();
-		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		// Récupération de la date sélectionnée dans le JCalendar
+        java.util.Date selectedDate = calendar.getDate();
 
-		// Formater la date
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		String formattedDate = sdf.format(sqlDate);
+        // Conversion de la date en format "jjmmaaaa"
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+        String formattedDate = dateFormat.format(selectedDate);
+
+        // Conversion de la date en LocalDate
+        LocalDate date = LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern("ddMMyyyy"));
 
 
 
@@ -231,17 +235,17 @@ public class EtudiantGUI extends JFrame{
 
 
 		
-		int nbLigne = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).size();
+		int nbLigne = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).size();
 		String[][] data2 = new String[nbLigne][5];
 		
 
 		try {
 			for (int i = 0; i < nbLigne; i++) {
-				data2[i][0] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getHeure()+ "";
-				data2[i][1] = coursDAO.getNomCours(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getIdCours());
-				data2[i][2] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getSalle();
-				data2[i][3] = enseignantDAO.getNomEnseignant(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getIdEnseignant());
-				data2[i][4] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getDuree()+ "h";									
+				data2[i][0] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getHeure()+ "";
+				data2[i][1] = coursDAO.getNomCours(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getIdCours());
+				data2[i][2] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getSalle();
+				data2[i][3] = enseignantDAO.getNomEnseignant(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getIdEnseignant());
+				data2[i][4] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getDuree()+ "h";									
 			}
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
@@ -276,29 +280,33 @@ public class EtudiantGUI extends JFrame{
 				base2.setLayout(new GridLayout(2,1));
 
 
-				java.util.Date date = calendar.getDate();
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(date);
-				int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
-				int month = cal.get(Calendar.MONTH) + 1; // les mois sont indexés à partir de 0
-				int year = cal.get(Calendar.YEAR);
-				String formattedDate = (dayOfMonth + "-" + month + "-" + year);
+				// Récupération de la date sélectionnée dans le JCalendar
+		        java.util.Date selectedDate = calendar.getDate();
+
+		        // Conversion de la date en format "jjmmaaaa"
+		        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+		        String formattedDate = dateFormat.format(selectedDate);
+
+		        // Conversion de la date en LocalDate
+		        LocalDate date = LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern("ddMMyyyy"));
+
+
 
 
 				//Creation du tableau de cours du jour selectionne
 
 
 				
-				int nbLigne = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).size();
+				int nbLigne = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).size();
 				String[][] data2 = new String[nbLigne][5];
 
 				try {
 					for (int i = 0; i < nbLigne; i++) {
-						data2[i][0] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getHeure()+ "";
-						data2[i][1] = coursDAO.getNomCours(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getIdCours());
-						data2[i][2] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getSalle();
-						data2[i][3] = enseignantDAO.getNomEnseignant(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getIdEnseignant());
-						data2[i][4] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), formattedDate).get(i).getDuree()+ "h";									
+						data2[i][0] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getHeure()+ "";
+						data2[i][1] = coursDAO.getNomCours(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getIdCours());
+						data2[i][2] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getSalle();
+						data2[i][3] = enseignantDAO.getNomEnseignant(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getIdEnseignant());
+						data2[i][4] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getDuree()+ "h";									
 					}
 				}
 				catch (Exception e1) {

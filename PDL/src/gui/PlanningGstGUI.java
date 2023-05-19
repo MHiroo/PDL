@@ -26,6 +26,7 @@ import model.TYPE_ABSENCE;
 import java.awt.event.ActionListener;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -133,7 +134,7 @@ public class PlanningGstGUI {
 				JPanel downContainer = new JPanel();
 				downContainer.setBounds(0, 569, 1484, 391);
 				JPanel panelBouton = new JPanel();
-				panelBouton.setBounds(1174, 106, 239, 218);
+				panelBouton.setBounds(1174, 33, 239, 353);
 				JPanel panelModifPlanning = new JPanel();
 				panelModifPlanning.setBounds(427, 491, 614, 69);
 				JLabel lblNewLabel2 = new JLabel("Planning du jour:");
@@ -143,7 +144,7 @@ public class PlanningGstGUI {
 
 
 				JButton retourBtn = new JButton("Retour");
-				retourBtn.setBounds(64, 109, 111, 40);
+				retourBtn.setBounds(64, 252, 111, 40);
 				retourBtn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent event) {
 						frameCalendar.dispose(); // ferme la fenetre actuelle
@@ -164,9 +165,9 @@ public class PlanningGstGUI {
 				textFieldSalle.setColumns(6);
 				String enseignant="";
 				String cours="";
-				String salle="AIAA";
+				String salle="";
 				Double dureeDouble=0.0;
-				Time temps=null;
+				Double temps=0.0;
 
 
 
@@ -175,30 +176,38 @@ public class PlanningGstGUI {
 				JCalendar calendar = new JCalendar();
 				calendar.setBounds(0, 0, 1484, 480);
 
-				java.util.Date utilDate = new java.util.Date();
-				utilDate=calendar.getDate();
-				java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+				// Récupération de la date sélectionnée dans le JCalendar
+		        Date selectedDate = calendar.getDate();
 
-				// Formater la date
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-				String formattedDate = sdf.format(sqlDate);
+		        // Conversion de la date en format "jjmmaaaa"
+		        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+		        String formattedDate = dateFormat.format(selectedDate);
+
+		        // Conversion de la date en LocalDate
+		        LocalDate date = LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern("ddMMyyyy"));
 
 
 
 				//Creation du tableau de cours du jour selectionne
 
 
-				int nbLigne = planningDAO.getPlanningJour(groupe, formattedDate).size();
+				PlanningDAO planningDAO = new PlanningDAO();
+				EnseignantDAO enseignantDAO = new EnseignantDAO();
+				CoursDAO coursDAO = new CoursDAO();
+				int nbLigne = planningDAO.getPlanningJour(groupe, date).size();
 				String[][] data = new String[nbLigne][5];
-
+				Integer[] idPlanning = new Integer[nbLigne];
+				
 
 				try {
 					for (int i = 0; i < nbLigne; i++) {
-						data[i][0] = planningDAO.getPlanningJour(groupe, formattedDate).get(i).getHeure()+ "";
-						data[i][1] = coursDAO.getNomCours(planningDAO.getPlanningJour(groupe, formattedDate).get(i).getIdCours());
-						data[i][2] = planningDAO.getPlanningJour(groupe, formattedDate).get(i).getSalle();
-						data[i][3] = enseignantDAO.getNomEnseignant(planningDAO.getPlanningJour(groupe, formattedDate).get(i).getIdEnseignant());
-						data[i][4] = planningDAO.getPlanningJour(groupe, formattedDate).get(i).getDuree()+ "h";									
+						Planning pln =planningDAO.getPlanningJour(groupe, date).get(i);
+						idPlanning[i] = pln.getId();
+						data[i][0] = pln.getHeure()+ "h";
+						data[i][1] = coursDAO.getNomCours(pln.getIdCours());
+						data[i][2] = pln.getSalle();
+						data[i][3] = enseignantDAO.getNomEnseignant(pln.getIdEnseignant());
+						data[i][4] = pln.getDuree()+ "h";									
 					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -267,7 +276,9 @@ public class PlanningGstGUI {
 				// Création du combobox des seance du jour a selectionner
 				
 				JComboBox<Integer> comboBoxSeance = new JComboBox<Integer>();
-				for (int i = 1; i < data.length+1; i++) {
+				comboBoxSeance.setSize(111, 40);
+				comboBoxSeance.setLocation(64, 108);
+				for (int i = 0; i < data.length; i++) {
 					comboBoxSeance.addItem(i);
 				}
 				
@@ -281,8 +292,8 @@ public class PlanningGstGUI {
 						Double dureeDouble = (Double) comboBoxDuree.getSelectedItem();
 						String cours = comboBoxCours.getSelectedItem().toString();
 						Double temps = (Double) comboBoxHeure.getSelectedItem();
-						java.sql.Date sqlDate2 = new java.sql.Date(calendar.getDate().getTime());
-						Planning planning = new Planning( groupe, enseignantDAO.getId(enseignant),coursDAO.getId(cours),sqlDate2 , salle, dureeDouble, temps);
+						String salle = textFieldSalle.getText();
+						Planning planning = new Planning( groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),date , salle, dureeDouble, temps);
 						planningDAO.add(planning);
 					}
 				});
@@ -294,16 +305,14 @@ public class PlanningGstGUI {
 
 				btnNewButton_1.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
-
-						
 						Integer NumeroSeance = (Integer) comboBoxSeance.getSelectedItem();
+						NumeroSeance = idPlanning[NumeroSeance];
 						String enseignant = comboBoxEnseignant.getSelectedItem().toString();
 						Double dureeDouble = (Double) comboBoxDuree.getSelectedItem();
 						String cours = comboBoxCours.getSelectedItem().toString();
+						String salle = textFieldSalle.getText();
 						Double temps = (Double) comboBoxHeure.getSelectedItem();
-						java.sql.Date sqlDate2 = new java.sql.Date(calendar.getDate().getTime());
-						Planning planning = new Planning( NumeroSeance,groupe, enseignantDAO.getId(enseignant),coursDAO.getId(cours),sqlDate2, salle, dureeDouble, temps);
+						Planning planning = new Planning( NumeroSeance,groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),date, salle, dureeDouble, temps);
 						planningDAO.update(planning );
 					}
 				});
@@ -319,8 +328,8 @@ public class PlanningGstGUI {
 
 				// Création d'un bouton pour récupérer la date sélectionnée
 
-				JButton button = new JButton("Selectionner");
-				button.setBounds(64, 44, 111, 40);
+				JButton button = new JButton("Raffraichir");
+				button.setBounds(64, 11, 111, 40);
 				button.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -335,29 +344,39 @@ public class PlanningGstGUI {
 						JPanel downContainer = new JPanel();
 						downContainer.setBounds(0, 569, 1484, 391);
 
+						PlanningDAO planningDAO = new PlanningDAO();
+						EnseignantDAO enseignantDAO = new EnseignantDAO();
+						CoursDAO coursDAO = new CoursDAO();
+						
+						// Récupération de la date sélectionnée dans le JCalendar
+				        Date selectedDate = calendar.getDate();
 
-						java.util.Date utilDate = calendar.getDate();
-						Calendar cal = Calendar.getInstance();
-						cal.setTime(utilDate);
-						int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
-						int month = cal.get(Calendar.MONTH) + 1; // les mois sont indexés à partir de 0
-						int year = cal.get(Calendar.YEAR);
-						String formattedDate = (dayOfMonth + "-" + month + "-" + year);
+				        // Conversion de la date en format "jjmmaaaa"
+				        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+				        String formattedDate = dateFormat.format(selectedDate);
+
+				        // Conversion de la date en LocalDate
+				        LocalDate date = LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern("ddMMyyyy"));
+
+
 
 
 						//Creation du tableau de cours du jour selectionne
 
 
-						int nbLigne = planningDAO.getPlanningJour(groupe, formattedDate).size();
+						int nbLigne = planningDAO.getPlanningJour(groupe, date).size();
 						String[][] data = new String[nbLigne][5];
-
+						Integer[] idPlanning = new Integer[nbLigne];
+						
 						try {
 							for (int i = 0; i < nbLigne; i++) {
-								data[i][0] = planningDAO.getPlanningJour(groupe, formattedDate).get(i).getHeure()+ "";
-								data[i][1] = coursDAO.getNomCours(planningDAO.getPlanningJour(groupe, formattedDate).get(i).getIdCours());
-								data[i][2] = planningDAO.getPlanningJour(groupe, formattedDate).get(i).getSalle();
-								data[i][3] = enseignantDAO.getNomEnseignant(planningDAO.getPlanningJour(groupe, formattedDate).get(i).getIdEnseignant());
-								data[i][4] = planningDAO.getPlanningJour(groupe, formattedDate).get(i).getDuree()+ "h";									
+								Planning pln =planningDAO.getPlanningJour(groupe, date).get(i);
+								idPlanning[i] = pln.getId();
+								data[i][0] = pln.getHeure()+ "h";
+								data[i][1] = coursDAO.getNomCours(pln.getIdCours());
+								data[i][2] = pln.getSalle();
+								data[i][3] = enseignantDAO.getNomEnseignant(pln.getIdEnseignant());
+								data[i][4] = pln.getDuree()+ "h";								
 							}
 						}
 						catch (Exception e1) {
@@ -368,13 +387,25 @@ public class PlanningGstGUI {
 
 
 						JTable tableau = new JTable(data, columnNames);
-
-
+						
+						
+						// Création du combobox des seance du jour a selectionner
+						
+						JComboBox<Integer> comboBoxSeance = new JComboBox<Integer>();
+						for (int i = 0; i < data.length; i++) {
+							comboBoxSeance.addItem(i);
+						}
+						
+						panelBouton.setLayout(null);
+						panelBouton.add(button);
+						panelBouton.add(retourBtn);
+						panelBouton.add(comboBoxSeance);
 						downContainer.setLayout(null);
 						JScrollPane scrollPane = new JScrollPane(tableau);
 						scrollPane.setBounds(355, 0, 743, 386);
 						downContainer.add(scrollPane);
 						downContainer.add(panelBouton);
+						
 
 						base.setLayout(null);
 
@@ -406,10 +437,11 @@ public class PlanningGstGUI {
 				panelModifPlanning.add(comboBoxDuree);
 				panelModifPlanning.add(lblHeure);
 				panelModifPlanning.add(comboBoxHeure);
-				panelModifPlanning.add(comboBoxSeance);
+				
 				panelBouton.setLayout(null);
 				panelBouton.add(button);
 				panelBouton.add(retourBtn);
+				panelBouton.add(comboBoxSeance);
 				JScrollPane scrollPane = new JScrollPane(tableau);
 				scrollPane.setBounds(355, 0, 743, 386);
 
