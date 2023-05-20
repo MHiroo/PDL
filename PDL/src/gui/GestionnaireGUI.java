@@ -1462,7 +1462,7 @@ public class GestionnaireGUI {
         btnUC7.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	pframe.setVisible(false);
-                PlanningGstGUI window = new PlanningGstGUI();
+                GestionnairePlanningGUI window = new GestionnairePlanningGUI();
                 frame = new JFrame();
                 window.frame.setLocationRelativeTo(null);
                 window.frame.setVisible(true);
