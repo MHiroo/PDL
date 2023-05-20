@@ -91,19 +91,9 @@ public class EnseignantPlanningGUI {
 		JPanel downContainer2 = new JPanel();
 		downContainer2.setBounds(0, 480, 1484, 480);
 		JPanel panelBouton = new JPanel();
-		panelBouton.setBounds(1174, 106, 239, 218);
-		//Ajout bouton retour
-
-
-		JButton retourBtn2 = new JButton("Retour");
-		retourBtn2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				framePlanning.dispose(); // ferme la fenetre actuelle
-				EnseignantGUI window = new EnseignantGUI();
-				window.frame.setLocationRelativeTo(null);
-				window.frame.setVisible(true);
-			}
-		});
+		panelBouton.setBounds(1167, 92, 239, 218);
+		
+		
 
 		
 	
@@ -241,6 +231,20 @@ public class EnseignantPlanningGUI {
 		});
 		panelBouton.setLayout(null);
 
+		//Ajout bouton retour
+
+
+		JButton retourBtn2 = new JButton("Retour");
+		retourBtn2.setSize(111, 40);
+		retourBtn2.setLocation(64, 103);
+		retourBtn2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				framePlanning.dispose(); // ferme la fenetre actuelle
+				EnseignantGUI window = new EnseignantGUI();
+				window.frame.setLocationRelativeTo(null);
+				window.frame.setVisible(true);
+			}
+		});
 
 		panelBouton.add(button);
 		panelBouton.add(retourBtn2);

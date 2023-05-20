@@ -7,7 +7,7 @@ VALUES (1,'Cabot','Chloé','07345343','chloé.cabot@esigelec.org','azerty');
 INSERT INTO GroupeEtudiant (idgroupe, capacitemax , num) 
 VALUES (1,34,9);
 INSERT INTO absence (idAbs, idEtud, idcours,heuredebut, nbrdheure, date_abs,statut)
-VALUES (1,1,1,TO_DATE('15:30:00', 'HH24:MI:SS'),2,TO_DATE('21-03-2023','DD-MM-YYYY'),'Non justifie');
+VALUES (1,1,1,2,2,TO_DATE('21-03-2023','DD-MM-YYYY'),'Non justifie');
 INSERT INTO etudiant (idetud, idgroupe, nomEtudiant, prenomEtudiant, filiere, email, motdepasse)
 VALUES (1,1,'Mizuno','Hiroo','classique','hiroo.mizuno@groupe-esigelec.org','azerty');
 INSERT INTO etudiant (idetud, idgroupe, nomEtudiant, prenomEtudiant, filiere, email, motdepasse)
@@ -27,7 +27,7 @@ INSERT INTO justificatif (idjustificatif , idAbs, date_abs, etat, motif)
 VALUES (1,1,TO_DATE('21-03-2023','DD-MM-YYYY'),'N','Covid');
 
 INSERT INTO Planning (idplanning,idGroupe, idEnseignant, idcours, date_pln, salle,duree,heure) 
-VALUES (1,1,1,1,TO_DATE('18-05-2023','DD-MM-YYYY'),'N',1.0,8.3);
+VALUES (3,1,1,1,TO_DATE('19-05-2023','DD-MM-YYYY'),'N',1.0,9);
 
 INSERT INTO lien (idlien, lien)
 VALUES (1,'https://ent.esigelec.fr/course/view.php?id=6070');

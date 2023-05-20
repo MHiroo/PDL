@@ -55,21 +55,14 @@ CREATE TABLE Absence
  idAbs INTEGER,
  idEtud INTEGER,
  idcours INTEGER,
-<<<<<<< HEAD
-=======
- heureDebut DATE,
->>>>>>> 764de7f88974b93f9893830927b5a8fa72d6b3f9
+ heureDebut FLOAT,
  nbrdheure INTEGER,
  date_abs DATE CONSTRAINT NN_date_abs NOT NULL,
  statut VARCHAR2(50)CONSTRAINT CK_statut CHECK (statut IN ('Justifie', 'Non justifie','En verification')),
-<<<<<<< HEAD
- CONSTRAINT PK_Absenceclassique PRIMARY KEY(idAbscla)
-);
-
-=======
  CONSTRAINT PK_Absence PRIMARY KEY(idAbs)
 );
->>>>>>> 764de7f88974b93f9893830927b5a8fa72d6b3f9
+
+
 
 
 CREATE TABLE GroupeEtudiant
@@ -135,7 +128,7 @@ CREATE TABLE Planning
  date_pln DATE,
  salle VARCHAR2(50),
  duree FLOAT,
- heure DATE,
+ heure FLOAT,
  CONSTRAINT PK_Planning PRIMARY KEY(idplanning),
  CONSTRAINT FK_idGroupe_Pln FOREIGN KEY(idGroupe) REFERENCES GroupeEtudiant(idGroupe) ON DELETE CASCADE,
  CONSTRAINT FK_idCours FOREIGN KEY(idCours) REFERENCES Cours(idCours) ON DELETE CASCADE,
