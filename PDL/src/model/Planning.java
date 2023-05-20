@@ -71,6 +71,10 @@ public class Planning {
 		this.duree= duree;
 		this.heure= heure;
 	}
+	public Planning(LocalDate date) {
+	
+		this.date=date;
+	}
 	
 	/**
 	 * getter pour l'attribut reference

@@ -116,8 +116,9 @@ public class GestionnairePlanningGUI {
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int groupe = (Integer) comboBox.getSelectedItem();
 				frame.setVisible(false);
+				int groupe = (Integer) comboBox.getSelectedItem();
+				
 				/**
 				 * Creation de la fenetre calendar
 				 */
@@ -183,7 +184,8 @@ public class GestionnairePlanningGUI {
 		        // Conversion de la date en LocalDate
 		        LocalDate date = LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern("ddMMyyyy"));
 
-
+		        Planning plnDate = new Planning(date);
+		        plnDate.setDate(date);;
 
 				//Creation du tableau de cours du jour selectionne
 
@@ -293,7 +295,9 @@ public class GestionnairePlanningGUI {
 						String cours = comboBoxCours.getSelectedItem().toString();
 						Double temps = (Double) comboBoxHeure.getSelectedItem();
 						String salle = textFieldSalle.getText();
-						Planning planning = new Planning( groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),date , salle, dureeDouble, temps);
+						JCalendar calendar = new JCalendar();
+						calendar.setBounds(0, 0, 1484, 480);
+						Planning planning = new Planning( groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),plnDate.getDate() , salle, dureeDouble, temps);
 						planningDAO.add(planning);
 					}
 				});
@@ -312,7 +316,9 @@ public class GestionnairePlanningGUI {
 						String cours = comboBoxCours.getSelectedItem().toString();
 						String salle = textFieldSalle.getText();
 						Double temps = (Double) comboBoxHeure.getSelectedItem();
-						Planning planning = new Planning( NumeroSeance,groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),date, salle, dureeDouble, temps);
+						JCalendar calendar = new JCalendar();
+						calendar.setBounds(0, 0, 1484, 480);
+						Planning planning = new Planning( NumeroSeance,groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),plnDate.getDate(), salle, dureeDouble, temps);
 						planningDAO.update(planning );
 					}
 				});
@@ -322,7 +328,11 @@ public class GestionnairePlanningGUI {
 				btnNewButton_2.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Integer NumeroSeance = (Integer) comboBoxSeance.getSelectedItem();
-						planningDAO.delete(idPlanning[NumeroSeance-1] );
+						int i= NumeroSeance-1;
+						Integer j =planningDAO.getPlanningJour(groupe, plnDate.getDate()).get(i).getId();
+						planningDAO.delete(j);
+						frameCalendar.dispose();
+						frame.setVisible(true);
 					}
 				});
 				
@@ -373,7 +383,7 @@ public class GestionnairePlanningGUI {
 				        // Conversion de la date en LocalDate
 				        LocalDate date = LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern("ddMMyyyy"));
 
-
+				        plnDate.setDate(date);
 
 
 						//Creation du tableau de cours du jour selectionne
