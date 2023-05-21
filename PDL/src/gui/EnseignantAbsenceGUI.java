@@ -49,6 +49,8 @@ public class EnseignantAbsenceGUI {
     private JTable table2;
     private DefaultTableModel tableModel;
     private DefaultTableModel tableModel2;
+    private JPanel panel2;
+    private JScrollPane scrollPane2;
 	/**
 	 * Launch the application.
 	 */
@@ -168,17 +170,16 @@ public class EnseignantAbsenceGUI {
         JButton btnAbsent = new JButton("Valider");
         btnAbsent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	frameAbsence.setVisible(false);
                 //Ajouter l'abence a l'etudiant correspondant � l'id selectionne
            	 int idEtudiant =(int)idBoxAbsent.getSelectedItem();
            	 AbsenceDAO absenceDAO = new AbsenceDAO(); 
-             EnseignantAbsenceGUI window = new EnseignantAbsenceGUI();
-             window.fAbsence.setLocationRelativeTo(null);
-             window.fAbsence.setVisible(true);
+           	
            	
            	 tableModel2.setRowCount(0); // Effacer les anciennes donn�es de la table
 
-             for (int i = 0; i < absenceDAO.getList().size(); i++) {
-                Absence absence = new Absence(absenceDAO.get(idEtudiant).getId());
+             for (int i = 0; i < absenceDAO.getListFromIdEtudiant(idEtudiant).size(); i++) {
+                Absence absence =absenceDAO.getListFromIdEtudiant(idEtudiant).get(i);
                 int IdCours = absence.getId();
                 int NbHeure = absence.getNbHeure();
                 Date date = absence.getDate();
@@ -186,22 +187,27 @@ public class EnseignantAbsenceGUI {
                 // Ajouter les donn�es � la table
                 tableModel2.addRow(new Object[]{IdCours, NbHeure, date});
              }
-            
+             
+             panel2.add(scrollPane2);
+             fAbsence.getContentPane().add(panel2);
+             fAbsence.setLocationRelativeTo(null);
+             fAbsence.setVisible(true);
             }
         });
         panelAbsent.add(btnAbsent);
         
-        JPanel panel2 = new JPanel();
-        fAbsence.getContentPane().add(panel2);
-        
-        // Ajouter la JTable � un JScrollPane
-        JScrollPane scrollPane2 = new JScrollPane(table2);
-        panel2.add(scrollPane2);
-        
+         panel2 = new JPanel();
+  
         // Creation de la JTable avec un DefaultTableModel vide
         tableModel2 = new DefaultTableModel();
         tableModel2.setColumnIdentifiers(new Object[]{"Id du cours", "Nombre d'heure", "Date de l'absence"});
         table2 = new JTable(tableModel2);
+        
+     // Ajouter la JTable � un JScrollPane
+         scrollPane2 = new JScrollPane(table2);
+        panel2.add(scrollPane2);
+        fAbsence.getContentPane().add(panel2);
+        
 
         // Creation de la JTable avec un DefaultTableModel vide
         tableModel = new DefaultTableModel();
@@ -223,10 +229,25 @@ public class EnseignantAbsenceGUI {
 				window.frame.setVisible(true);
 			}
 		});
-
 		JPanel panelBoutonRetour = new JPanel();
 		panelBoutonRetour.add(retourBtn);
 		frameAbsence.getContentPane().add(panelBoutonRetour);
+		
+		JButton retourBtn2 = new JButton("Retour");
+		retourBtn2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				fAbsence.dispose(); // ferme la fenetre actuelle
+				EnseignantAbsenceGUI window = new EnseignantAbsenceGUI();
+				window.frameAbsence.setLocationRelativeTo(null);
+				window.frameAbsence.setVisible(true);
+			}
+		});
+		
+		JPanel panelBoutonRetour2 = new JPanel();
+		panelBoutonRetour2.add(retourBtn2);
+		fAbsence.getContentPane().add(panelBoutonRetour2);
+
+		
 
 
 	}

@@ -15,6 +15,7 @@ public class EnseignantGUI {
     JFrame frameListeCours;
     JFrame framePlanning;
     JFrame frameAppel;
+    JFrame frameAbsence;
     
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -100,6 +101,23 @@ public class EnseignantGUI {
 	        }
 	    });
 	    appelPanel.add(appelBtn);
+	    
+	    /**
+	     * Creation du bouton pour acceder e la liste d'absence de l'enseignant
+	     */
+	    JPanel AbsencePanel = new JPanel();
+	    frame.getContentPane().add(AbsencePanel);
+	    JButton absenceBtn = new JButton("Voir les absences d'un etudiant");
+	    absenceBtn.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		frame.setVisible(false);
+        		EnseignantAbsenceGUI window = new EnseignantAbsenceGUI();
+        		frameAbsence = new JFrame();
+        		window.frameAbsence.setLocationRelativeTo(null);
+        		window.frameAbsence.setVisible(true);
+	        }
+	    });
+	    AbsencePanel.add(absenceBtn);
 	    
 	    
 	    
