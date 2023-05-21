@@ -29,7 +29,6 @@ import java.awt.event.ActionEvent;
 public class GestionnaireGUI {
 
 	private JFrame UC2frame;
-	private JFrame UC3frame;
 	private JFrame UC4frame;
 	private JFrame UC5frame;
 	private JFrame UC6frame;
@@ -172,14 +171,7 @@ public class GestionnaireGUI {
         UC2frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         UC2frame.getContentPane().setLayout(new BoxLayout(UC2frame.getContentPane(), BoxLayout.Y_AXIS));
         
-    	/**
-    	 * Creation de la fenetre UC3
-    	 */
-    	UC3frame = new JFrame();
-    	UC3frame.setBounds(100, 100, 450, 300);
-        UC3frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        UC3frame.getContentPane().setLayout(new BoxLayout(UC3frame.getContentPane(), BoxLayout.Y_AXIS));
-        
+    	
     	/**
     	 * Creation de la fenetre UC4
     	 */
@@ -1119,17 +1111,7 @@ public class GestionnaireGUI {
         });
         panelUC1.add(btnUC2);
         
-        /**
-         * Creation du bouton du UC 3
-         */
-        JButton btnUC3 = new JButton("Declencher une penalite");
-        btnUC3.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	UC3frame.setLocationRelativeTo(null);
-            	UC3frame.setVisible(true);
-            }
-        });
-        panelUC1.add(btnUC3);
+      
         
         /**
          * Creation du bouton du UC 4

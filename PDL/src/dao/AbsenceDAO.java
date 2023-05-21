@@ -487,6 +487,56 @@ public class AbsenceDAO extends ConnectionDAO {
 	}
 	
 	/**
+	 * Permet de modifier uneabsence dans la table absence.
+	 * Le mode est auto-commit par defaut : chaque modification est validee
+	 * 
+	 * @param absence labsence a modifier
+	 * @return retourne le nombre de lignes modifiees dans la table
+	 */
+	public String declencherPenalite(int idEtud) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String returnValue = "";
+
+		// connexion a la base de donnees
+				try {
+					con = DriverManager.getConnection(URL, LOGIN, PASS);
+					ps = con.prepareStatement("SELECT COUNT(*) AS nombre_absences FROM absence WHERE (statut = 'Non justifie' AND idEtud = ?)");
+					ps.setInt(1,idEtud);
+					// on execute la requete
+					rs = ps.executeQuery();
+					// on parcourt les lignes du resultat
+					int nbAbs = 0;
+					while (rs.next()) 
+					{
+						nbAbs = rs.getInt("nombre_absences");
+					}
+					if (nbAbs>0)
+					{
+						returnValue = "Votre quota est depasse, vous obtenez une penalite!";
+					}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// fermeture du preparedStatement et de la connexion
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	
+	/**
 	 * ATTENTION : Cette methode n'a pas vocation a� a�tre executee lors d'une utilisation normale du programme !
 	 * Elle existe uniquement pour TESTER les methodes ecrites au-dessus !
 	 * 
