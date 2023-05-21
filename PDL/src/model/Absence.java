@@ -67,12 +67,13 @@ public class Absence {
 
 
 
-	public Absence(int idEtud, int idCours,double heureDebut, int nbHeure) {
+	public Absence(int idEtud, int idCours,Double heureDebut, int nbHeure) {
 		this.idEtud=idEtud;
 		this.idCours=idCours;
 		this.heureDebut=heureDebut;
 		this.nbHeure=nbHeure;
 	}
+
 
 	/**
 	 * getter pour l'attribut reference
@@ -113,14 +114,14 @@ public class Absence {
 	 * getter pour l'attribut idCours
 	 * @param idCours l'identifiant du cours de l'absence
 	 */
-	public double getHeureDebut() {
+	public Double getHeureDebut() {
 		return heureDebut;
 	}
 	/**
 	 * setter pour l'attribut nbHeure
 	 * @param nbHeure : nouvelle valeur du nombre d'heure d'absence
 	 */
-	public void setHeureDebut(double heureDebut) {
+	public void setHeureDebut(float heureDebut) {
 		this.heureDebut = heureDebut;
 	}
 	/**
