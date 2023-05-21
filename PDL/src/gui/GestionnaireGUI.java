@@ -1559,6 +1559,23 @@ public class GestionnaireGUI {
             }
         });
         panelBoutonSupprEns.add(btnSupprimerEns2);
+        
+      //Ajout bouton deconnexion
+
+      		JPanel panelBoutonDeco = new JPanel();
+      		JButton retourBtnDeco = new JButton("Deconnexion");
+      		retourBtnDeco.addActionListener(new ActionListener() {
+      			public void actionPerformed(ActionEvent event) {
+      				pframe.dispose(); // ferme la fenêtre actuelle
+      				UserGUI window = new UserGUI();
+      				frame = new JFrame();
+      				window.frame.setLocationRelativeTo(null);
+      				window.frame.setVisible(true);
+      			}
+      		});
+      		panelBoutonDeco.add(retourBtnDeco);
+      		pframe.getContentPane().add(panelBoutonDeco);
+
     }
 }
        
