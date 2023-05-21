@@ -161,7 +161,7 @@ public class AbsenceDAO extends ConnectionDAO {
 			ps = con.prepareStatement("UPDATE absence SET idetud = ?, idcours = ?, heureDebut = ?, nbrdheure = ?, date_abs = ?, statut = ? WHERE idabs = ?");
 			ps.setInt(1, absence.getIdEtud());
 			ps.setInt(2, absence.getIdCours());
-			ps.setTime(3, absence.getHeureDebut());	
+			ps.set(3, absence.getHeureDebut());	
 			ps.setInt(4, absence.getNbHeure());	
 			ps.setDate(5, absence.getDate());
 			ps.setString(6, absence.getStatut());
