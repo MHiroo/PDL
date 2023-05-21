@@ -158,11 +158,9 @@ public class AbsenceDAO extends ConnectionDAO {
 			ps = con.prepareStatement("UPDATE absence SET idetud = ?, idcours = ?, heureDebut = ?, nbrdheure = ?, date_abs = ?, statut = ? WHERE idabs = ?");
 			ps.setInt(1, absence.getIdEtud());
 			ps.setInt(2, absence.getIdCours());
-<<<<<<< HEAD
-			ps.set(3, absence.getHeureDebut());	
-=======
 			ps.setDouble(3, absence.getHeureDebut());	
->>>>>>> 01fc0336d9f9e4bfe8a5656f568abd9c0d71f75b
+
+			ps.setDouble(3, absence.getHeureDebut());	
 			ps.setInt(4, absence.getNbHeure());	
 			ps.setDate(5, absence.getDate());
 			ps.setString(6, absence.getStatut());
@@ -268,8 +266,60 @@ public class AbsenceDAO extends ConnectionDAO {
 										   rs.getInt("idetud"),
 									       rs.getInt("idcours"),
 									       rs.getDouble("heureDebut"),
-									       rs.getInt("nbHeure"),
-									       rs.getDate("date"),
+									       rs.getInt("nbrdHeure"),
+									       rs.getDate("date_abs"),
+									       rs.getString("statut"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	
+	public Absence get2(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Absence returnValue = null;
+
+		// connexion a la base de donnees
+		try {
+
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT * FROM absence WHERE idetud = ?");
+			ps.setInt(1, id);
+
+			// on execute la requete
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			if (rs.next()) {
+				returnValue = new Absence(rs.getInt("idabs"),
+										   rs.getInt("idetud"),
+									       rs.getInt("idcours"),
+									       rs.getDouble("heureDebut"),
+									       rs.getInt("nbrdHeure"),
+									       rs.getDate("date_abs"),
 									       rs.getString("statut"));
 			}
 		} catch (Exception ee) {
