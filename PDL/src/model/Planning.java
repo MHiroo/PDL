@@ -1,5 +1,5 @@
 package model;
-import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 /**
  * Classe Planning
@@ -24,9 +24,9 @@ public class Planning {
 	 */
 	private int idCours;
 	/**
-	 * Date 
+	 * LocalDate 
 	 */
-	private Date date;
+	private LocalDate date;
 	/**
 	 * nbreHeure
 	 */
@@ -38,7 +38,7 @@ public class Planning {
 	/**
 	 * Répartition
 	 */
-	private Time heure;
+	private double heure;
 	
 	/**
 	 * Constructor
@@ -51,7 +51,7 @@ public class Planning {
 	 * @param duree de la séance
 	 * @param heure de la séance
 	 */
-	public Planning(int id,int idGroupe, int idEnseignant,int idCours, Date date, String salle, double duree, Time heure) {
+	public Planning(int id,int idGroupe, int idEnseignant,int idCours, LocalDate date, String salle, double duree, double heure) {
 		this.id=id;
 		this.idGroupe= idGroupe;
 		this.idEnseignant=idEnseignant;
@@ -61,7 +61,7 @@ public class Planning {
 		this.duree= duree;
 		this.heure= heure;
 	}
-	public Planning(int idGroupe, int idEnseignant,int idCours, Date date, String salle, double duree, Time heure) {
+	public Planning(int idGroupe, int idEnseignant,int idCours, LocalDate date, String salle, double duree, double heure) {
 	
 		this.idGroupe= idGroupe;
 		this.idEnseignant=idEnseignant;
@@ -70,6 +70,10 @@ public class Planning {
 		this.salle=salle;
 		this.duree= duree;
 		this.heure= heure;
+	}
+	public Planning(LocalDate date) {
+	
+		this.date=date;
 	}
 	
 	/**
@@ -104,14 +108,14 @@ public class Planning {
 	 * getter pour l'attribut date
 	 * @return valeur de la date
 	 */
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 	/**
 	 * setter pour l'attribut date
 	 * @param date : nouvelle valeur de la date
 	 */
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	/**
@@ -139,21 +143,21 @@ public class Planning {
 	 * setter pour l'attribut duree
 	 * @param duree : nouvelle valeur de la duree
 	 */
-	public void setDuree(double duree) {
+	public void setDuree1(double duree) {
 		this.duree = duree;
 	}
 	/**
 	 * getter pour l'attribut heure
 	 * @return valeur de la heure
 	 */
-	public Time getHeure() {
+	public double getHeure() {
 		return heure;
 	}
 	/**
 	 * setter pour l'attribut duree
 	 * @param duree : nouvelle valeur de la duree
 	 */
-	public void setDuree(Time heure) {
+	public void setHeure(double heure) {
 		this.heure = heure;
 	}
 	

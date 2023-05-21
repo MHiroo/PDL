@@ -1,5 +1,4 @@
 package model;
-import java.sql.Time;
 import java.util.Date;
 /**
  * Classe Absence
@@ -22,7 +21,7 @@ public class Absence {
 	/**
 	 * heure de debut
 	 */
-	private Time heureDebut;
+	private double heureDebut;
 	/**
 	 * nombre d'heure 
 	 */
@@ -47,7 +46,7 @@ public class Absence {
 	 * @param date date de l'absence
 	 * @param statut statut de l'absence justifie ou non
 	 */
-	public Absence(int id, int idEtud, int idCours,Time heureDebut, int nbHeure, java.sql.Date date, String statut) {
+	public Absence(int id, int idEtud, int idCours,double heureDebut, int nbHeure, java.sql.Date date, String statut) {
 		this.id=id;
 		this.idEtud=idEtud;
 		this.idCours=idCours;
@@ -68,9 +67,11 @@ public class Absence {
 
 
 
-	public Absence(int id, Time heureDebut) {
-		this.id=id;
+	public Absence(int idEtud, int idCours,double heureDebut, int nbHeure) {
+		this.idEtud=idEtud;
+		this.idCours=idCours;
 		this.heureDebut=heureDebut;
+		this.nbHeure=nbHeure;
 	}
 
 	/**
@@ -112,14 +113,14 @@ public class Absence {
 	 * getter pour l'attribut idCours
 	 * @param idCours l'identifiant du cours de l'absence
 	 */
-	public Time getHeureDebut() {
+	public double getHeureDebut() {
 		return heureDebut;
 	}
 	/**
 	 * setter pour l'attribut nbHeure
 	 * @param nbHeure : nouvelle valeur du nombre d'heure d'absence
 	 */
-	public void setHeureDebut(Time heureDebut) {
+	public void setHeureDebut(double heureDebut) {
 		this.heureDebut = heureDebut;
 	}
 	/**

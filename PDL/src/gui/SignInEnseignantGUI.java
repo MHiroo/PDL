@@ -22,7 +22,7 @@ public class SignInEnseignantGUI {
     private JTextField textFieldId;
     private JTextField textFieldEmail;
     private JTextField textFieldMdp;
-    
+    public static int id;
     /**
      * Launch the application
      */
@@ -106,6 +106,7 @@ public class SignInEnseignantGUI {
 	                frame.setVisible(true);
                 }
                 else {
+                	id = enseignant.getId();
                 	frame.setVisible(false);
 	                EnseignantGUI window = new EnseignantGUI();
 	                frame = new JFrame();

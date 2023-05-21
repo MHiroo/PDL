@@ -36,7 +36,6 @@ public class AbsenceDAO extends ConnectionDAO {
 		PreparedStatement ps = null;
 		int returnValue = 0;
         LocalDate date = LocalDate.now();
-        LocalTime time = LocalTime.now();
 
 
 		// connexion a la base de donnees
@@ -50,11 +49,9 @@ public class AbsenceDAO extends ConnectionDAO {
 			ps = con.prepareStatement("INSERT INTO absence(idabs, idetud, idcours, heuredebut, nbrdheure, date_abs, statut) VALUES( ?, ?, ?, ?, ?, ?,?)");
 			ps.setInt(1, getList().get(getList().size()-1).getId()+1);
 			ps.setInt(2, absence.getIdEtud());
-			//ps.setInt(3, absence.getIdCours());
-			ps.setInt(3, 1);
-			//ps.setInt(4, absence.getNbHeure());
-			ps.setTime(4, absence.getHeureDebut());
-			ps.setInt(5, 2);
+			ps.setInt(3, absence.getIdCours());
+			ps.setDouble(4, absence.getHeureDebut());
+			ps.setInt(5, absence.getNbHeure());
 			ps.setDate(6, Date.valueOf(date)); 
 			//ps.setString(6, absence.getStatut());
 			ps.setString(7, "En verification");
@@ -161,7 +158,11 @@ public class AbsenceDAO extends ConnectionDAO {
 			ps = con.prepareStatement("UPDATE absence SET idetud = ?, idcours = ?, heureDebut = ?, nbrdheure = ?, date_abs = ?, statut = ? WHERE idabs = ?");
 			ps.setInt(1, absence.getIdEtud());
 			ps.setInt(2, absence.getIdCours());
+<<<<<<< HEAD
 			ps.set(3, absence.getHeureDebut());	
+=======
+			ps.setDouble(3, absence.getHeureDebut());	
+>>>>>>> 01fc0336d9f9e4bfe8a5656f568abd9c0d71f75b
 			ps.setInt(4, absence.getNbHeure());	
 			ps.setDate(5, absence.getDate());
 			ps.setString(6, absence.getStatut());
@@ -266,7 +267,7 @@ public class AbsenceDAO extends ConnectionDAO {
 				returnValue = new Absence(rs.getInt("idabs"),
 										   rs.getInt("idetud"),
 									       rs.getInt("idcours"),
-									       rs.getTime("heureDebut"),
+									       rs.getDouble("heureDebut"),
 									       rs.getInt("nbHeure"),
 									       rs.getDate("date"),
 									       rs.getString("statut"));
@@ -320,7 +321,7 @@ public class AbsenceDAO extends ConnectionDAO {
 				returnValue.add(new Absence(rs.getInt("idabs"),
 						   rs.getInt("idetud"),
 					       rs.getInt("idcours"),
-					       rs.getTime("heureDebut"),
+					       rs.getDouble("heureDebut"),
 					       rs.getInt("nbrdHeure"),
 					       rs.getDate("date_abs"),
 					       rs.getString("statut")));

@@ -1456,14 +1456,13 @@ public class GestionnaireGUI {
         
         
         /**
-         * Cr�ation du bouton du UC 7 s
->>>>>>> a9e61249cb0c1628468ef7f3030a78d9c6c5ea50
+         * Cr�ation du bouton du UC 7  ajouter/modifier  un planning
          */
         JButton btnUC7 = new JButton("Creer/Modifier un planning");
         btnUC7.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	pframe.setVisible(false);
-                PlanningGstGUI window = new PlanningGstGUI();
+                GestionnairePlanningGUI window = new GestionnairePlanningGUI();
                 frame = new JFrame();
                 window.frame.setLocationRelativeTo(null);
                 window.frame.setVisible(true);

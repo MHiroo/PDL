@@ -1,5 +1,6 @@
 package dao;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import model.*;
 
@@ -38,15 +39,16 @@ public class PlanningDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO planning(idplanning,idgroupe, idenseignant, idcours, date_pln, salle, duree, heure) VALUES( ?, ?, ?, ?, TO_DATE(?,'DD-MM-YYYY'), ?, ?, TO_DATE('15:30:00', 'HH24:MI:SS'))");
+			ps = con.prepareStatement("INSERT INTO planning(idplanning,idgroupe, idenseignant, idcours, date_pln, salle, duree, heure) VALUES( ?, ?, ?, ?, TO_DATE(?,'DD-MM-YYYY'), ?, ?, ?)");
 			ps.setInt(1, getListPlanning().get(getListPlanning().size()-1).getId()+1);
 			ps.setInt(2, planning.getIdGroupe());
 			ps.setInt(3, planning.getIdEnseignant());
 			ps.setInt(4, planning.getIdCours());
-			ps.setDate(5, (Date) planning.getDate());
+			//ps.setString(5,"19-05-2023" );
+			ps.setDate(5, Date.valueOf(planning.getDate()));
 			ps.setString(6, planning.getSalle());
 			ps.setDouble(7, planning.getDuree());
-			//ps.setTime(8, planning.getHeure());
+			ps.setDouble(8, planning.getHeure());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -94,14 +96,14 @@ public class PlanningDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans la modification.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("UPDATE planning SET idgroupe = ?, idenseignant = ?, idcours = ?, date_pln = ?, salle = ?, duree = ?, heure = ? WHERE idplanning = ?");
+			ps = con.prepareStatement("UPDATE planning SET idgroupe = ?, idenseignant = ?, idcours = ?, date_pln = TO_DATE(?,'DD-MM-YYYY'), salle = ?, duree = ?, heure = ? WHERE idplanning = ?");
 			ps.setInt(1, planning.getIdGroupe());
 			ps.setInt(2, planning.getIdEnseignant());
 			ps.setInt(3, planning.getIdCours());
-			ps.setDate(4,(Date) planning.getDate());
+			ps.setDate(4,Date.valueOf(planning.getDate()));
 			ps.setString(5, planning.getSalle());
 			ps.setDouble(6, planning.getDuree());
-			ps.setTime(7, planning.getHeure());
+			ps.setDouble(7, planning.getHeure());
 			ps.setInt(8, planning.getId());	
 
 			// Execution de la requete
@@ -189,7 +191,6 @@ public class PlanningDAO extends ConnectionDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Planning returnValue = null;
-
 		// connexion a la base de donnees
 		try {
 
@@ -202,14 +203,16 @@ public class PlanningDAO extends ConnectionDAO {
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
 			if (rs.next()) {
+				java.sql.Date sqlDate = rs.getDate("date_pln");
+				LocalDate localDate = sqlDate.toLocalDate();
 				returnValue = new Planning(rs.getInt("idplanning"),
 										   rs.getInt("idgroupe"),
 									       rs.getInt("idEnseignant"),
 									       rs.getInt("idCours"),
-									       rs.getDate("date_pln"),
+									       localDate,
 									       rs.getString("salle"),
 										   rs.getDouble("duree"),
-										   rs.getTime("heure"));
+										   rs.getDouble("heure"));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -257,14 +260,16 @@ public class PlanningDAO extends ConnectionDAO {
 			rs = ps.executeQuery();
 			// on parcourt les lignes du resultat
 			while (rs.next()) {
+				java.sql.Date sqlDate = rs.getDate("date_pln");
+				LocalDate localDate = sqlDate.toLocalDate();
 				returnValue.add(new Planning(rs.getInt("idplanning"),
 						   rs.getInt("idgroupe"),
 					       rs.getInt("idEnseignant"),
 					       rs.getInt("idCours"),
-					       rs.getDate("date_pln"),
+					       localDate,
 					       rs.getString("salle"),
 						   rs.getDouble("duree"),
-						   rs.getTime("heure")));
+						   rs.getDouble("heure")));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -296,7 +301,7 @@ public class PlanningDAO extends ConnectionDAO {
 	 * @return le planning trouve;
 	 * 			null si aucun planning ne correspond a cette reference
 	 */
-	public ArrayList<Planning> getPlanningJour(int idGroupe, String date) {
+	public ArrayList<Planning> getPlanningJour(int idGroupe, LocalDate date) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -308,21 +313,87 @@ public class PlanningDAO extends ConnectionDAO {
 			con = DriverManager.getConnection(URL, LOGIN, PASS);
 			ps = con.prepareStatement("SELECT * FROM planning WHERE (idGroupe = ? AND date_pln = (TO_DATE(?,'DD-MM-YYYY'))) ORDER BY heure");
 			ps.setInt(1, idGroupe);
-			ps.setString(2, date);
+			java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+			ps.setDate(2, (Date) sqlDate);
+			//ps.setDate(2, date);
 
 			// on execute la requete
 			// rs contient un pointeur situe juste avant la premiere ligne retournee
 			rs = ps.executeQuery();
 			// passe a la premiere (et unique) ligne retournee
 			while (rs.next()) {
+				LocalDate localDate = rs.getDate("date_pln").toLocalDate();
 				returnValue.add(new Planning(rs.getInt("idplanning"),
 						   rs.getInt("idgroupe"),
 					       rs.getInt("idEnseignant"),
 					       rs.getInt("idCours"),
-					       rs.getDate("date_pln"),
+					       localDate,
 					       rs.getString("salle"),
 						   rs.getDouble("duree"),
-						   rs.getTime("heure")));
+						   rs.getDouble("heure")));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer une liste de planning du jour a partir de l'id enseignant et de la date
+	 * 
+	 * @param reference la reference du planning a recuperer
+	 * @return le planning trouve;
+	 * 			null si aucun planning ne correspond a cette reference
+	 */
+	public ArrayList<Planning> getPlanningJourEnseignant(int idEnseignant, LocalDate date) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Planning> returnValue = new ArrayList<Planning>();
+
+		// connexion a la base de donnees
+		try {
+
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT * FROM planning WHERE (idEnseignant = ? AND date_pln = (TO_DATE(?,'DD-MM-YYYY'))) ORDER BY heure");
+			ps.setInt(1, idEnseignant);
+			java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+			ps.setDate(2, (Date) sqlDate);
+			//ps.setDate(2, date);
+
+			// on execute la requete
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			while (rs.next()) {
+				LocalDate localDate = rs.getDate("date_pln").toLocalDate();
+				returnValue.add(new Planning(rs.getInt("idplanning"),
+						   rs.getInt("idgroupe"),
+					       rs.getInt("idEnseignant"),
+					       rs.getInt("idCours"),
+					       localDate,
+					       rs.getString("salle"),
+						   rs.getDouble("duree"),
+						   rs.getDouble("heure")));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
