@@ -212,8 +212,7 @@ public class EnseignantFaireAppelGUI {
            	 int idEtudiant = (int) idBoxAbsent.getSelectedItem();
            	 Double heureDebut = (Double) comboBoxHeure.getSelectedItem();
            	 int idCours = (Integer) coursDAO.getIdCours((String) comboBoxCours.getSelectedItem());
-           	 int nbHeure = (Integer) comboBoxDuree.getSelectedItem();
-           	 
+           	 int nbHeure = (Integer) comboBoxDuree.getSelectedItem();        	 
            	 Absence absence = new Absence(idEtudiant, idCours ,heureDebut, nbHeure );
            	 AbsenceDAO absenceDAO = new AbsenceDAO();
            	 absenceDAO.add(absence);         	  
@@ -231,7 +230,7 @@ public class EnseignantFaireAppelGUI {
         panelGroupe.add(scrollPane);
       
 
-
+        //Creation du bouton retour
 
 		JButton retourBtn = new JButton("Retour");
 		retourBtn.addActionListener(new ActionListener() {

@@ -329,8 +329,10 @@ public class EtudiantGUI extends JFrame{
 
 				JLabel lblNewLabel = new JLabel("Planning du jour:");
 				lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-				lblNewLabel.setBounds(161, 11, 144, 78);
+				lblNewLabel.setBounds(120, 11, 144, 78);
 				downContainer2.add(lblNewLabel);
+				
+				
 
 				//to finish, we add the main container to the window
 				framePlanning.setContentPane(base2);
@@ -364,7 +366,8 @@ public class EtudiantGUI extends JFrame{
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel.setBounds(161, 11, 144, 78);
 		downContainer2.add(lblNewLabel);
-
+		
+		
 		//to finish, we add the main container to the window
 
 		framePlanning.setContentPane(base2);
@@ -394,7 +397,7 @@ public class EtudiantGUI extends JFrame{
 
 		//each panel gets its own layout
 		upContainer3.setLayout(new GridLayout(1, 2));
-		downContainer3.setLayout(new GridLayout(1, 1));
+		//downContainer3.setLayout(new GridLayout(1, 1));
 		base3.setLayout(new GridLayout(2,1));
 
 		//System.out.println(etudiantDAO.getStatutAbs(1).get(0));
@@ -478,9 +481,15 @@ public class EtudiantGUI extends JFrame{
 				frame.setVisible(true);
 			}
 		});
+		retourBtn3.setBounds(50, 40, 300, 200);
 		panelBoutonRetour3.add(retourBtn3);
 
-
+		AbsenceDAO absenceDAO = new AbsenceDAO();
+		
+		JLabel lblNewLabel2 = new JLabel(absenceDAO.declencherPenalite(SignInEtudiantGUI.id));
+		lblNewLabel2.setBounds(50, 80, 300, 200);
+		lblNewLabel2.setForeground(Color.RED);
+		downContainer3.add(lblNewLabel2);
 
 		//distribution of the components in the 2 containers
 		upContainer3.add(new JScrollPane(tableau3));
