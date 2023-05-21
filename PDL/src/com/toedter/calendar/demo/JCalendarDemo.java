@@ -73,10 +73,6 @@ import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
 import com.jgoodies.looks.FontPolicies;
-import com.jgoodies.looks.FontPolicy;
-import com.jgoodies.looks.FontSet;
-import com.jgoodies.looks.FontSets;
-import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDayChooser;
@@ -182,16 +178,7 @@ public class JCalendarDemo extends JApplet implements PropertyChangeListener {
 						"com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
 			}
 			String os = System.getProperty("os.name");
-			FontSet fontSet = null;
-			if (os.startsWith("Windows")) {
-				fontSet = FontSets.createDefaultFontSet(new Font(
-						"arial unicode MS", Font.PLAIN, 12));
-			} else {
-				fontSet = FontSets.createDefaultFontSet(new Font(
-						"arial unicode", Font.PLAIN, 12));				
-			}
-			FontPolicy fixedPolicy = FontPolicies.createFixedPolicy(fontSet);
-			PlasticLookAndFeel.setFontPolicy(fixedPolicy);
+			
 
 			UIManager
 					.setLookAndFeel("com.jgoodies.looks.plastic.Plastic3DLookAndFeel");

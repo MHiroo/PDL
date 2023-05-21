@@ -33,6 +33,8 @@ import dao.CoursDAO;
 import dao.EnseignantDAO;
 import dao.EtudiantDAO;
 import dao.PlanningDAO;
+import model.Absence;
+
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -406,16 +408,15 @@ public class EtudiantGUI extends JFrame{
 		String[][] data3 = new String[nbLigne3][4];
 		String[] columnNames3 = {"Date:", "Cours:", "Heures d'absence:", "Statut:"};
 
-
+		AbsenceDAO absenceDAO = new AbsenceDAO();
 		try {
 			for (int i = 0; i < nbLigne3; i++) {
-
-				Date d= etudiantDAO.getDateAbs(SignInEtudiantGUI.id).get(i);
-				data3[i][0] = d+"";
-				data3[i][1] = etudiantDAO.getNomCoursAbs(SignInEtudiantGUI.id).get(i);
-				Integer x = etudiantDAO.getHeureAbs(SignInEtudiantGUI.id).get(i);
-				data3[i][2] = x+ "";
-				data3[i][3] = etudiantDAO.getStatutAbs(SignInEtudiantGUI.id).get(i);
+				Absence absence = absenceDAO.getListFromIdEtudiant(SignInEtudiantGUI.id).get(i);
+				
+				data3[i][0] = absence.getDate().toString();
+				data3[i][1] = coursDAO.getNomCours(absence.getIdCours());
+				data3[i][2] = absence.getNbHeure()+"";
+				data3[i][3] = absence.getStatut();
 
 			}
 		} catch (Exception e1) {
@@ -484,7 +485,6 @@ public class EtudiantGUI extends JFrame{
 		retourBtn3.setBounds(50, 40, 300, 200);
 		panelBoutonRetour3.add(retourBtn3);
 
-		AbsenceDAO absenceDAO = new AbsenceDAO();
 		
 		JLabel lblNewLabel2 = new JLabel(absenceDAO.declencherPenalite(SignInEtudiantGUI.id));
 		lblNewLabel2.setBounds(50, 80, 300, 200);

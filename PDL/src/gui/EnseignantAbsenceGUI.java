@@ -178,7 +178,7 @@ public class EnseignantAbsenceGUI {
            	 tableModel2.setRowCount(0); // Effacer les anciennes donn�es de la table
 
              for (int i = 0; i < absenceDAO.getList().size(); i++) {
-                Absence absence = new Absence(absenceDAO.get2(idEtudiant).getId());
+                Absence absence = new Absence(absenceDAO.get(idEtudiant).getId());
                 int IdCours = absence.getId();
                 int NbHeure = absence.getNbHeure();
                 Date date = absence.getDate();

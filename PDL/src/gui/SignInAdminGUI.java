@@ -102,12 +102,14 @@ public class SignInAdminGUI {
                     JLabel lbl = new JLabel("Erreur: Email ou Mot de passe errones");
                     lbl.setForeground(Color.RED);
                     panel.add(lbl);
+                    frame.setLocationRelativeTo(null);
 	                frame.setVisible(true);
                 }
                 else {
                 	frame.setVisible(false);
 	                AdminGUI window = new AdminGUI();
 	                frame = new JFrame();
+	                window.frame.setLocationRelativeTo(null);
 	                window.frame.setVisible(true);
                 }
             }

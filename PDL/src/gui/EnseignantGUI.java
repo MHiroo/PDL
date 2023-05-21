@@ -15,7 +15,6 @@ public class EnseignantGUI {
     JFrame frameListeCours;
     JFrame framePlanning;
     JFrame frameAppel;
-    JFrame frameAbsence;
     
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -103,7 +102,6 @@ public class EnseignantGUI {
 	    appelPanel.add(appelBtn);
 	    
 	    
-<<<<<<< HEAD
 	    
 	  //Ajout bouton deconnexion
 
@@ -121,24 +119,6 @@ public class EnseignantGUI {
 	  		panelBoutonDeco.add(retourBtnDeco);
 	  		frame.getContentPane().add(panelBoutonDeco);
 
-=======
-	    /**
-	     * Creation du bouton pour acceder au planning de l'enseignant
-	     */
-	    JPanel AbsenceEleve = new JPanel();
-	    frame.getContentPane().add(AbsenceEleve);
-	    JButton absenceBtn = new JButton("Consulter les absences");
-	    absenceBtn.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		frame.setVisible(false);
-        		EnseignantAbsenceGUI window = new EnseignantAbsenceGUI();
-        		frameAbsence = new JFrame();
-        		window.frameAbsence.setLocationRelativeTo(null);
-        		window.frameAbsence.setVisible(true);
-	        }
-	    });
-	    AbsenceEleve.add(absenceBtn);
->>>>>>> 987899039a5b3fac734ebb2f2cf2c040947e97fe
 	    }
     
     
