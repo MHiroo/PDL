@@ -52,9 +52,9 @@ public class AbsenceDAO extends ConnectionDAO {
 			ps.setInt(3, absence.getIdCours());
 			ps.setDouble(4, absence.getHeureDebut());
 			ps.setInt(5, absence.getNbHeure());
-			ps.setDate(6, Date.valueOf(date)); 
+			ps.setDate(6, absence.getDate()); 
 			//ps.setString(6, absence.getStatut());
-			ps.setString(7, "En verification");
+			ps.setString(7, absence.getStatut());
 			
 
 			// Execution de la requete
@@ -508,7 +508,7 @@ public class AbsenceDAO extends ConnectionDAO {
 					{
 						nbAbs = rs.getInt("nombre_absences");
 					}
-					if (nbAbs>0)
+					if (nbAbs>29)
 					{
 						returnValue = "Votre quota est depasse, vous obtenez une penalite!";
 					}

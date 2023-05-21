@@ -55,6 +55,15 @@ public class Absence {
 		this.date=date;
 		this.statut=statut;
 	}
+	public Absence( int idEtud, int idCours,double heureDebut, int nbHeure, java.sql.Date date, String statut) {
+		
+		this.idEtud=idEtud;
+		this.idCours=idCours;
+		this.heureDebut=heureDebut;
+		this.nbHeure=nbHeure;
+		this.date=date;
+		this.statut=statut;
+	}
 	
 	public Absence(int id) {
 		this.id=id;
