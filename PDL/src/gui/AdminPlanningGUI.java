@@ -349,7 +349,7 @@ public class AdminPlanningGUI {
 				JPanel panelBouton = new JPanel();
 				panelBouton.setBounds(1174, 33, 239, 353);
 				JPanel panelModifPlanning = new JPanel();
-				panelModifPlanning.setBounds(427, 491, 614, 69);
+				panelModifPlanning.setBounds(43, 510, 1130, 46);
 				JLabel lblNewLabel2 = new JLabel("Planning du jour:");
 				JButton btnNewButton= null;
 				JButton btnNewButton_1= null;
@@ -357,7 +357,7 @@ public class AdminPlanningGUI {
 
 
 				JButton retourBtn = new JButton("Retour");
-				retourBtn.setBounds(64, 252, 111, 40);
+				retourBtn.setBounds(64, 230, 111, 40);
 				retourBtn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent event) {
 						frameCalendar.dispose(); // ferme la fenetre actuelle
@@ -370,13 +370,21 @@ public class AdminPlanningGUI {
 				 * Creation du panel de modification du planning
 				 */
 				JLabel lblEnseignant = new JLabel("Enseignant:");
+				lblEnseignant.setBounds(24, 5, 80, 18);
 				JLabel lblCours = new JLabel("Cours:");
+				lblCours.setBounds(217, 5, 62, 18);
 				JLabel lblSalle = new JLabel("Salle:");
+				lblSalle.setBounds(338, 5, 54, 18);
 				JLabel lblDuree = new JLabel("Duree:");
+				lblDuree.setBounds(893, -1, 62, 30);
 				JLabel lblHeure = new JLabel("Heure:");
+				lblHeure.setBounds(998, 5, 54, 22);
 				JTextField textFieldSalle = new JTextField();
+				textFieldSalle.setBounds(374, 4, 54, 20);
 				textFieldSalle.setColumns(6);
-
+				JTextField textFieldLien = new JTextField();
+				textFieldLien.setBounds(468, 4, 406, 20);
+				textFieldLien.setColumns(50);
 
 
 				//Creation du calendrier et reccuperation de la date selectionnee
@@ -385,17 +393,17 @@ public class AdminPlanningGUI {
 				calendar.setBounds(0, 0, 1484, 480);
 
 				// Récupération de la date sélectionnée dans le JCalendar
-				Date selectedDate = calendar.getDate();
+		        Date selectedDate = calendar.getDate();
 
-				// Conversion de la date en format "jjmmaaaa"
-				SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
-				String formattedDate = dateFormat.format(selectedDate);
+		        // Conversion de la date en format "jjmmaaaa"
+		        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+		        String formattedDate = dateFormat.format(selectedDate);
 
-				// Conversion de la date en LocalDate
-				LocalDate date = LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern("ddMMyyyy"));
+		        // Conversion de la date en LocalDate
+		        LocalDate date = LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern("ddMMyyyy"));
 
-				Planning plnDate = new Planning(date);
-				plnDate.setDate(date);;
+		        Planning plnDate = new Planning(date);
+		        plnDate.setDate(date);;
 
 				//Creation du tableau de cours du jour selectionne
 
@@ -406,7 +414,7 @@ public class AdminPlanningGUI {
 				int nbLigne = planningDAO.getPlanningJour(groupe, date).size();
 				String[][] data = new String[nbLigne][5];
 				Integer[] idPlanning = new Integer[nbLigne];
-
+				
 
 				try {
 					for (int i = 0; i < nbLigne; i++) {
@@ -427,36 +435,38 @@ public class AdminPlanningGUI {
 
 				DefaultTableModel model = new DefaultTableModel(data, columnNames);
 				JTable tableau = new JTable(model);
-
-
+				
+				
 				// Création du combobox des seance du jour a selectionner
-
+				
 				JComboBox<Integer> comboBoxSeance = new JComboBox<Integer>();
 				comboBoxSeance.setSize(111, 40);
-				comboBoxSeance.setLocation(64, 108);
+				comboBoxSeance.setLocation(64, 143);
 				for (int i = 0; i < data.length; i++) {
 					comboBoxSeance.addItem(i+1);
 				}
-
+				
 
 				// Création du combobox des enseignants a selectionner
 
 				JComboBox<String> comboBoxEnseignant = new JComboBox<String>();
+				comboBoxEnseignant.setBounds(94, 3, 113, 22);
 				for (int i = 0; i < enseignantDAO.getList().size(); i++) {
 					comboBoxEnseignant.addItem(enseignantDAO.getList().get(i).getName());
 				}
 
-
-
+						
+					
 
 
 				// Création du combobox des cours a selectionner
 
 				JComboBox<String> comboBoxCours = new JComboBox<String>();
+				comboBoxCours.setBounds(256, 5, 80, 22);
 				for (int i = 0; i < coursDAO.getList().size(); i++) {
 					comboBoxCours.addItem(coursDAO.getList().get(i).getNom());
 				}
-
+				
 
 
 				// Création du combobox des duree a selectionner
@@ -467,6 +477,7 @@ public class AdminPlanningGUI {
 					duree.add(i );
 				}
 				JComboBox<Double> comboBoxDuree = new JComboBox<Double>();
+				comboBoxDuree.setBounds(943, 3, 45, 22);
 				for (int i = 0; i < duree.size(); i++) {
 					comboBoxDuree.addItem(duree.get(i));
 				}
@@ -482,19 +493,20 @@ public class AdminPlanningGUI {
 
 				double heureActuelle = heureDebut;
 				while (heureActuelle <= heureFin) {
-					listeHeures.add(heureActuelle);
-					heureActuelle += intervalle;
+				    listeHeures.add(heureActuelle);
+				    heureActuelle += intervalle;
 				}
-
+				
 				JComboBox<Double> comboBoxHeure = new JComboBox<Double>();
+				comboBoxHeure.setBounds(1048, 1, 54, 22);
 				for (int i = 0; i < listeHeures.size(); i++) {
 					comboBoxHeure.addItem(listeHeures.get(i));
 				}
-
-
-
-
-
+				
+				
+				
+				
+				
 				// Creation du bouton ajouter un nouveau planning a partir des informations selectionees
 
 				btnNewButton = new JButton("Ajouter");
@@ -505,9 +517,10 @@ public class AdminPlanningGUI {
 						String cours = comboBoxCours.getSelectedItem().toString();
 						Double temps = (Double) comboBoxHeure.getSelectedItem();
 						String salle = textFieldSalle.getText();
+						String lien = textFieldLien.getText();
 						JCalendar calendar = new JCalendar();
 						calendar.setBounds(0, 0, 1484, 480);
-						Planning planning = new Planning( groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),plnDate.getDate() , salle, dureeDouble, temps);
+						Planning planning = new Planning( groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),plnDate.getDate() , salle, dureeDouble, temps,lien);
 						planningDAO.add(planning);
 					}
 				});
@@ -528,13 +541,14 @@ public class AdminPlanningGUI {
 						Double temps = (Double) comboBoxHeure.getSelectedItem();
 						JCalendar calendar = new JCalendar();
 						calendar.setBounds(0, 0, 1484, 480);
-						Planning planning = new Planning( NumeroSeance,groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),plnDate.getDate(), salle, dureeDouble, temps);
+						String lien = textFieldLien.getText();
+						Planning planning = new Planning( NumeroSeance,groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),plnDate.getDate(), salle, dureeDouble, temps,lien);
 						planningDAO.update(planning );
 					}
 				});
-
+				
 				JButton btnNewButton_2 = new JButton("Supprimer");
-				btnNewButton_2.setBounds(1150, 537, 100, 23);
+				btnNewButton_2.setBounds(1296, 533, 100, 23);
 				btnNewButton_2.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Integer NumeroSeance = (Integer) comboBoxSeance.getSelectedItem();
@@ -545,13 +559,13 @@ public class AdminPlanningGUI {
 						framePlanning.setVisible(true);
 					}
 				});
-
-
-
-
+				
+				
+				
+				
 				lblNewLabel2.setBounds(161, 11, 144, 78);
-				btnNewButton.setBounds(1051, 491, 89, 23);
-				btnNewButton_1.setBounds(1051, 537, 89, 23);
+				btnNewButton.setBounds(1197, 487, 89, 23);
+				btnNewButton_1.setBounds(1197, 533, 89, 23);
 
 
 
@@ -562,7 +576,7 @@ public class AdminPlanningGUI {
 				// Création d'un bouton pour récupérer la date sélectionnée
 
 				JButton button = new JButton("Raffraichir");
-				button.setBounds(64, 11, 111, 40);
+				button.setBounds(64, 57, 111, 40);
 				button.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -582,18 +596,18 @@ public class AdminPlanningGUI {
 						PlanningDAO planningDAO = new PlanningDAO();
 						EnseignantDAO enseignantDAO = new EnseignantDAO();
 						CoursDAO coursDAO = new CoursDAO();
-
+						
 						// Récupération de la date sélectionnée dans le JCalendar
-						Date selectedDate = calendar.getDate();
+				        Date selectedDate = calendar.getDate();
 
-						// Conversion de la date en format "jjmmaaaa"
-						SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
-						String formattedDate = dateFormat.format(selectedDate);
+				        // Conversion de la date en format "jjmmaaaa"
+				        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+				        String formattedDate = dateFormat.format(selectedDate);
 
-						// Conversion de la date en LocalDate
-						LocalDate date = LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern("ddMMyyyy"));
+				        // Conversion de la date en LocalDate
+				        LocalDate date = LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern("ddMMyyyy"));
 
-						plnDate.setDate(date);
+				        plnDate.setDate(date);
 
 
 						//Creation du tableau de cours du jour selectionne
@@ -602,7 +616,7 @@ public class AdminPlanningGUI {
 						int nbLigne = planningDAO.getPlanningJour(groupe, date).size();
 						String[][] data2 = new String[nbLigne][5];
 						Integer[] idPlanning = new Integer[nbLigne];
-
+						
 						try {
 							for (int i = 0; i < nbLigne; i++) {
 								Planning pln =planningDAO.getPlanningJour(groupe, date).get(i);
@@ -619,17 +633,17 @@ public class AdminPlanningGUI {
 							e1.printStackTrace();
 						}
 						JTable tableau = new JTable(data2, columnNames);
-
-
+						
+						
 						// Création du combobox des seance du jour a selectionner
-
+						
 						JComboBox<Integer> comboBoxSeance2 = new JComboBox<Integer>();
 						comboBoxSeance2.setSize(111, 40);
 						comboBoxSeance2.setLocation(64, 108);
 						for (int i = 0; i < data2.length; i++) {
 							comboBoxSeance2.addItem(i+1);
 						}
-
+						
 						panelBouton2.setLayout(null);
 						panelBouton2.add(button);
 						panelBouton2.add(retourBtn);
@@ -639,7 +653,7 @@ public class AdminPlanningGUI {
 						scrollPane.setBounds(355, 0, 743, 386);
 						downContainer.add(scrollPane);
 						downContainer.add(panelBouton2);
-
+						
 
 						base.setLayout(null);
 
@@ -660,6 +674,7 @@ public class AdminPlanningGUI {
 				upContainer.add(btnNewButton);
 				upContainer.add(btnNewButton_1);
 				upContainer.add(btnNewButton_2);
+				panelModifPlanning.setLayout(null);
 
 				panelModifPlanning.add(lblEnseignant);
 				panelModifPlanning.add(comboBoxEnseignant);
@@ -667,11 +682,16 @@ public class AdminPlanningGUI {
 				panelModifPlanning.add(comboBoxCours);
 				panelModifPlanning.add(lblSalle);
 				panelModifPlanning.add(textFieldSalle);
+				
+				JLabel lblNewLabel = new JLabel("Lien:");
+				lblNewLabel.setBounds(438, 5, 45, 18);
+				panelModifPlanning.add(lblNewLabel);
+				panelModifPlanning.add(textFieldLien);
 				panelModifPlanning.add(lblDuree);
 				panelModifPlanning.add(comboBoxDuree);
 				panelModifPlanning.add(lblHeure);
 				panelModifPlanning.add(comboBoxHeure);
-
+				
 				panelBouton.setLayout(null);
 				panelBouton.add(button);
 				panelBouton.add(retourBtn);

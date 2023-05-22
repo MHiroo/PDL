@@ -32,13 +32,17 @@ public class Planning {
 	 */
 	private double duree;
 	/**
-	 * Répartition
+	 * Salle
 	 */
 	private String salle;
 	/**
 	 * Répartition
 	 */
 	private double heure;
+	/**
+	 * lien
+	 */
+	private String lien;
 	
 	/**
 	 * Constructor
@@ -51,7 +55,7 @@ public class Planning {
 	 * @param duree de la séance
 	 * @param heure de la séance
 	 */
-	public Planning(int id,int idGroupe, int idEnseignant,int idCours, LocalDate date, String salle, double duree, double heure) {
+	public Planning(int id,int idGroupe, int idEnseignant,int idCours, LocalDate date, String salle, double duree, double heure, String lien) {
 		this.id=id;
 		this.idGroupe= idGroupe;
 		this.idEnseignant=idEnseignant;
@@ -60,8 +64,9 @@ public class Planning {
 		this.salle=salle;
 		this.duree= duree;
 		this.heure= heure;
+		this.lien= lien;
 	}
-	public Planning(int idGroupe, int idEnseignant,int idCours, LocalDate date, String salle, double duree, double heure) {
+	public Planning(int idGroupe, int idEnseignant,int idCours, LocalDate date, String salle, double duree, double heure, String lien) {
 	
 		this.idGroupe= idGroupe;
 		this.idEnseignant=idEnseignant;
@@ -70,6 +75,7 @@ public class Planning {
 		this.salle=salle;
 		this.duree= duree;
 		this.heure= heure;
+		this.lien= lien;
 	}
 	public Planning(LocalDate date) {
 	
@@ -160,6 +166,20 @@ public class Planning {
 	public void setHeure(double heure) {
 		this.heure = heure;
 	}
+	/**
+	 * getter pour l'attribut heure
+	 * @return valeur de la heure
+	 */
+	public String getLien() {
+		return lien;
+	}
+	/**
+	 * setter pour l'attribut duree
+	 * @param duree : nouvelle valeur de la duree
+	 */
+	public void setLien(String lien) {
+		this.lien = lien;
+	}
 	
 	/**
 	 * display de toutes les donnees du planning
@@ -173,6 +193,7 @@ public class Planning {
 		System.out.println(salle);
 		System.out.println(duree);
 		System.out.println(heure);
+		System.out.println(lien);
 	}
 
 }

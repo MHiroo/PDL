@@ -139,7 +139,7 @@ public class GestionnairePlanningGUI {
 				JPanel panelBouton = new JPanel();
 				panelBouton.setBounds(1174, 33, 239, 353);
 				JPanel panelModifPlanning = new JPanel();
-				panelModifPlanning.setBounds(427, 491, 614, 69);
+				panelModifPlanning.setBounds(43, 510, 1130, 46);
 				JLabel lblNewLabel2 = new JLabel("Planning du jour:");
 				JButton btnNewButton= null;
 				JButton btnNewButton_1= null;
@@ -147,7 +147,7 @@ public class GestionnairePlanningGUI {
 
 
 				JButton retourBtn = new JButton("Retour");
-				retourBtn.setBounds(64, 252, 111, 40);
+				retourBtn.setBounds(64, 230, 111, 40);
 				retourBtn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent event) {
 						frameCalendar.dispose(); // ferme la fenetre actuelle
@@ -160,13 +160,21 @@ public class GestionnairePlanningGUI {
 				 * Creation du panel de modification du planning
 				 */
 				JLabel lblEnseignant = new JLabel("Enseignant:");
+				lblEnseignant.setBounds(24, 5, 80, 18);
 				JLabel lblCours = new JLabel("Cours:");
+				lblCours.setBounds(217, 5, 62, 18);
 				JLabel lblSalle = new JLabel("Salle:");
+				lblSalle.setBounds(338, 5, 54, 18);
 				JLabel lblDuree = new JLabel("Duree:");
+				lblDuree.setBounds(893, -1, 62, 30);
 				JLabel lblHeure = new JLabel("Heure:");
+				lblHeure.setBounds(998, 5, 54, 22);
 				JTextField textFieldSalle = new JTextField();
+				textFieldSalle.setBounds(374, 4, 54, 20);
 				textFieldSalle.setColumns(6);
-
+				JTextField textFieldLien = new JTextField();
+				textFieldLien.setBounds(468, 4, 406, 20);
+				textFieldLien.setColumns(50);
 
 
 				//Creation du calendrier et reccuperation de la date selectionnee
@@ -223,7 +231,7 @@ public class GestionnairePlanningGUI {
 				
 				JComboBox<Integer> comboBoxSeance = new JComboBox<Integer>();
 				comboBoxSeance.setSize(111, 40);
-				comboBoxSeance.setLocation(64, 108);
+				comboBoxSeance.setLocation(64, 143);
 				for (int i = 0; i < data.length; i++) {
 					comboBoxSeance.addItem(i+1);
 				}
@@ -232,6 +240,7 @@ public class GestionnairePlanningGUI {
 				// Création du combobox des enseignants a selectionner
 
 				JComboBox<String> comboBoxEnseignant = new JComboBox<String>();
+				comboBoxEnseignant.setBounds(94, 3, 113, 22);
 				for (int i = 0; i < enseignantDAO.getList().size(); i++) {
 					comboBoxEnseignant.addItem(enseignantDAO.getList().get(i).getName());
 				}
@@ -243,6 +252,7 @@ public class GestionnairePlanningGUI {
 				// Création du combobox des cours a selectionner
 
 				JComboBox<String> comboBoxCours = new JComboBox<String>();
+				comboBoxCours.setBounds(256, 5, 80, 22);
 				for (int i = 0; i < coursDAO.getList().size(); i++) {
 					comboBoxCours.addItem(coursDAO.getList().get(i).getNom());
 				}
@@ -257,6 +267,7 @@ public class GestionnairePlanningGUI {
 					duree.add(i );
 				}
 				JComboBox<Double> comboBoxDuree = new JComboBox<Double>();
+				comboBoxDuree.setBounds(943, 3, 45, 22);
 				for (int i = 0; i < duree.size(); i++) {
 					comboBoxDuree.addItem(duree.get(i));
 				}
@@ -277,6 +288,7 @@ public class GestionnairePlanningGUI {
 				}
 				
 				JComboBox<Double> comboBoxHeure = new JComboBox<Double>();
+				comboBoxHeure.setBounds(1048, 1, 54, 22);
 				for (int i = 0; i < listeHeures.size(); i++) {
 					comboBoxHeure.addItem(listeHeures.get(i));
 				}
@@ -295,9 +307,10 @@ public class GestionnairePlanningGUI {
 						String cours = comboBoxCours.getSelectedItem().toString();
 						Double temps = (Double) comboBoxHeure.getSelectedItem();
 						String salle = textFieldSalle.getText();
+						String lien = textFieldLien.getText();
 						JCalendar calendar = new JCalendar();
 						calendar.setBounds(0, 0, 1484, 480);
-						Planning planning = new Planning( groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),plnDate.getDate() , salle, dureeDouble, temps);
+						Planning planning = new Planning( groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),plnDate.getDate() , salle, dureeDouble, temps,lien);
 						planningDAO.add(planning);
 					}
 				});
@@ -318,13 +331,14 @@ public class GestionnairePlanningGUI {
 						Double temps = (Double) comboBoxHeure.getSelectedItem();
 						JCalendar calendar = new JCalendar();
 						calendar.setBounds(0, 0, 1484, 480);
-						Planning planning = new Planning( NumeroSeance,groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),plnDate.getDate(), salle, dureeDouble, temps);
+						String lien = textFieldLien.getText();
+						Planning planning = new Planning( NumeroSeance,groupe, enseignantDAO.getId(enseignant),coursDAO.getIdFromNom(cours),plnDate.getDate(), salle, dureeDouble, temps,lien);
 						planningDAO.update(planning );
 					}
 				});
 				
 				JButton btnNewButton_2 = new JButton("Supprimer");
-				btnNewButton_2.setBounds(1150, 537, 100, 23);
+				btnNewButton_2.setBounds(1296, 533, 100, 23);
 				btnNewButton_2.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Integer NumeroSeance = (Integer) comboBoxSeance.getSelectedItem();
@@ -340,8 +354,8 @@ public class GestionnairePlanningGUI {
 				
 				
 				lblNewLabel2.setBounds(161, 11, 144, 78);
-				btnNewButton.setBounds(1051, 491, 89, 23);
-				btnNewButton_1.setBounds(1051, 537, 89, 23);
+				btnNewButton.setBounds(1197, 487, 89, 23);
+				btnNewButton_1.setBounds(1197, 533, 89, 23);
 
 
 
@@ -352,7 +366,7 @@ public class GestionnairePlanningGUI {
 				// Création d'un bouton pour récupérer la date sélectionnée
 
 				JButton button = new JButton("Raffraichir");
-				button.setBounds(64, 11, 111, 40);
+				button.setBounds(64, 57, 111, 40);
 				button.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -450,6 +464,7 @@ public class GestionnairePlanningGUI {
 				upContainer.add(btnNewButton);
 				upContainer.add(btnNewButton_1);
 				upContainer.add(btnNewButton_2);
+				panelModifPlanning.setLayout(null);
 
 				panelModifPlanning.add(lblEnseignant);
 				panelModifPlanning.add(comboBoxEnseignant);
@@ -457,6 +472,11 @@ public class GestionnairePlanningGUI {
 				panelModifPlanning.add(comboBoxCours);
 				panelModifPlanning.add(lblSalle);
 				panelModifPlanning.add(textFieldSalle);
+				
+				JLabel lblNewLabel = new JLabel("Lien:");
+				lblNewLabel.setBounds(438, 5, 45, 18);
+				panelModifPlanning.add(lblNewLabel);
+				panelModifPlanning.add(textFieldLien);
 				panelModifPlanning.add(lblDuree);
 				panelModifPlanning.add(comboBoxDuree);
 				panelModifPlanning.add(lblHeure);

@@ -4,7 +4,10 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
+import java.net.URI;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -20,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -34,12 +38,20 @@ import dao.EnseignantDAO;
 import dao.EtudiantDAO;
 import dao.PlanningDAO;
 import model.Absence;
+import model.Planning;
 
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Desktop;
+
 import javax.swing.border.TitledBorder;
 import java.awt.Font;
+import java.awt.GridBagLayout;
 
 public class EtudiantGUI extends JFrame{
 
@@ -49,6 +61,8 @@ public class EtudiantGUI extends JFrame{
 	private JFrame frameListeAbsences;
 	private Integer selectedNumber;
 	private JFrame frameListeAbsenceAnticiper;
+	private JFrame frameLien;
+	private JLabel label;
 
 
 	public static void main(String[] args) {
@@ -213,8 +227,7 @@ public class EtudiantGUI extends JFrame{
 		});
 
 
-
-
+		
 		//Creation du calendrier et reccuperation de la date selectionnee
 
 		JCalendar calendar = new JCalendar();
@@ -242,15 +255,17 @@ public class EtudiantGUI extends JFrame{
 
 		int nbLigne = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).size();
 		String[][] data2 = new String[nbLigne][5];
-
+		Integer[] idPlanning = new Integer[nbLigne];
 
 		try {
 			for (int i = 0; i < nbLigne; i++) {
-				data2[i][0] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getHeure()+ "";
-				data2[i][1] = coursDAO.getNomCours(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getIdCours());
-				data2[i][2] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getSalle();
-				data2[i][3] = enseignantDAO.getNomEnseignant(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getIdEnseignant());
-				data2[i][4] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getDuree()+ "h";									
+				Planning pln =planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i);
+				idPlanning[i] = pln.getId();
+				data2[i][0] = pln.getHeure()+ "";
+				data2[i][1] = coursDAO.getNomCours(pln.getIdCours());
+				data2[i][2] = pln.getSalle();
+				data2[i][3] = enseignantDAO.getNomEnseignant(pln.getIdEnseignant());
+				data2[i][4] = pln.getDuree()+ "h";									
 			}
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
@@ -263,7 +278,76 @@ public class EtudiantGUI extends JFrame{
 		JTable tableau2 = new JTable(model);
 
 
+		// Création du combobox des seance du jour a selectionner
 
+		JComboBox<Integer> comboBoxSeance = new JComboBox<Integer>();
+		comboBoxSeance.setSize(50, 40);
+		comboBoxSeance.setLocation(100, 170);
+		for (int i = 0; i < data2.length; i++) {
+			comboBoxSeance.addItem(i+1);
+		}
+		comboBoxSeance.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Integer NumeroSeance = (Integer) comboBoxSeance.getSelectedItem();
+				NumeroSeance = idPlanning[NumeroSeance-1];
+				
+				
+				frameLien = new JFrame();
+		        frameLien.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		        frameLien.setTitle("Lien ");
+		        frameLien.setPreferredSize(new Dimension(600, 100));
+		        frameLien.getContentPane().setBackground(new Color(240, 240, 240)); // Couleur de fond de la frameLien
+
+		        // Création du panneau principal
+		        JPanel mainPanel = new JPanel();
+		        mainPanel.setLayout(new GridBagLayout());
+		        mainPanel.setBackground(new Color(240, 240, 240)); // Couleur de fond du panneau
+		        String lien = planningDAO.getLien(NumeroSeance);
+		        // Création du label avec le lien
+		        JLabel label = new JLabel(lien);
+		        label.setFont(new Font("Arial", Font.BOLD, 13)); // Ajuster la taille de la police
+		        label.setForeground(new Color(0, 102, 204)); // Couleur du texte
+
+		        // Ajout d'un effet de survol pour simuler un lien
+		        label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		        label.addMouseListener(new MouseAdapter() {
+		        	@Override
+		            public void mouseClicked(MouseEvent e) {
+		                // Action à effectuer lors du clic sur le lien
+		                try {
+		                    Desktop.getDesktop().browse(new URI(lien));
+		                } catch (Exception ex) {
+		                    ex.printStackTrace();
+		                }
+		            }
+
+		            @Override
+		            public void mouseEntered(MouseEvent e) {
+		                label.setForeground(new Color(51, 153, 255)); // Couleur du texte au survol
+		            }
+
+		            @Override
+		            public void mouseExited(MouseEvent e) {
+		                label.setForeground(new Color(0, 102, 204)); // Couleur du texte par défaut
+		            }
+		        });
+
+		        // Ajout du label au panneau principal
+		        mainPanel.add(label);
+
+		        // Ajout du panneau principal à la fenêtre
+		        frameLien.getContentPane().add(mainPanel);
+
+		        frameLien.pack();
+		        frameLien.setLocationRelativeTo(null);
+		        frameLien.setVisible(true);
+				
+			}
+		});
+
+		
+		
 		// Création d'un bouton pour récupérer la date sélectionnée
 
 		JButton button = new JButton("Selectionner");
@@ -283,7 +367,8 @@ public class EtudiantGUI extends JFrame{
 				downContainer2.setBounds(0, 480, 1484, 480);
 				downContainer2.setLayout(new GridLayout(1, 2));
 				base2.setLayout(new GridLayout(2,1));
-
+				JPanel panelBouton = new JPanel();
+				panelBouton.setBounds(1174, 106, 239, 218);
 
 				// Récupération de la date sélectionnée dans le JCalendar
 				java.util.Date selectedDate = calendar.getDate();
@@ -304,14 +389,17 @@ public class EtudiantGUI extends JFrame{
 
 				int nbLigne = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).size();
 				String[][] data2 = new String[nbLigne][5];
+				Integer[] idPlanning = new Integer[nbLigne];
 
 				try {
 					for (int i = 0; i < nbLigne; i++) {
-						data2[i][0] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getHeure()+ "";
-						data2[i][1] = coursDAO.getNomCours(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getIdCours());
-						data2[i][2] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getSalle();
-						data2[i][3] = enseignantDAO.getNomEnseignant(planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getIdEnseignant());
-						data2[i][4] = planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i).getDuree()+ "h";									
+						Planning pln =planningDAO.getPlanningJour(etudiantDAO.getIdGroupe(SignInEtudiantGUI.id), date).get(i);
+						idPlanning[i] = pln.getId();
+						data2[i][0] = pln.getHeure()+ "";
+						data2[i][1] = coursDAO.getNomCours(pln.getIdCours());
+						data2[i][2] = pln.getSalle();
+						data2[i][3] = enseignantDAO.getNomEnseignant(pln.getIdEnseignant());
+						data2[i][4] = pln.getDuree()+ "h";									
 					}
 				}
 				catch (Exception e1) {
@@ -321,8 +409,83 @@ public class EtudiantGUI extends JFrame{
 
 
 				JTable tableau2 = new JTable(data2, columnNames2);
+				
+				
+				// Création du combobox des seance du jour a selectionner
 
+				JComboBox<Integer> comboBoxSeance = new JComboBox<Integer>();
+				comboBoxSeance.setSize(50, 40);
+				comboBoxSeance.setLocation(100, 170);
+				for (int i = 0; i < data2.length; i++) {
+					comboBoxSeance.addItem(i+1);
+				}
+				comboBoxSeance.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						Integer NumeroSeance = (Integer) comboBoxSeance.getSelectedItem();
+						NumeroSeance = idPlanning[NumeroSeance-1];
+
+
+
+						frameLien = new JFrame();
+				        frameLien.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				        frameLien.setTitle("Lien ");
+				        frameLien.setPreferredSize(new Dimension(600, 100));
+				        frameLien.getContentPane().setBackground(new Color(240, 240, 240)); // Couleur de fond de la frameLien
+
+				        // Création du panneau principal
+				        JPanel mainPanel = new JPanel();
+				        mainPanel.setLayout(new GridBagLayout());
+				        mainPanel.setBackground(new Color(240, 240, 240)); // Couleur de fond du panneau
+				        String lien = planningDAO.getLien(NumeroSeance);
+				        // Création du label avec le lien
+				        JLabel label = new JLabel(lien);
+				        label.setFont(new Font("Arial", Font.BOLD, 13)); // Ajuster la taille de la police
+				        label.setForeground(new Color(0, 102, 204)); // Couleur du texte
+
+				        // Ajout d'un effet de survol pour simuler un lien
+				        label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				        label.addMouseListener(new MouseAdapter() {
+				        	@Override
+				            public void mouseClicked(MouseEvent e) {
+				                // Action à effectuer lors du clic sur le lien
+				                try {
+				                    Desktop.getDesktop().browse(new URI(lien));
+				                } catch (Exception ex) {
+				                    ex.printStackTrace();
+				                }
+				            }
+
+				            @Override
+				            public void mouseEntered(MouseEvent e) {
+				                label.setForeground(new Color(51, 153, 255)); // Couleur du texte au survol
+				            }
+
+				            @Override
+				            public void mouseExited(MouseEvent e) {
+				                label.setForeground(new Color(0, 102, 204)); // Couleur du texte par défaut
+				            }
+				        });
+
+				        // Ajout du label au panneau principal
+				        mainPanel.add(label);
+
+				        // Ajout du panneau principal à la fenêtre
+				        frameLien.getContentPane().add(mainPanel);
+
+				        frameLien.pack();
+				        frameLien.setLocationRelativeTo(null);
+				        frameLien.setVisible(true);
+				        
+					}
+				});
+				
+				panelBouton.setLayout(null);
+				panelBouton.add(button);
+				panelBouton.add(comboBoxSeance);
+				panelBouton.add(retourBtn2);
 				downContainer2.setLayout(null);
+				
 				JScrollPane scrollPane = new JScrollPane(tableau2);
 				scrollPane.setBounds(355, 0, 742, 447);
 				downContainer2.add(scrollPane);
@@ -346,9 +509,8 @@ public class EtudiantGUI extends JFrame{
 			}
 		});
 		panelBouton.setLayout(null);
-
-
 		panelBouton.add(button);
+		panelBouton.add(comboBoxSeance);
 		panelBouton.add(retourBtn2);
 		upContainer2.setLayout(null);
 

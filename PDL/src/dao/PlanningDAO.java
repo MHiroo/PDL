@@ -39,7 +39,7 @@ public class PlanningDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO planning(idplanning,idgroupe, idenseignant, idcours, date_pln, salle, duree, heure) VALUES( ?, ?, ?, ?, TO_DATE(?,'DD-MM-YYYY'), ?, ?, ?)");
+			ps = con.prepareStatement("INSERT INTO planning(idplanning,idgroupe, idenseignant, idcours, date_pln, salle, duree, heure, lien) VALUES( ?, ?, ?, ?, TO_DATE(?,'DD-MM-YYYY'), ?, ?, ?,?)");
 			ps.setInt(1, getListPlanning().get(getListPlanning().size()-1).getId()+1);
 			ps.setInt(2, planning.getIdGroupe());
 			ps.setInt(3, planning.getIdEnseignant());
@@ -49,7 +49,7 @@ public class PlanningDAO extends ConnectionDAO {
 			ps.setString(6, planning.getSalle());
 			ps.setDouble(7, planning.getDuree());
 			ps.setDouble(8, planning.getHeure());
-
+			ps.setString(9, planning.getLien());
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
 
@@ -96,7 +96,7 @@ public class PlanningDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans la modification.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("UPDATE planning SET idgroupe = ?, idenseignant = ?, idcours = ?, date_pln = TO_DATE(?,'DD-MM-YYYY'), salle = ?, duree = ?, heure = ? WHERE idplanning = ?");
+			ps = con.prepareStatement("UPDATE planning SET idgroupe = ?, idenseignant = ?, idcours = ?, date_pln = TO_DATE(?,'DD-MM-YYYY'), salle = ?, duree = ?, heure = ? , lien = ? WHERE idplanning = ?");
 			ps.setInt(1, planning.getIdGroupe());
 			ps.setInt(2, planning.getIdEnseignant());
 			ps.setInt(3, planning.getIdCours());
@@ -104,7 +104,8 @@ public class PlanningDAO extends ConnectionDAO {
 			ps.setString(5, planning.getSalle());
 			ps.setDouble(6, planning.getDuree());
 			ps.setDouble(7, planning.getHeure());
-			ps.setInt(8, planning.getId());	
+			ps.setString(8, planning.getLien());
+			ps.setInt(9, planning.getId());	
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -212,7 +213,60 @@ public class PlanningDAO extends ConnectionDAO {
 									       localDate,
 									       rs.getString("salle"),
 										   rs.getDouble("duree"),
-										   rs.getDouble("heure"));
+										   rs.getDouble("heure"),
+										   rs.getString("lien"));
+			}
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		} finally {
+			// fermeture du ResultSet, du PreparedStatement et de la Connexion
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (Exception ignore) {
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (Exception ignore) {
+			}
+		}
+		return returnValue;
+	}
+	/**
+	 * Permet de recuperer un planning a partir de sa reference
+	 * 
+	 * @param reference la reference du planning a recuperer
+	 * @return le planning trouve;
+	 * 			null si aucun planning ne correspond a cette reference
+	 */
+	public String getLien(int id) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String returnValue = "";
+		// connexion a la base de donnees
+		try {
+
+			con = DriverManager.getConnection(URL, LOGIN, PASS);
+			ps = con.prepareStatement("SELECT lien FROM planning WHERE idplanning = ?");
+			ps.setInt(1, id);
+
+			// on execute la requete
+			// rs contient un pointeur situe juste avant la premiere ligne retournee
+			rs = ps.executeQuery();
+			// passe a la premiere (et unique) ligne retournee
+			if (rs.next()) {
+				
+				returnValue = rs.getString("lien");
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -269,7 +323,8 @@ public class PlanningDAO extends ConnectionDAO {
 					       localDate,
 					       rs.getString("salle"),
 						   rs.getDouble("duree"),
-						   rs.getDouble("heure")));
+						   rs.getDouble("heure"),
+						   rs.getString("lien")));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -330,7 +385,8 @@ public class PlanningDAO extends ConnectionDAO {
 					       localDate,
 					       rs.getString("salle"),
 						   rs.getDouble("duree"),
-						   rs.getDouble("heure")));
+						   rs.getDouble("heure"),
+						   rs.getString("lien")));
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
@@ -393,7 +449,9 @@ public class PlanningDAO extends ConnectionDAO {
 					       localDate,
 					       rs.getString("salle"),
 						   rs.getDouble("duree"),
-						   rs.getDouble("heure")));
+						   rs.getDouble("heure"),
+						   rs.getString("lien")));
+						   
 			}
 		} catch (Exception ee) {
 			ee.printStackTrace();
