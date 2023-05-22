@@ -39,14 +39,13 @@ public class EtudiantDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO etudiant(idetud,idgroupe, nomEtudiant, prenomEtudiant, filiere, email, motdepasse) VALUES( ?, ?, ?, ?, ?, ?, ?)");
-			ps.setInt(1, getList().get(getList().size()-1).getId()+1);
-			ps.setInt(2, etudiant.getGroupe());
-			ps.setString(3, etudiant.getName());
-			ps.setString(4, etudiant.getFirstName());
-			ps.setString(5, etudiant.getFiliere());
-			ps.setString(6, etudiant.getEmail());
-			ps.setString(7, etudiant.getMdp());
+			ps = con.prepareStatement("INSERT INTO etudiant(idetud,idgroupe, nomEtudiant, prenomEtudiant, filiere, email, motdepasse) VALUES( etudiant_seq.nextval, ?, ?, ?, ?, ?, ?)");
+			ps.setInt(1, etudiant.getGroupe());
+			ps.setString(2, etudiant.getName());
+			ps.setString(3, etudiant.getFirstName());
+			ps.setString(4, etudiant.getFiliere());
+			ps.setString(5, etudiant.getEmail());
+			ps.setString(6, etudiant.getMdp());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -178,7 +177,7 @@ public class EtudiantDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer un etudiant a partir de sa reference
 	 * 
-	 * @param reference la reference du etudiant a recuperer
+	 * @param id la reference du etudiant a recuperer
 	 * @return le etudiant trouve;
 	 * 			null si aucun etudiant ne correspond a cette reference
 	 */
@@ -236,7 +235,7 @@ public class EtudiantDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer un in du groupe a partir de la reference de l'etudiant
 	 * 
-	 * @param reference la reference du etudiant a recuperer
+	 * @param id la reference du etudiant a recuperer
 	 * @return le etudiant trouve;
 	 * 			null si aucun etudiant ne correspond a cette reference
 	 */

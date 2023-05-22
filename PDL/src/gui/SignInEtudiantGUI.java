@@ -90,12 +90,10 @@ public class SignInEtudiantGUI {
                 String email = textFieldEmail.getText();
                 String mdp = textFieldMdp.getText();
                 
-                // Creer un objet Etudiant avec les donnees recuperees
-                Etudiant etudiant = new Etudiant( 0,  0,  "",  "",  "", "", "");
                 
                 // Appeler la methode d'authentification d'un etudiant dans la base de donnees
                 EtudiantDAO etudiantDAO = new EtudiantDAO();
-                etudiant = etudiantDAO.signIn(email,mdp);
+                Etudiant etudiant = etudiantDAO.signIn(email,mdp);
                 
 
                 if (etudiant==null) {

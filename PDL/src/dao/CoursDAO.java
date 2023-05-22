@@ -178,7 +178,7 @@ public class CoursDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer un cours a partir de sa reference
 	 * 
-	 * @param reference la reference du cours a recuperer
+	 * @param id la reference du cours a recuperer
 	 * @return le cours trouve;
 	 * 			null si aucun cours ne correspond a cette reference
 	 */
@@ -236,7 +236,7 @@ public class CoursDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer un idCours a partir de son id
 	 * 
-	 * @param reference la reference du enseignant a recuperer
+	 * @param id la reference du enseignant a recuperer
 	 * @return le enseignant trouve;
 	 * 			null si aucun enseignant ne correspond a cette reference
 	 */
@@ -288,7 +288,7 @@ public class CoursDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer un idCours a partir de son nom
 	 * 
-	 * @param reference la reference du enseignant a recuperer
+	 * @param nomCours la reference du enseignant a recuperer
 	 * @return le enseignant trouve;
 	 * 			null si aucun enseignant ne correspond a cette reference
 	 */
@@ -340,7 +340,7 @@ public class CoursDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer le nom d'un cours a partir de sa reference
 	 * 
-	 * @param reference la reference du cours a recuperer
+	 * @param id la reference du cours a recuperer
 	 * @return le cours trouve;
 	 * 			null si aucun cours ne correspond a cette reference
 	 */
@@ -392,7 +392,7 @@ public class CoursDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer l'id d'un cours a partir de son nom
 	 * 
-	 * @param reference la reference du cours a recuperer
+	 * @param nomCours la reference du cours a recuperer
 	 * @return le cours trouve;
 	 * 			null si aucun cours ne correspond a cette reference
 	 */

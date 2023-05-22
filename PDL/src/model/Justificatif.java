@@ -13,7 +13,7 @@ public class Justificatif {
 	 */
 	public int idJustificatif;
 	/**
-	 * date à justifier
+	 * date ï¿½ justifier
 	 */
 	public Date date;
 	/**
@@ -28,9 +28,9 @@ public class Justificatif {
 	/**
 	 * Constructor
 	 * @param idJustificatif identifiant du justificatif
-	 * @param date date à justifier
+	 * @param date date ï¿½ justifier
 	 * @param motif Motif de l'absence
-	 * @param accepté Justification acceptee ou refusee
+	 * @param accepte Justification acceptee ou refusee
 	 */
 	public Justificatif(int idJustificatif, Date date, String motif, boolean accepte) {
 		this.idJustificatif=idJustificatif;

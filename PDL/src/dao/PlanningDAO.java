@@ -183,7 +183,7 @@ public class PlanningDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer un planning a partir de sa reference
 	 * 
-	 * @param reference la reference du planning a recuperer
+	 * @param id la reference du planning a recuperer
 	 * @return le planning trouve;
 	 * 			null si aucun planning ne correspond a cette reference
 	 */
@@ -244,7 +244,7 @@ public class PlanningDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer un planning a partir de sa reference
 	 * 
-	 * @param reference la reference du planning a recuperer
+	 * @param id la reference du planning a recuperer
 	 * @return le planning trouve;
 	 * 			null si aucun planning ne correspond a cette reference
 	 */
@@ -352,7 +352,8 @@ public class PlanningDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer une liste de planning du jour a partir du groupe et de la date
 	 * 
-	 * @param reference la reference du planning a recuperer
+	 * @param idGroupe 
+	 * @param date 
 	 * @return le planning trouve;
 	 * 			null si aucun planning ne correspond a cette reference
 	 */
@@ -416,7 +417,8 @@ public class PlanningDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer une liste de planning du jour a partir de l'id enseignant et de la date
 	 * 
-	 * @param reference la reference du planning a recuperer
+	 * @param idEnseignant 
+	 * @param date 
 	 * @return le planning trouve;
 	 * 			null si aucun planning ne correspond a cette reference
 	 */

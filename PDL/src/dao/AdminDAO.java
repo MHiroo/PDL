@@ -181,7 +181,7 @@ public class AdminDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer un administratif a partir de sa reference
 	 * 
-	 * @param reference la reference du administratif a recuperer
+	 * @param id la reference du administratif a recuperer
 	 * @return le administratif trouve;
 	 * 			null si aucun administratif ne correspond a cette reference
 	 */

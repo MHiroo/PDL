@@ -38,13 +38,12 @@ public class EnseignantDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO enseignant(idEnseignant, nomEnseignant, prenomEnseignant, tel, email, motdepasse) VALUES( ?, ?, ?, ?, ?, ?)");
-			ps.setInt(1, getList().get(getList().size()-1).getId()+1);
-			ps.setString(2, enseignant.getName());
-			ps.setString(3, enseignant.getFirstName());
-			ps.setString(4, enseignant.getTel());
-			ps.setString(5, enseignant.getEmail());
-			ps.setString(6, enseignant.getMdp());
+			ps = con.prepareStatement("INSERT INTO enseignant(idEnseignant, nomEnseignant, prenomEnseignant, tel, email, motdepasse) VALUES( enseignant_seq.nextval, ?, ?, ?, ?, ?)");
+			ps.setString(1, enseignant.getName());
+			ps.setString(2, enseignant.getFirstName());
+			ps.setString(3, enseignant.getTel());
+			ps.setString(4, enseignant.getEmail());
+			ps.setString(5, enseignant.getMdp());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -181,7 +180,7 @@ public class EnseignantDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer un enseignant a partir de sa reference
 	 * 
-	 * @param reference la reference du enseignant a recuperer
+	 * @param id la reference du enseignant a recuperer
 	 * @return le enseignant trouve;
 	 * 			null si aucun enseignant ne correspond a cette reference
 	 */
@@ -238,7 +237,7 @@ public class EnseignantDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer un idenseignant a partir de son nom
 	 * 
-	 * @param reference la reference du enseignant a recuperer
+	 * @param enseignant la reference du enseignant a recuperer
 	 * @return le enseignant trouve;
 	 * 			null si aucun enseignant ne correspond a cette reference
 	 */
@@ -290,7 +289,7 @@ public class EnseignantDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer le nom d'un enseignant a partir de sa reference
 	 * 
-	 * @param reference la reference du enseignant a recuperer
+	 * @param id la reference du enseignant a recuperer
 	 * @return le enseignant trouve;
 	 * 			null si aucun enseignant ne correspond a cette reference
 	 */

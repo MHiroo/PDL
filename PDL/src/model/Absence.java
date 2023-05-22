@@ -41,8 +41,8 @@ public class Absence {
 	 * @param id identifiant de l'absence
 	 * @param idEtud identifiant de l'etudiant
 	 * @param idCours id du cours de l'absence
-	 * @param nbHeure nombre d'heure d'absence
-	 * @param nbreHeure de l'absence
+	 * @param heureDebut nombre d'heure d'absence
+	 * @param nbHeure de l'absence
 	 * @param date date de l'absence
 	 * @param statut statut de l'absence justifie ou non
 	 */
@@ -121,21 +121,19 @@ public class Absence {
 	}
 	/**
 	 * getter pour l'attribut idCours
-	 * @param idCours l'identifiant du cours de l'absence
 	 */
 	public Double getHeureDebut() {
 		return heureDebut;
 	}
 	/**
 	 * setter pour l'attribut nbHeure
-	 * @param nbHeure : nouvelle valeur du nombre d'heure d'absence
+	 * @param heureDebut : nouvelle valeur du nombre d'heure d'absence
 	 */
 	public void setHeureDebut(float heureDebut) {
 		this.heureDebut = heureDebut;
 	}
 	/**
 	 * getter pour l'attribut idCours
-	 * @param idCours l'identifiant du cours de l'absence
 	 */
 	public int getNbHeure() {
 		return nbHeure;

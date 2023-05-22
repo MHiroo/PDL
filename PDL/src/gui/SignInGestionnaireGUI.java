@@ -90,13 +90,13 @@ public class SignInGestionnaireGUI {
                 String mdp = textFieldMdp.getText();
                 
                 // Creer un objet gestionnaire avec les donnees recuperees
-                Personne gestionnaire = new Personne( 0,  "",  "",  "", "", "");
+              
                 
                 // Appeler la methode d'authentification d'un gestionnaire dans la base de donnees
                 GestionnaireDAO gestionnaireDAO = new GestionnaireDAO();
-                gestionnaire = gestionnaireDAO.signIn(email,mdp);
+                Personne gestionnaire = gestionnaireDAO.signIn(email,mdp);
+               // System.out.println(gestionnaire.getEmail()+gestionnaire.getMdp());
                 if (gestionnaire==null) {
-                	
                 	JPanel panel = new JPanel();
                     pframe.getContentPane().add(panel);
                     JLabel lbl = new JLabel("Erreur: Email ou Mot de passe errones");

@@ -23,10 +23,10 @@ public class Type_absenceDAO extends ConnectionDAO {
 	 * Permet d'ajouter un type d'absence dans la table type_absence.
 	 * Le mode est auto-commit par defaut : chaque insertion est validee
 	 * 
-	 * @param type_absence le type d'absence a ajouter
+	 * @param typeAbsence le type d'absence a ajouter
 	 * @return retourne le nombre de lignes ajoutees dans la table
 	 */
-	public int add(TYPE_ABSENCE TypeAbsence) {
+	public int add(TYPE_ABSENCE typeAbsence) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -41,8 +41,8 @@ public class Type_absenceDAO extends ConnectionDAO {
 			// les getters permettent de recuperer les valeurs des attributs souhaites
 			ps = con.prepareStatement("INSERT INTO type_absence(idtypeabsence, quota, designation) VALUES( ?, ?, ?)");
 			ps.setInt(1, getList().get(getList().size()-1).getId()+1);
-			ps.setString(2, TypeAbsence.getQuota());
-			ps.setString(3, TypeAbsence.getDesignation());
+			ps.setString(2, typeAbsence.getQuota());
+			ps.setString(3, typeAbsence.getDesignation());
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -74,10 +74,10 @@ public class Type_absenceDAO extends ConnectionDAO {
 	 * Permet de modifier un type d'absence dans la table type_absence.
 	 * Le mode est auto-commit par defaut : chaque modification est validee
 	 * 
-	 * @param type_absence le type d'absence a modifier
+	 * @param typeAbsence le type d'absence a modifier
 	 * @return retourne le nombre de lignes modifiees dans la table
 	 */
-	public int update(TYPE_ABSENCE TypeAbsence) {
+	public int update(TYPE_ABSENCE typeAbsence) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int returnValue = 0;
@@ -91,9 +91,9 @@ public class Type_absenceDAO extends ConnectionDAO {
 			// a communiquer dans la modification.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
 			ps = con.prepareStatement("UPDATE type_absence SET quota = ?, designation = ? WHERE idtypeabsence = ?");
-			ps.setString(1, TypeAbsence.getQuota());
-			ps.setString(2, TypeAbsence.getDesignation());
-			ps.setInt(3, TypeAbsence.getId());	
+			ps.setString(1, typeAbsence.getQuota());
+			ps.setString(2, typeAbsence.getDesignation());
+			ps.setInt(3, typeAbsence.getId());	
 
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
@@ -170,7 +170,7 @@ public class Type_absenceDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer un type d'absence a partir de sa reference
 	 * 
-	 * @param reference la reference du type d'absence a recuperer
+	 * @param id la reference du type d'absence a recuperer
 	 * @return le type d'absence trouve;
 	 * 			null si aucun type d'absence ne correspond a cette reference
 	 */

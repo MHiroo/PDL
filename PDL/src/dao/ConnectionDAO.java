@@ -11,17 +11,15 @@ public class ConnectionDAO {
 	 * Parametres de connexion a la base de donnees oracle
 	 * URL, LOGIN et PASS sont des constantes
 	 */
-	// � utiliser si vous �tes sur une machine personnelle :"jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl"  
+	// � utiliser si vous �tes sur une machine personnelle :
 
-	final static String URL   = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl" ;
+	//final static String URL   = "jdbc:oracle:thin:@oracle.esigelec.fr:1521:orcl" ;
 	
 	//sinon :
 
 
-	//final static String URL   = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
+	final static String URL   = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
 
-
-	//final static String URL   = "jdbc:oracle:thin:@//srvoracledb.intranet.int:1521/orcl.intranet.int";
 	
 	//nom dhote: srvoracledb.intranet.int; nom de service : orcl.intranet.int
 

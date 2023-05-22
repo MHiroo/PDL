@@ -35,14 +35,6 @@ CREATE SEQUENCE enseignant_seq
  NOCACHE
  NOCYCLE;
  
- CREATE TABLE Intervenant
-(
- idEnseignant INTEGER,
- idCours INTEGER,
- CONSTRAINT PK_Intervenant PRIMARY KEY(idEnseignant, idCours),
- CONSTRAINT FK_idEnseignant_itv FOREIGN KEY(idEnseignant) REFERENCES Enseignant(idEnseignant) ON DELETE CASCADE,
- CONSTRAINT FK_idCours_itv FOREIGN KEY(idCours) REFERENCES Cours(idCours) ON DELETE CASCADE
-);
 CREATE TABLE Type_absence
 (
  idtypeAbsence INTEGER,
@@ -96,13 +88,7 @@ CREATE SEQUENCE etudiant_seq
  INCREMENT BY 1
  NOCACHE
  NOCYCLE;
-CREATE TABLE lien
-(
- idlien INTEGER,
- lien VARCHAR2(100),
- CONSTRAINT PK_lien PRIMARY KEY(idlien)
- 
-);
+
 CREATE TABLE Cours
 (
  idCours INTEGER,
@@ -129,6 +115,7 @@ CREATE TABLE Planning
  salle VARCHAR2(50),
  duree FLOAT,
  heure FLOAT,
+ lien VARCHAR2(100),
  CONSTRAINT PK_Planning PRIMARY KEY(idplanning),
  CONSTRAINT FK_idGroupe_Pln FOREIGN KEY(idGroupe) REFERENCES GroupeEtudiant(idGroupe) ON DELETE CASCADE,
  CONSTRAINT FK_idCours FOREIGN KEY(idCours) REFERENCES Cours(idCours) ON DELETE CASCADE,
@@ -150,6 +137,9 @@ maladie')),
 CASCADE
 );
 
-
+INSERT INTO gestionnaire (idGst, nomGst, prenomGst, tel, email, motdepasse)
+VALUES (1,'NomGst','PrénomGst','07345343','mail','1234');
+INSERT INTO administratif(idAdmin, nomAdmin, prenomAdmin, tel, email, motdepasse)
+VALUES (1,'NomAdmin','PrénomAdmin','07345343','mail','1234');
 
 

@@ -1,19 +1,15 @@
-DROP TABLE justificatifclassique;
-DROP TABLE justificatifdistanciel;
+DROP TABLE justificatif;
 DROP TABLE gestionnaire;
 DROP TABLE administratif;
-DROP TABLE absenceclassique;
-DROP TABLE absencedistanciel;
+DROP TABLE absence;
 DROP TABLE etudiant;
 DROP TABLE GroupeEtudiant;
 DROP TABLE enseignant;
 DROP TABLE Cours;
 DROP TABLE Planning;
-DROP TABLE lien;
 DROP TABLE type_absence;
-DROP TABLE intervenant;
-DROP TABLE estabs;
 
+/**
 DELETE * from Cours Where idCours = 2;
 SELECT Cours.nomCours FROM Cours INNER JOIN Planning ON Cours.idCours = Planning.idCours ;
 SELECT nomCours FROM Cours;
@@ -55,3 +51,4 @@ SELECT * FROM planning WHERE (idGroupe = 1 AND date_pln = (TO_DATE('08-05-2023',
 SELECT * FROM planning WHERE (idGroupe = 1 AND date_pln = (TO_DATE('08-05-2023','DD-MM-YYYY'))) ORDER BY heure;
 SELECT statut FROM Absence WHERE (idEtud= 1);
 UPDATE absence SET statut = 'En verification' WHERE (idCours=1 AND heureDebut=TO_DATE('15:30:00', 'HH24:MI:SS'));
+*/

@@ -47,13 +47,14 @@ public class Planning {
 	/**
 	 * Constructor
 	 * @param id identifiant du planning
-	 * @param enseignant du planning
-	 * @param cours du planning
+	 * @param idGroupe du planning
+	 * @param idEnseignant du planning
+	 * @param idCours du planning
 	 * @param date du planning
-	 * @param nbreHeure du planning
 	 * @param salle du planning
-	 * @param duree de la séance
+	 * @param duree du planning
 	 * @param heure de la séance
+	 * @param lien de la séance
 	 */
 	public Planning(int id,int idGroupe, int idEnseignant,int idCours, LocalDate date, String salle, double duree, double heure, String lien) {
 		this.id=id;
@@ -161,7 +162,7 @@ public class Planning {
 	}
 	/**
 	 * setter pour l'attribut duree
-	 * @param duree : nouvelle valeur de la duree
+	 * @param heure : nouvelle valeur de la duree
 	 */
 	public void setHeure(double heure) {
 		this.heure = heure;
@@ -175,7 +176,7 @@ public class Planning {
 	}
 	/**
 	 * setter pour l'attribut duree
-	 * @param duree : nouvelle valeur de la duree
+	 * @param lien : nouvelle valeur de la duree
 	 */
 	public void setLien(String lien) {
 		this.lien = lien;

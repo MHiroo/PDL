@@ -39,11 +39,11 @@ public class Cours {
 	 * Constructor
 	 * @param id identifiant du cours
 	 * @param nom du cours
-	 * @param cours du cours
-	 * @param date du cours
-	 * @param nbreHeure du cours
-	 * @param justificatif du cours
-	 * @param decision du cours
+	 * @param masseHoraire du cours
+	 * @param repNbrHAmphi du cours
+	 * @param repNbrHTD du cours
+	 * @param repNbrHTP du cours
+	 * @param repNbrHExam du cours
 	 */
 	public Cours(int id, String nom,int masseHoraire,int repNbrHAmphi, int repNbrHTD,int repNbrHTP, int repNbrHExam) {
 		this.id=id;

@@ -26,12 +26,7 @@ VALUES (3,10,'grève');
 INSERT INTO justificatif (idjustificatif , idAbs, date_abs, etat, motif) 
 VALUES (1,1,TO_DATE('21-03-2023','DD-MM-YYYY'),'N','Covid');
 
-INSERT INTO Planning (idplanning,idGroupe, idEnseignant, idcours, date_pln, salle,duree,heure) 
-VALUES (3,1,1,1,TO_DATE('19-05-2023','DD-MM-YYYY'),'N',1.0,9);
-
-INSERT INTO lien (idlien, lien)
-VALUES (1,'https://ent.esigelec.fr/course/view.php?id=6070');
+INSERT INTO Planning (idplanning,idGroupe, idEnseignant, idcours, date_pln, salle,duree,heure,lien) 
+VALUES (3,1,1,1,TO_DATE('19-05-2023','DD-MM-YYYY'),'N',1.0,9,'https://ent.esigelec.fr/');
 
 
-INSERT INTO Intervenant (idEnseignant, idCours)
-VALUES (1,1);

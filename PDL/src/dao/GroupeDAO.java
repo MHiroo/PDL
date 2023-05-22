@@ -38,10 +38,9 @@ public class GroupeDAO extends ConnectionDAO {
 			// preparation de l'instruction SQL, chaque ? represente une valeur
 			// a communiquer dans l'insertion.
 			// les getters permettent de recuperer les valeurs des attributs souhaites
-			ps = con.prepareStatement("INSERT INTO groupeetudiant(idgroupe,num, capacitemax) VALUES( ?, ?, ?)");
-			ps.setInt(1, getList().get(getList().size()-1).getId()+1);
-			ps.setInt(2, groupe.getNum());
-			ps.setInt(3, groupe.getcapaciteMax());
+			ps = con.prepareStatement("INSERT INTO groupeetudiant(idgroupe, num, capacitemax) VALUES( GroupeEtudiant_seq.nextval, ?, ?)");
+			ps.setInt(1, groupe.getNum());
+			ps.setInt(2, groupe.getcapaciteMax());
 			// Execution de la requete
 			returnValue = ps.executeUpdate();
 
@@ -169,7 +168,7 @@ public class GroupeDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer un groupe a partir de sa reference
 	 * 
-	 * @param reference la reference du groupe a recuperer
+	 * @param id la reference du groupe a recuperer
 	 * @return le groupe trouve;
 	 * 			null si aucun groupe ne correspond a cette reference
 	 */

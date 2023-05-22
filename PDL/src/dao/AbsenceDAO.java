@@ -238,7 +238,7 @@ public class AbsenceDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer une absence a partir de sa reference
 	 * 
-	 * @param reference la reference de l'absence a recuperer
+	 * @param id la reference de l'absence a recuperer
 	 * @return l'absence trouve;
 	 * 			null si aucune absence ne correspond a cette reference
 	 */
@@ -439,7 +439,8 @@ public class AbsenceDAO extends ConnectionDAO {
 	 * Permet de modifier uneabsence dans la table absence.
 	 * Le mode est auto-commit par defaut : chaque modification est validee
 	 * 
-	 * @param absence labsence a modifier
+	 * @param idCours  
+	 * @param heureDebut
 	 * @return retourne le nombre de lignes modifiees dans la table
 	 */
 	public int setStatut(int idCours,Time heureDebut) {
@@ -486,7 +487,7 @@ public class AbsenceDAO extends ConnectionDAO {
 	 * Permet de modifier uneabsence dans la table absence.
 	 * Le mode est auto-commit par defaut : chaque modification est validee
 	 * 
-	 * @param absence labsence a modifier
+	 * @param idEtud 
 	 * @return retourne le nombre de lignes modifiees dans la table
 	 */
 	public String declencherPenalite(int idEtud) {

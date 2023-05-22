@@ -181,7 +181,7 @@ public class GestionnaireDAO extends ConnectionDAO {
 	/**
 	 * Permet de recuperer un gestionnaire a partir de sa reference
 	 * 
-	 * @param reference la reference du gestionnaire a recuperer
+	 * @param id la reference du gestionnaire a recuperer
 	 * @return le gestionnaire trouve;
 	 * 			null si aucun gestionnaire ne correspond a cette reference
 	 */

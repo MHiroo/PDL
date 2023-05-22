@@ -149,7 +149,7 @@ public class Personne {
 	}
 	/**
 	 * setter pour l'attribut mdp
-	 * @param tel : nouvelle valeur du mot de passe
+	 * @param mdp : nouvelle valeur du mot de passe
 	 */
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
